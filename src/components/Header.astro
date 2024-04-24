@@ -1,0 +1,35 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+import { SITE_TITLE } from "../consts";
+import SocialButtons from "./SocialButtons.astro";
+---
+
+<header class="m-0 p-0 px-4 bg-white shadow-md">
+	<nav class="flex items-center justify-between">
+		<h2 class="m-0 text-xl"><a class="no-underline text-black hover:text-black" href="/">{SITE_TITLE}</a></h2>
+		<div>
+			<HeaderLink class="text-black hover:text-black" href="/">Inicio</HeaderLink>
+			<HeaderLink class="text-black hover:text-black" href="/blog">Blog</HeaderLink>
+			<HeaderLink class="text-black hover:text-black" href="/about">Sobre mi</HeaderLink>
+		</div>
+		<div class="social-links flex">
+			<SocialButtons />
+		</div>
+	</nav>
+</header>
+<style>
+	nav a {
+		padding: 1em 0.5em;
+		border-bottom: 4px solid transparent;
+	}
+	nav a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+
+	@media (max-width: 720px) {
+		.social-links {
+			display: none;
+		}
+	}
+</style>

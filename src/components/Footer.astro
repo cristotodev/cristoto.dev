@@ -1,0 +1,19 @@
+---
+import SocialButtons from "./SocialButtons.astro";
+
+const today = new Date();
+---
+
+<footer class="pt-10 pb-5 text-center">
+	&copy; {today.getFullYear()} cirstotodev. Todos los derechos reservados.
+	<div class="social-links flex justify-center mt-4">
+		<SocialButtons />
+	</div>
+</footer>
+<style>
+	footer {
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		color: rgb(var(--gray));
+	}
+
+</style>

@@ -1,0 +1,41 @@
+---
+import ButtonIcon from "../components/ButtonIcon.astro";
+import Email from "../icons/email.astro";
+import Github from "../icons/github.astro";
+import Linkedin from "../icons/linkedin.astro";
+---
+
+<div class="flex gap-4 mb-4">
+    <img
+        src="img/blog/blog-placeholder-1.jpg"
+        alt="Cristo Estévez"
+        class="rounded-full shadow-lg size-16"
+    />
+</div>
+<div>
+    <h1
+        class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
+    >
+        Hey, soy cristotodev &#128587;
+    </h1>
+    <p
+        class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
+    >
+        +6 años de experiencia. <strong
+            >Ingeniero de Software y Creador de Contenido sobre Programación</strong
+        > de Tenerife, España 🇪🇸. Especializado en el desarrollo de aplicaciones
+        web únicas.
+    </p>
+    <nav class="flex flex-wrap gap-4 mt-8">
+        <ButtonIcon text="Contáctame">
+            <Email />
+
+        </ButtonIcon>
+        <ButtonIcon text="Linkedin">
+            <Linkedin width={24} height={24}/>
+        </ButtonIcon>
+        <ButtonIcon text="GitHub">
+            <Github width={24} height={24}/>
+        </ButtonIcon>
+    </nav>
+</div>

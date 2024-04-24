@@ -1,0 +1,12 @@
+---
+interface Props {
+	tool: string;
+}
+
+const { tool } = Astro.props;
+---
+
+<div class="rounded-xl flex justify-evenly bg-white gap-0 p-2">
+    <slot />
+    {tool}
+</div>

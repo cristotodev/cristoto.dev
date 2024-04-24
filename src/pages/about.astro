@@ -1,0 +1,75 @@
+---
+import { BUSINESSES } from "../consts";
+import Layout from "../layouts/BlogPost.astro";
+---
+
+<Layout
+	title="🙋 ¿Quién soy?"
+	description="Soy Cristo (cristotodev en redes sociales) un apasionado del desarrollo de software"
+	pubDate={new Date("April 23 2024")}
+	heroImage="/img/blog/blog-placeholder-about.jpg"
+>
+	<p>
+		¡Hola! Soy Cristo (cristotodev en redes sociales), un apasionado del
+		desarrollo de software con más de 6 años de experiencia en el campo.
+		Durante este tiempo, he centrado gran parte de mi trabajo en el backend,
+		pero también tengo habilidades sólidas en el frontend. Mi enfoque
+		versátil me ha permitido crear aplicaciones completas, desde la lógica
+		del servidor hasta la interfaz de usuario, brindando soluciones
+		integrales a diversos proyectos.
+	</p>
+
+	<p>
+		Fuera del horario laboral, mi pasión por la programación se extiende a
+		mis redes sociales, donde comparto contenido relacionado con tecnología
+		y desarrollo. Me encanta mantenerme al día con las últimas tendencias y
+		compartir mis conocimientos con la comunidad en línea.
+	</p>
+
+	<p>
+		Además de mi interés por la tecnología, encuentro placer en sumergirme
+		en las páginas de un buen libro. Creo firmemente en la importancia del
+		aprendizaje continuo y la exploración de nuevos conceptos.
+	</p>
+
+	<p>
+		Fuera del mundo digital, encuentro mi equilibrio en el ajedrez. Desde
+		una edad temprana, he competido a nivel profesional, y aunque ahora lo
+		considero más un hobby, la estrategia y la concentración requeridas en
+		el juego continúan inspirándome en mi enfoque hacia los desafíos tanto
+		en la vida como en el desarrollo de software.
+	</p>
+
+	<p>
+		¡Gracias por visitar mi página y espero tener la oportunidad de
+		colaborar contigo en el futuro!
+	</p>
+
+	<section class="mt-20 md:mt-30">
+		<h2>Empresas a las que he ayudado</h2>
+		<div class="mt-12 grid select-none grid-cols-3 gap-2 md:gap-8">
+			{
+				BUSINESSES.map(({ id, name, url, image }) => (
+					<a
+						class="company-link group relative flex h-24 items-center justify-center overflow-hidden md:h-32"
+						title={`Visita la página del patrocinador ${name}`}
+						href={url}
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label={`Link con el logo de ${name} que lleva a ${url}`}
+					>
+						<img
+							src={`/img/businesses/${id}.webp`}
+							width={image.width}
+							loading="lazy"
+							height={image.height}
+							fetchpriority="low"
+							alt={`Logo de ${name}`}
+							class="company-logo px-5 text-white transition group-hover:scale-110 group-focus:scale-110 md:px-4"
+						/>
+					</a>
+				))
+			}
+		</div>
+	</section>
+</Layout>

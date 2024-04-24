@@ -1,0 +1,31 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import Tools from "../sections/Tools.astro";
+import Projects from "../sections/Projects.astro";
+import Greeting from "../sections/Greeting.astro";
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="w-3/4">
+			<section class="py-16 md:py-28 w-full mx-auto lg:max-w-4xl md:max-w-2xl">
+				<Greeting />
+			</section>
+			<section class="text-center py-16 md:py-10">
+				<Tools />
+			</section>
+			<section class="text-center mt-10">
+				<Projects />
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
