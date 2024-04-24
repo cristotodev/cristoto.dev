@@ -120,4 +120,32 @@ export const PROJECTS: Array<Project> = [{
         bgColorHex: "#002D62",
         fontColorHex: '#000000'
     }]
+}, {
+    id: "speed",
+    description: `Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto`,
+    title: "Prueba titulo",
+    url: "https://google.es",
+    tags: [{
+        name: "javascript",
+        bgColorHex: "#F0DB4F",
+        fontColorHex: '#000000'
+    }, {
+        name: "astro",
+        bgColorHex: "#002D62",
+        fontColorHex: '#000000'
+    }]
+}, {
+    id: "speed",
+    description: `Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto`,
+    title: "Prueba titulo",
+    url: "https://google.es",
+    tags: [{
+        name: "javascript",
+        bgColorHex: "#F0DB4F",
+        fontColorHex: '#000000'
+    }, {
+        name: "astro",
+        bgColorHex: "#002D62",
+        fontColorHex: '#000000'
+    }]
 }];

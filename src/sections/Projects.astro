@@ -2,32 +2,61 @@
 import { PROJECTS } from "../consts";
 ---
 
-<h2>&#128640; Proyectos</h2>
-<section class="flex flex-wrap items-start justify-center">
-    {
-        PROJECTS.map(({ id, title, description, url, tags }) => (
-            <div class="max-w-sm rounded overflow-hidden shadow-lg m-4">
-                <a href={url} target="_blank">
-                    <img
-                        class="w-full"
-                        src="/img/blog/blog-placeholder-1.jpg"
-                        alt="Sunset in the mountains"
-                    />
-                </a>
-                <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">{title}</div>
-                    <p class="text-gray-700 text-base text-left">
-                        {description}
-                    </p>
-                </div>
-                <div class="px-6 pb-2">
-                    {tags.map(({name, bgColorHex, fontColorHex}) => (
-                        <span style={`background-color: ${bgColorHex}; color: ${fontColorHex};`} class="inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
-                            {name}
-                        </span>
-                    ))}
-                </div>
-            </div>
-        ))
-    }
-</section>
+{
+    PROJECTS.length > 0 && (
+        <>
+            <h2>&#128640; Proyectos</h2>
+            <section class="flex flex-wrap items-start justify-center mt-16">
+                {PROJECTS.slice(0, 6).map(
+                    ({ id, title, description, url, tags }) => (
+                        <div class="max-w-sm rounded overflow-hidden shadow-lg m-4">
+                            <a href={url} target="_blank">
+                                <img
+                                    class="w-full"
+                                    src="/img/blog/blog-placeholder-1.jpg"
+                                    alt="Sunset in the mountains"
+                                />
+                            </a>
+                            <div class="px-6 py-4">
+                                <div class="font-bold text-xl mb-2">
+                                    {title}
+                                </div>
+                                <p class="text-gray-700 text-base text-left">
+                                    {description}
+                                </p>
+                            </div>
+                            <div class="px-6 pb-2">
+                                {tags.map(
+                                    ({ name, bgColorHex, fontColorHex }) => (
+                                        <span
+                                            style={`background-color: ${bgColorHex}; color: ${fontColorHex};`}
+                                            class="inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
+                                        >
+                                            {name}
+                                        </span>
+                                    ),
+                                )}
+                            </div>
+                        </div>
+                    ),
+                )}
+            </section>
+        </>
+    )
+}
+
+{
+    PROJECTS.length >= 6 && (
+        <div class="relative inline-flex group mt-16">
+            <div class="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#A0C4FF] via-[#FFA0C4] to-[#FFC4A0] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt" />
+            <a
+                href="projects"
+                title="Proyectos"
+                class="relative hover:text-current inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black transition-all duration-200 bg-gray-50 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+                role="button"
+            >
+                Proyectos
+            </a>
+        </div>
+    )
+}
