@@ -149,3 +149,4 @@ export const PROJECTS: Array<Project> = [{
         fontColorHex: '#000000'
     }]
 }];
+

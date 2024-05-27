@@ -1,24 +1,32 @@
 ---
-import Tool from "../components/Tool.astro";
 import { TOOLS } from "../consts";
 ---
 
-<h2 class="text-center text-4xl font-bold text-gray-800 sm:text-5xl dark:text-white">&#128295; Herramientas</h2>
+<h2
+    class="text-center text-4xl font-bold text-gray-800 sm:text-5xl dark:text-white"
+>
+    &#128295; Herramientas
+</h2>
 
 <div
     class="p-5 mt-16 grid gap-3 select-none xl:grid-cols-8 md:grid-cols-4 sm:grid-cols-3 bg-gray-100 rounded-xl"
 >
     {
         TOOLS.map(({ id, name }) => (
-            <Tool tool={name}>
+            <div class="rounded-xl flex justify-evenly bg-white gap-0 p-2 group relative">
                 <img
                     src={`/img/tools/${id}.svg`}
                     loading="lazy"
                     fetchpriority="low"
                     alt={`Logo de ${name}`}
-                    class=""
                 />
-            </Tool>
+                <div
+                    class="hidden group-hover:block absolute z-10 px-3 py-2 text-sm font-medium text-white transition-all duration-300 ease-in-out bg-gray-900 rounded-lg shadow-sm text-center whitespace-nowrap"
+                    style="transform: translateY(-200%); top: 80%; "
+                >
+                    {name}
+                </div>
+            </div>
         ))
     }
 </div>
