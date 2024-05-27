@@ -6,7 +6,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import Tools from "../sections/Tools.astro";
 import Greeting from "../sections/Greeting.astro";
 import News from "../sections/News.astro";
-
 ---
 
 <!doctype html>
@@ -17,13 +16,19 @@ import News from "../sections/News.astro";
 	<body>
 		<Header />
 		<main class="w-3/4">
-			<section class="py-16 md:py-28 w-full mx-auto lg:max-w-4xl md:max-w-2xl animate-bounce-fade-in animate-delay-300 animate-duration-slow">
+			<section
+				class="py-16 md:py-28 w-full mx-auto lg:max-w-4xl md:max-w-2xl animate-bounce-fade-in animate-delay-300 animate-duration-slow"
+			>
 				<Greeting />
 			</section>
-			<section class="text-center py-16 md:py-18 animate-fade-in-up animate-delay-300 animate-duration-slow">
+			<section
+				class="text-center py-16 md:py-18 animate-fade-in-up animate-delay-300 animate-duration-slow"
+			>
 				<Tools />
 			</section>
-			<section class="text-center py-16 md:py-18 animate-fade-in-up animate-delay-300 animate-duration-slow">
+			<section
+				class="text-center py-16 md:py-18 animate-fade-in-up animate-delay-300 animate-duration-slow"
+			>
 				<News />
 			</section>
 			<!-- <section class="text-center py-16 md:py-18 animate-fade-in-up animate-delay-300 animate-duration-slow">
