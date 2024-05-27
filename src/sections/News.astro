@@ -4,14 +4,16 @@ import { getCollection } from "astro:content";
 const posts = (await getCollection('blog')).sort(
 	(b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 ).slice(0,6);
+
+const lastPosts = posts.slice(0,6);
 ---
 
 {
-    posts.length > 0 && (
+    lastPosts.length > 0 && (
         <>
             <h2 class="text-4xl font-bold text-gray-800 sm:text-5xl dark:text-white">🗞️ Noticias</h2>
             <section class="flex flex-wrap items-start justify-center mt-16">
-                {posts.slice(0, 6).map(
+                {lastPosts.slice(0, 6).map(
                     ({ slug, data: {description, title, heroImage, tags} }) => (
                         <div class="max-w-sm rounded overflow-hidden shadow-lg m-4">
                             <a href={`blog/${slug}`}>
@@ -50,3 +52,18 @@ const posts = (await getCollection('blog')).sort(
         </>
     )
 }
+
+{
+    posts.length > 5 && (
+    <div class="relative inline-flex group mt-16">
+        <div class="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#A0C4FF] via-[#FFA0C4] to-[#FFC4A0] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt" />
+        <a
+            href="blog"
+            title="Blog"
+            class="relative hover:text-current inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black transition-all duration-200 bg-gray-50 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+            role="button"
+        >
+            Más noticias
+        </a>
+    </div>
+)}

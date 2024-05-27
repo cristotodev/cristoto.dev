@@ -40,6 +40,14 @@ export const BUSINESSES: Array<Businesses> = [{
         width: 164,
         height: 35,
     },
+}, {
+    id: "masorange",
+    name: "MasOrange",
+    url: "https://masorange.es/",
+    image: {
+        width: 164,
+        height: 35,
+    },
 }];
 
 
