@@ -1,12 +1,16 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+---
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página no encontrada</title>
-    <link href="/ruta/a/tu/css/tailwind.css" rel="stylesheet"> <!-- Asegúrate de reemplazar esto con la ruta correcta a tu archivo CSS de Tailwind -->
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 </head>
-<body class="flex items-center justify-center min-h-screen bg-gray-100">
+</head>
+<body>
     <section class=" dark:bg-gray-900 ">
         <div class="container flex items-center min-h-screen px-6 py-12 mx-auto">
             <div class="flex flex-col items-center max-w-sm mx-auto text-center">

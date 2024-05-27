@@ -134,6 +134,14 @@ hr {
 	}
 }
 
+.prose > h2 {
+	margin-top: 40px;
+}
+.prose > ul {
+	list-style: inside;
+	
+}
+
 .sr-only {
 	border: 0;
 	padding: 0;

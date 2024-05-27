@@ -1,53 +1,68 @@
 ---
 import { getCollection } from "astro:content";
 
-const posts = (await getCollection('blog')).sort(
-	(b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-).slice(0,6);
+const posts = (await getCollection("blog"))
+    .sort((b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
+    .slice(0, 6);
 
-const lastPosts = posts.slice(0,6);
+const lastPosts = posts.slice(0, 6);
 ---
 
 {
     lastPosts.length > 0 && (
         <>
-            <h2 class="text-4xl font-bold text-gray-800 sm:text-5xl dark:text-white">🗞️ Noticias</h2>
+            <h2 class="text-4xl font-bold text-gray-800 sm:text-5xl dark:text-white">
+                🗞️ Noticias
+            </h2>
             <section class="flex flex-wrap items-start justify-center mt-16">
-                {lastPosts.slice(0, 6).map(
-                    ({ slug, data: {description, title, heroImage, tags} }) => (
-                        <div class="max-w-sm rounded overflow-hidden shadow-lg m-4">
-                            <a href={`blog/${slug}`}>
-                                <img
-                                    class="w-full"
-                                    src={heroImage}
-                                    alt={title}
-                                />
-                            </a>
-                            <div class="px-6 py-4">
-                                <div class="font-bold text-xl mb-2">
-                                    {title}
-                                </div>
-                                <p class="text-gray-700 text-base text-left">
-                                    {description.length > 150 ? description.slice(0, 150)+'...' : description}
-                                </p>
-                            </div>
-                            {tags && tags.length > 0 && (
-                                <div class="px-6 pb-2">
-                                {tags.map(
-                                    ({ name, bgColorHex, fontColorHex }) => (
-                                        <span
-                                            style={`background-color: ${bgColorHex}; color: ${fontColorHex};`}
-                                            class="inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
-                                        >
-                                            {name}
-                                        </span>
-                                    ),
+                {lastPosts
+                    .slice(0, 6)
+                    .map(
+                        ({
+                            slug,
+                            data: { description, title, heroImage, tags },
+                        }) => (
+                            <div class="max-w-sm rounded overflow-hidden shadow-lg m-4 hover:shadow-2xl">
+                                <a href={`blog/${slug}`}>
+                                    <img
+                                        class="w-full"
+                                        src={heroImage}
+                                        alt={title}
+                                    />
+
+                                    <div class="px-6 py-4">
+                                        <div class="font-bold text-xl mb-2 text-gray-800">
+                                            {title}
+                                        </div>
+                                        <p class="text-gray-700 text-base text-left">
+                                            {description.length > 150
+                                                ? description.slice(0, 150) +
+                                                  "..."
+                                                : description}
+                                        </p>
+                                    </div>
+                                </a>
+                                {tags && tags.length > 0 && (
+                                    <div class="px-6 pb-2">
+                                        {tags.map(
+                                            ({
+                                                name,
+                                                bgColorHex,
+                                                fontColorHex,
+                                            }) => (
+                                                <span
+                                                    style={`background-color: ${bgColorHex}; color: ${fontColorHex};`}
+                                                    class="inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
+                                                >
+                                                    {name}
+                                                </span>
+                                            ),
+                                        )}
+                                    </div>
                                 )}
                             </div>
-                            )}
-                        </div>
-                    ),
-                )}
+                        ),
+                    )}
             </section>
         </>
     )
@@ -55,15 +70,16 @@ const lastPosts = posts.slice(0,6);
 
 {
     posts.length > 5 && (
-    <div class="relative inline-flex group mt-16">
-        <div class="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#A0C4FF] via-[#FFA0C4] to-[#FFC4A0] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt" />
-        <a
-            href="blog"
-            title="Blog"
-            class="relative hover:text-current inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black transition-all duration-200 bg-gray-50 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
-            role="button"
-        >
-            Más noticias
-        </a>
-    </div>
-)}
+        <div class="relative inline-flex group mt-16">
+            <div class="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#A0C4FF] via-[#FFA0C4] to-[#FFC4A0] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt" />
+            <a
+                href="blog"
+                title="Blog"
+                class="relative hover:text-current inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black transition-all duration-200 bg-gray-50 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+                role="button"
+            >
+                Más noticias
+            </a>
+        </div>
+    )
+}
