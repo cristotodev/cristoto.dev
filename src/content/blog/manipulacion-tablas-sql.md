@@ -79,8 +79,6 @@ La creación, inserción, modificación y eliminación de tablas son operaciones
 
 ## Más Ejemplos y Videos
 
-Si deseas aprender más sobre cómo trabajar con SQL y explorar ejemplos prácticos, te invito a visitar mi repositorio de GitHub. Allí encontrarás una colección de scripts, procedimientos almacenados y funciones que demuestran cómo aplicar los tipos de datos y comandos SQL en situaciones del mundo real.
-
-Además, te animo a seguir mis videos en YouTube, donde explico en detalle cómo utilizar estos tipos de datos y cómo diseñar y optimizar tus bases de datos. Cada video viene acompañado de ejemplos de código y explicaciones claras, diseñados para ayudarte a mejorar tus habilidades en SQL y la gestión de bases de datos.
+Te animo a seguir mis videos en YouTube, cada video viene acompañado de ejemplos de código y explicaciones claras, diseñados para ayudarte a mejorar tus habilidades en SQL y la gestión de bases de datos.
 
 Visita mi [repositorio de GitHub](https://github.com/cristotodev/Apuntes-SQL) y suscríbete a mi canal de [YouTube](https://www.youtube.com/@cristotodev) para comenzar tu viaje hacia la maestría en SQL y bases de datos hoy mismo.

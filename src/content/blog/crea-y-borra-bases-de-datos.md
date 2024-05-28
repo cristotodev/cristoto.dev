@@ -54,3 +54,9 @@ Este comando eliminará permanentemente la base de datos especificada junto con 
 ## Conclusión
 
 La creación y eliminación de bases de datos son aspectos cruciales de la gestión de bases de datos. Independientemente de si eliges trabajar a través de la línea de comandos o preferir una GUI como [DBeaver](https://dbeaver.io/), los principios básicos permanecen constantes. Familiarizarte con estos comandos y entender cómo aplicarlos en tu DBMS de elección te equipará con las habilidades necesarias para gestionar eficazmente tus bases de datos.
+
+## Más Ejemplos y Videos
+
+Te animo a seguir mis videos en YouTube, cada video viene acompañado de ejemplos de código y explicaciones claras, diseñados para ayudarte a mejorar tus habilidades en SQL y la gestión de bases de datos.
+
+Visita mi [repositorio de GitHub](https://github.com/cristotodev/Apuntes-SQL) y suscríbete a mi canal de [YouTube](https://www.youtube.com/@cristotodev) para comenzar tu viaje hacia la maestría en SQL y bases de datos hoy mismo.

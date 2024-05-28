@@ -43,3 +43,9 @@ Un sistema de gestión de datos relacional (RDBMS, por sus siglas en inglés) es
 SQL (Structured Query Language) es esencial para trabajar con bases de datos relacionales. Permite crear, modificar, consultar y gestionar bases de datos, y manipular y extraer información. Su simplicidad y versatilidad lo hacen fundamental para desarrolladores y profesionales de TI.
 
 En resumen, las bases de datos relacionales son cruciales para muchas aplicaciones modernas, ofreciendo una combinación de orden, integridad y flexibilidad. La elección del sistema de gestión dependerá de las necesidades específicas de tu proyecto.
+
+## Más Ejemplos y Videos
+
+Te animo a seguir mis videos en YouTube, cada video viene acompañado de ejemplos de código y explicaciones claras, diseñados para ayudarte a mejorar tus habilidades en SQL y la gestión de bases de datos.
+
+Visita mi [repositorio de GitHub](https://github.com/cristotodev/Apuntes-SQL) y suscríbete a mi canal de [YouTube](https://www.youtube.com/@cristotodev) para comenzar tu viaje hacia la maestría en SQL y bases de datos hoy mismo.
