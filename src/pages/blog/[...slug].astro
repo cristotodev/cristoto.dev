@@ -7,7 +7,7 @@ const allPosts = await getCollection('blog');
 const post = allPosts.find(p => p.slug === slug);
 
 if (!post) {
-  throw new Error(`Post not found: ${slug}`);
+  return Astro.redirect('/404');
 }
 
 const { Content } = await post.render();
