@@ -16,77 +16,47 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<style>
 			main {
 				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
 			}
 			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
 				box-shadow: var(--box-shadow);
 			}
 			.prose {
-				width: 720px;
 				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
 			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-				font-size: 42px;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-
-			
 		</style>
 	</head>
 
 	<body>
 		<Header />
-		<main>
+		<main class="w-3/4 max-w-max">
 			<article>
-				<div class="hero-image">
+				<div class="hero-image w-auto">
 					{
 						heroImage && (
 							<img
+								class="block rounded-lg mx-auto"
 								width={1020}
 								height={510}
 								src={heroImage}
-								alt=""
+								alt={title}
 							/>
 						)
 					}
 				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
+				<div class="prose w-[720px] sm:max-w-full mx-auto px-4 py-4 text-gray-800">
+					<div class="mb-4 py-4 text-center leading-tight">
+						<div class="date mb-2 text-gray-600">
 							<FormattedDate date={pubDate} />
 							{
 								updatedDate && (
-									<div class="last-updated-on">
+									<div class="italic">
 										Last updated on{" "}
 										<FormattedDate date={updatedDate} />
 									</div>
 								)
 							}
 						</div>
-						<h1>{title}</h1>
+						<h1 class="my-0 mb-6 text-[42px]">{title}</h1>
 						<hr />
 					</div>
 					<slot />
