@@ -41,13 +41,13 @@ DELETE FROM clientes WHERE nombre = 'Cristotodev';
 
 Este comando elimina solo la fila correspondiente a Juan Pérez, dejando intactos los demás registros.
 
-### Ventajas y Desventajas de DELETE
+### Ventajas de DELETE
 
-**Ventajas:**
 - Permite eliminar registros específicos basados en condiciones.
 - Mantiene registros históricos si se usa correctamente.
 
-**Desventajas:**
+### Desventajas de DELETE
+
 - Puede ser más lento que TRUNCATE, especialmente con grandes volúmenes de datos.
 - No puede ser revertido fácilmente sin respaldo.
 
@@ -64,13 +64,11 @@ TRUNCATE TABLE clientes;
 ```
 Este comando borra rápidamente todos los registros de la tabla `clientes`.
 
-### Ventajas y Desventajas de TRUNCATE
-
-**Ventajas:**
+### Ventajas de TRUNCATE
 - Mucho más rápido que DELETE para eliminar todos los registros.
 - No afecta las restricciones de integridad referencial.
 
-**Desventajas:**
+### Desventajas de TRUNCATE
 - No permite especificar condiciones para eliminar registros específicos.
 - No mantiene registros históricos.
 
