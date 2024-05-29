@@ -1,32 +1,26 @@
 ---
-import Github from "../icons/github.astro";
-import Instagram from "../icons/instagram.astro";
-import Linkedin from "../icons/linkedin.astro";
-import Thread from "../icons/thread.astro";
-import Tiktok from "../icons/tiktok.astro";
-import X from "../icons/x.astro";
-import Youtube from "../icons/youtube.astro";
 import SocialButton from "./SocialButton.astro";
+import { Icon } from 'astro-icon/components'
 ---
 
 <SocialButton link="https://www.instagram.com/cristoto.dev" message="Sígueme cristotodev en Instagram">
-    <Instagram />
+    <Icon name="instagram" width={32} height={32}/>
 </SocialButton>
 <SocialButton link="https://www.tiktok.com/@cristoto.dev" message="Sígueme cristotodev en TikTok">
-    <Tiktok />
+    <Icon name="tiktok" width={32} height={32}/>
 </SocialButton>
 <SocialButton link="https://www.threads.net/@cristoto.dev" message="Sígueme cristotodev en Threads">
-    <Thread />
+    <Icon name="thread" width={32} height={32}/>
 </SocialButton>
 <SocialButton link="https://twitter.com/cristotodev/" message="Sígueme cristotodev en X">
-    <X />
+    <Icon name="x" width={32} height={32}/>
 </SocialButton>
 <SocialButton link="https://es.linkedin.com/in/cristotodev" message="Sígueme cristotodev en Linkedin">
-    <Linkedin />
+    <Icon name="linkedin" width={32} height={32}/>
 </SocialButton>
 <SocialButton link="https://github.com/cristotodev" message="Ir a cristotodev GitHub repositorio">
-    <Github />
+    <Icon name="github" width={32} height={32}/>
 </SocialButton>
 <SocialButton link="https://www.youtube.com/@cristotodev" message="Sígueme cristotodev en Youtube">
-    <Youtube />
+    <Icon name="youtube" width={32} height={32}/>
 </SocialButton>

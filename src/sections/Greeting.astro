@@ -1,8 +1,6 @@
 ---
 import ButtonIcon from "../components/ButtonIcon.astro";
-import Email from "../icons/email.astro";
-import Github from "../icons/github.astro";
-import Linkedin from "../icons/linkedin.astro";
+import { Icon } from 'astro-icon/components'
 ---
 
 <div class="flex gap-4 mb-4">
@@ -27,13 +25,13 @@ import Linkedin from "../icons/linkedin.astro";
     </p>
     <nav class="flex flex-wrap gap-4 mt-8">
         <ButtonIcon text="Contáctame" url="mailto:cristotodev@outlook.com">
-            <Email />
+            <Icon name="email" width={24} height={24}/>
         </ButtonIcon>
         <ButtonIcon text="Linkedin" url="https://es.linkedin.com/in/cristotodev">
-            <Linkedin width={24} height={24}/>
+            <Icon name="linkedin" width={24} height={24}/>
         </ButtonIcon>
         <ButtonIcon text="GitHub" url="https://github.com/cristotodev">
-            <Github width={24} height={24}/>
+            <Icon name="github" width={24} height={24}/>
         </ButtonIcon>
     </nav>
 </div>
