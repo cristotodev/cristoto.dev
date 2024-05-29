@@ -9,41 +9,41 @@ export const SITE_TITLE = 'cristotodev';
 export const SITE_DESCRIPTION = 'Backend, JavaScript, TypeScript, Node';
 
 export const BUSINESSES: Array<Businesses> = [{
-    id: "dareplanet",
     name: "DarePlanet",
     url: "https://dareplanet.com/es/",
+    imageUrl: "https://res.cloudinary.com/cristotodev/image/upload/v1716970321/cristotodev/businesses/dareplanet_w23rul.webp",
     image: {
         width: 200,
         height: 35,
     },
 }, {
-    id: "masmovil",
     name: "MasMovil",
     url: "https://www.masmovil.es/",
+    imageUrl: "https://res.cloudinary.com/cristotodev/image/upload/v1716970322/cristotodev/businesses/masmovil_p1jm0v.webp",
     image: {
         width: 164,
         height: 35,
     },
 }, {
-    id: "devoteam",
     name: "Devoteam",
     url: "https://es.devoteam.com/",
+    imageUrl: "https://res.cloudinary.com/cristotodev/image/upload/v1716970321/cristotodev/businesses/devoteam_bt7uvc.webp",
     image: {
         width: 164,
         height: 35,
     },
 }, {
-    id: "atecresa",
     name: "Atecresa",
     url: "https://atecresa.com/",
+    imageUrl: "https://res.cloudinary.com/cristotodev/image/upload/v1716970320/cristotodev/businesses/atecresa_jrj6gw.webp",
     image: {
         width: 164,
         height: 35,
     },
 }, {
-    id: "masorange",
     name: "MasOrange",
     url: "https://masorange.es/",
+    imageUrl: "https://res.cloudinary.com/cristotodev/image/upload/v1716970323/cristotodev/businesses/masorange_e6oulo.webp",
     image: {
         width: 164,
         height: 35,
@@ -81,6 +81,9 @@ export const TOOLS: Array<Tool> = [{
 }, {
     id: "vue",
     name: "Vue",
+},{
+    id: "react",
+    name: "React",
 }, {
     id: "astro",
     name: "Astro",

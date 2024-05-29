@@ -2,7 +2,7 @@
 title: "Creación y Eliminación de Bases de Datos"
 description: "Exploramos cómo crear y eliminar bases de datos utilizando MySQL y cómo estos principios se aplican a otros gestores de bases de datos."
 pubDate: 1716826182000
-heroImage: '/img/blog/sql.webp'
+heroImage: 'https://res.cloudinary.com/cristotodev/image/upload/v1716969914/cristotodev/blog/sql_cfui24.webp'
 tags: [{
         name: "SQL",
         bgColorHex: "#D3D3D3",

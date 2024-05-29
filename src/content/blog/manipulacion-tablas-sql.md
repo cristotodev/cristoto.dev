@@ -2,7 +2,7 @@
 title: "Manipulación de Tablas usando SQL: Crear, Eliminar y Modificar"
 description: "Un viaje por la creación, eliminación y modificación de tablas en MySQL, con ejemplos prácticos y consejos para optimizar tu trabajo con bases de datos."
 pubDate: 1716828724000
-heroImage: '/img/blog/sql.webp'
+heroImage: 'https://res.cloudinary.com/cristotodev/image/upload/v1716969914/cristotodev/blog/sql_cfui24.webp'
 tags: [{
         name: "SQL",
         bgColorHex: "#D3D3D3",

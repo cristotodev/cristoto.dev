@@ -10,6 +10,7 @@ type ToolId =
     | "openshift"
     | "vue"
     | "astro"
+    | "react"
 
 type ToolName =
 	| "Typescript"
@@ -23,6 +24,7 @@ type ToolName =
     | "Openshift"
     | "Vue"
     | "Astro"
+    | "React"
 
 export interface Tool {
     id: ToolId

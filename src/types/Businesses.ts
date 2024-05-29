@@ -1,9 +1,3 @@
-type BusinessId =
-	| "atecresa"
-	| "dareplanet"
-	| "devoteam"
-	| "masmovil"
-	| "masorange"
 type BusinessName =
 	| "Atecresa"
 	| "DarePlanet"
@@ -12,9 +6,9 @@ type BusinessName =
 	| "MasOrange"
 
 export interface Businesses {
-	id: BusinessId
 	name: BusinessName
 	url: string
+	imageUrl: string
 	image: {
 		width: number
 		height: number

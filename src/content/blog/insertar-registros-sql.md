@@ -2,7 +2,7 @@
 title: "Insertando Registros usando SQL"
 description: "Descubre cómo insertar registros en MySQL y otros gestores de bases de datos con ejemplos prácticos usando SQL. Desde inserciones individuales hasta masivas, aprende a manipular tus datos de manera eficiente."
 pubDate: 1716903496000
-heroImage: '/img/blog/sql.webp'
+heroImage: 'https://res.cloudinary.com/cristotodev/image/upload/v1716969914/cristotodev/blog/sql_cfui24.webp'
 tags: [{
         name: "SQL",
         bgColorHex: "#D3D3D3",
