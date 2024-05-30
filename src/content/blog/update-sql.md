@@ -16,14 +16,12 @@ Cómo actualizar registros en una base de datos utilizando la sentencia `UPDATE`
 Primero, definamos nuestra tabla `clientes`:
 
 ``` sql
-CREATE TABLE nombre_de_tu_tabla ( 
-    id INT AUTO_INCREMENT PRIMARY KEY, 
-    columna1 VARCHAR(255), 
-    columna2 DATE, 
-    columna3 DECIMAL(10, 2), 
-    columna4 VARCHAR(255) NOT NULL, 
-    columna5 INT DEFAULT 0, 
-    columna6 TIMESTAMP NULL 
+CREATE TABLE clientes (
+    id int AUTO_INCREMENT PRIMARY KEY, 
+    nombre varchar(50) NOT NULL, 
+    email varchar(100) NOT NULL, 
+    fecha_nacimiento DATE NULL, 
+    sueldo DECIMAL(10,2) NULL
 );
 ```
 
@@ -48,7 +46,8 @@ Este comando cambia el sueldo del cliente con ID 5 a $5000, manteniendo intactos
 Supongamos que queremos aumentar el sueldo de todos los clientes mayores de 30 años en un 10%. Podríamos hacerlo así:
 
 ``` sql
-UPDATE clientes SET sueldo = sueldo * 1.10 WHERE fecha_nacimiento IS NOT NULL 
+UPDATE clientes SET sueldo = sueldo * 1.10 
+WHERE fecha_nacimiento IS NOT NULL 
 AND EXTRACT(YEAR FROM fecha_nacimiento) <= 1994;
 ```
 
@@ -59,7 +58,8 @@ Este comando busca a todos los clientes que tienen una fecha de nacimiento regis
 Ahora, veamos cómo podemos usar `UPDATE` junto con `JOIN` para actualizar registros en una tabla relacionada. Supongamos que tenemos una tabla `pedidos` que necesita ser actualizada con el nuevo sueldo de los clientes.
 
 ``` sql
-UPDATE pedidos INNER JOIN clientes ON pedidos.cliente_id = clientes.id 
+UPDATE pedidos INNER JOIN clientes 
+ON pedidos.cliente_id = clientes.id 
 SET pedidos.precio_total = pedidos.precio_total * 0.9 
 WHERE clientes.sueldo > 3000;
 ```
