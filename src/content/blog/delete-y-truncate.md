@@ -79,6 +79,10 @@ Este comando borra rápidamente todos los registros de la tabla `clientes`.
 
 Ambas operaciones son herramientas poderosas en el manejo de bases de datos, y elegir entre ellas depende del contexto específico de tu tarea.
 
+>Y mucho cuidado con el DELETE sin el WHERE
+
+![Lo que te puede pasar si no usas el where](https://cdn.memegenerator.es/descargar/31070175)
+
 ## Más Ejemplos y Videos
 
 Te animo a seguir mis videos en YouTube, cada video viene acompañado de ejemplos de código y explicaciones claras, diseñados para ayudarte a mejorar tus habilidades en SQL y la gestión de bases de datos.
