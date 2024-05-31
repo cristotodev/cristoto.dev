@@ -1,6 +1,6 @@
 ---
 title: "Obteniendo Registros con SELECT en SQL"
-description: "Aprende a consultar datos en SQL utilizando SELECT, con ejemplos prácticos."
+description: "Aprende a consultar datos en SQL utilizando SELECT y WHERE con ejemplos prácticos. Desde los filtros más básicos hasta algunos más complejos."
 pubDate: 1717061306000
 heroImage: 'https://res.cloudinary.com/cristotodev/image/upload/v1716969914/cristotodev/blog/sql_cfui24.webp'
 tags: [{
