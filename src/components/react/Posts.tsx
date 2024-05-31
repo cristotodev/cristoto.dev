@@ -38,11 +38,31 @@ export function Posts({ initialPosts }: Props) {
                         posts.map((post, index) => (
                             <li key={index} className="hover:shadow-2xl shadow-lg transition-shadow duration-300 ease-in-out rounded-xl">
                                 <a href={`/blog/${post.slug}/`}>
-                                    <img width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
+                                    <img className="w-full h-64 object-cover" src={post.data.heroImage} alt={post.data.title} />
                                     <h4 className="title m-0 text-black hover:text-black leading-none p-4">{post.data.title}</h4>
+                                    <p className="text-gray-700 text-base text-left pl-4">
+                                        {post.data.description.length > 150
+                                            ? post.data.description.slice(0, 150) + "..."
+                                            : post.data.description}
+                                    </p>
                                     <div className="date m-0 text-[#60739F]">
                                         <Time date={post.data.pubDate} />
                                     </div>
+                                    {post.data.tags && post.data.tags.length > 0 && (
+                                        <div className="px-6 pb-2">
+                                            {post.data.tags.map(
+                                                ({ name, bgColorHex, fontColorHex }: any, index: number) => (
+                                                    <span
+                                                        key={index}
+                                                        style={{ backgroundColor: bgColorHex, color: fontColorHex }}
+                                                        className="inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
+                                                    >
+                                                        {name}
+                                                    </span>
+                                                )
+                                            )}
+                                        </div>
+                                    )}
                                 </a>
                             </li>
                         ))
