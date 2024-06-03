@@ -3,6 +3,7 @@ title: '¿Qué es una Base de Datos Relacional?'
 description: 'Descubre el mundo de las bases de datos relacionales: desde su definición hasta ventajas y desventajas, y cuándo elegirlas es la mejor opción. Además, exploramos ejemplos populares como MySQL, PostgreSQL y SQLite. ¡Aprende rápido y con claridad!'
 pubDate: 1716818400000
 heroImage: 'https://res.cloudinary.com/cristotodev/image/upload/v1716969914/cristotodev/blog/sql_cfui24.webp'
+image: 'https://res.cloudinary.com/cristotodev/image/upload/v1716969914/cristotodev/blog/sql_cfui24.webp'
 tags: [{
         name: "SQL",
         bgColorHex: "#D3D3D3",
