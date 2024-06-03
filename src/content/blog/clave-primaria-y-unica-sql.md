@@ -123,6 +123,14 @@ En este ejemplo, la combinación de `empleado_id` y `fecha_inicio` es una clave 
 
 Las relaciones de clave foránea se suelen hacer sobre la clave primaria de otra tabla. Esto permite vincular datos entre tablas y mantener la integridad referencial de la base de datos.
 
+## Preguntas
+### ¿Una clave primaria puede ser NULL?
+No, una clave primaria no puede ser NULL. Esto se debe a que la clave primaria tiene la función de identificar de manera única cada fila en una tabla de una base de datos.
+
+Cuando creas una tabla y defines una columna como clave primaria, esa columna automáticamente se convierte en NOT NULL, aunque no lo especifiques explícitamente. Es decir, incluso si olvidas añadir la restricción NOT NULL, la base de datos se asegurará de que la columna de la clave primaria no contenga valores nulos.
+
+Esto es importante porque un valor nulo significa "desconocido" o "sin valor", y no puede haber algo desconocido en la columna que utilizamos para identificar de manera única cada registro. Por eso, las bases de datos relacionales siempre hacen que las claves primarias no permitan valores nulos para mantener la integridad y consistencia de los datos.
+
 ## Conclusión
 
 Entender las claves primarias y únicas es fundamental para diseñar y trabajar con bases de datos relacionales. Cada una tiene su propósito específico, y conocer cuándo usar cada una te ayudará a crear bases de datos más eficientes y organizadas.```
