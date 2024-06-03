@@ -35,12 +35,32 @@ CREATE TABLE usuarios (
 
 Aquí, `id` es la clave primaria porque garantiza que cada usuario tiene un identificador único.
 
+También podemos darle un nombre específico a la calve primaria (Constraint) con el siguiente comando una vez creada la tabla.
+
+``` sql
+ALTER TABLE usuarios 
+ADD CONSTRAINT usuarios_pk PRIMARY KEY (id);
+```
+Aquí, la clave primaria se crea sobre la columna `id` con el nombre `usuarios_pk`
+
 ### Ejemplo de eliminación Clave Primaria
 Para borrar una clave primaría dispones de `DROP PRIMARY KEY`.
 
 ``` sql
 ALTER TABLE empleados DROP PRIMARY KEY;
 ```
+
+### Clave Primaria Compuesta
+Una clave primaria compuesta es un conjunto de dos o más columnas que juntas identifican de manera única a cada registro en una tabla. Es especialmente útil cuando no hay una sola columna que pueda servir como identificador único.
+
+``` sql
+CREATE TABLE empleados ( 
+    id_empleado INT, 
+    departamento_id INT, 
+    PRIMARY KEY (id_empleado, departamento_id) 
+);
+```
+Aquí, la combinación de `id_empleado` y `departamento_id` constituye la clave primaria compuesta, asegurando la unicidad de cada empleado en su departamento.
 
 ## ¿Qué es una Clave Única?
 
@@ -64,12 +84,35 @@ CREATE TABLE productos (
 
 Aquí, `sku` es una clave única que garantiza que ningún producto tenga el mismo código de identificación de stock.
 
+Al igual que la clave primaria pordemos crear la clave única con un nombre específico.
+
+``` sql
+ALTER TABLE productos
+ADD CONSTRAINT productos_uq UNIQUE(sku);
+```
+Aquí, estamos haciendo lo mismo que arriba pero dandole el nombre `productos_uq` a la clave única.
+
 ### Ejemplo de eliminación Clave Única
 Para este hay que indicar que queremos borrar el índice que está creado sobre la columna que deseamos borrar con `DROP INDEX`.
 
 ``` sql
 ALTER TABLE productos DROP INDEX codigo_sku;
 ```
+
+### Clave Única Compuesta
+Similar a la clave primaria, una clave única compuesta utiliza un conjunto de columnas para garantizar la unicidad de los datos, permitiendo valores nulos en cualquiera de las columnas.
+
+``` sql
+CREATE TABLE proyectos ( 
+    proyecto_id INT, 
+    empleado_id INT, 
+    fecha_inicio DATE, 
+    PRIMARY KEY (proyecto_id), 
+    UNIQUE KEY (empleado_id, fecha_inicio) 
+);
+```
+
+En este ejemplo, la combinación de `empleado_id` y `fecha_inicio` es una clave única compuesta, asegurando que ningún empleado pueda iniciar más de un proyecto en la misma fecha.
 
 ## Cuando Deberías Usar Cada Una
 
