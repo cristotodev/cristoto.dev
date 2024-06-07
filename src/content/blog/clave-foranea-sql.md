@@ -9,9 +9,6 @@ tags: [{
         fontColorHex: '#000000'
     }]
 ---
-
-# Claves Foráneas (Foreign Keys) en SQL
-
 En SQL, las **claves foráneas** son fundamentales para establecer relaciones entre tablas. Una clave foránea es una columna (o combinación de columnas) que vincula datos de una tabla secundaria con una tabla principal o referenciada. Veamos los detalles:
 
 ## ¿Qué es una Clave Foránea?
