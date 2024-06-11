@@ -74,6 +74,8 @@ SELECT empleados.nombre, departamentos.nombre_departamento FROM empleados
 FULL JOIN departamentos ON empleados.id_departamento = departamentos.id;
 ```
 
+> No todos los gestores de Base de Datos soportan `FULL JOIN`. Algunos gestores de base de datos que lo soportan son: `PostgreSQL`, `SQL Server`, `Oracle`, `SQLite`, `IBM DB2` y `MariaDB`. Antes de usar cualquier JOIN recomiendo que visites su documentación para ver si lo soportan.
+
 ### CROSS JOIN
 
 El `CROSS JOIN` permite unir cada fila de una tabla con cada fila de otra tabla, creando así el [producto cartesiano](https://es.wikipedia.org/wiki/Producto_cartesiano) de ambas. No requiere una condición de coincidencia específica, simplemente combina todas las posibles combinaciones de filas.
