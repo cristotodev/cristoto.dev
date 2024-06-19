@@ -1,19 +1,11 @@
-type ProjectId =
-	| "speed"
-
-type ProjectTags = 
-	| "javascript"
-	| "typescript"
-	| "vue"
-	| "astro"
-
 export interface Project {
-    id: ProjectId
+    id: string
 	title: string
     description: string
 	url: string
+	img: string
 	tags: Array<{
-		name: ProjectTags,
+		name: string,
 		bgColorHex: string,
 		fontColorHex: string
 	}>

@@ -5,39 +5,44 @@ import { PROJECTS } from "../consts";
 {
     PROJECTS.length > 0 && (
         <>
-            <h2 class="text-4xl font-bold text-gray-800 sm:text-5xl">&#128640; Proyectos</h2>
+            <h2 class="text-4xl font-bold text-gray-800 sm:text-5xl">
+                &#128640; Proyectos
+            </h2>
             <section class="flex flex-wrap items-start justify-center mt-16">
                 {PROJECTS.slice(0, 6).map(
-                    ({ title, description, url, tags }) => (
-                        <div class="max-w-sm rounded overflow-hidden shadow-lg m-4">
-                            <a href={url} target="_blank">
-                                <img
-                                    class="w-full"
-                                    src="/img/blog/blog-placeholder-1.jpg"
-                                    alt="Sunset in the mountains"
-                                />
-                            </a>
-                            <div class="px-6 py-4">
-                                <div class="font-bold text-xl mb-2">
-                                    {title}
+                    ({ title, description, url, tags, img }) => (
+                        <a href={url} target="_blank">
+                            <div class="max-w-sm rounded overflow-hidden shadow-lg m-4">
+                                <img class="w-full" src={img} alt={title} />
+
+                                <div class="px-6 py-4">
+                                    <div class="font-bold text-xl mb-2 text-gray-800">
+                                        {title}
+                                    </div>
+                                    <p class="text-gray-700 text-base text-left">
+                                        {description.length > 150
+                                            ? description.slice(0, 150) + "..."
+                                            : description}
+                                    </p>
                                 </div>
-                                <p class="text-gray-700 text-base text-left">
-                                    {description.length > 150 ? description.slice(0, 150)+'...' : description}
-                                </p>
+                                <div class="px-6 pb-2">
+                                    {tags.map(
+                                        ({
+                                            name,
+                                            bgColorHex,
+                                            fontColorHex,
+                                        }) => (
+                                            <span
+                                                style={`background-color: ${bgColorHex}; color: ${fontColorHex};`}
+                                                class="inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
+                                            >
+                                                {name}
+                                            </span>
+                                        ),
+                                    )}
+                                </div>
                             </div>
-                            <div class="px-6 pb-2">
-                                {tags.map(
-                                    ({ name, bgColorHex, fontColorHex }) => (
-                                        <span
-                                            style={`background-color: ${bgColorHex}; color: ${fontColorHex};`}
-                                            class="inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
-                                        >
-                                            {name}
-                                        </span>
-                                    ),
-                                )}
-                            </div>
-                        </div>
+                        </a>
                     ),
                 )}
             </section>

@@ -81,7 +81,7 @@ export const TOOLS: Array<Tool> = [{
 }, {
     id: "vue",
     name: "Vue",
-},{
+}, {
     id: "react",
     name: "React",
 }, {
@@ -90,73 +90,26 @@ export const TOOLS: Array<Tool> = [{
 }];
 
 export const PROJECTS: Array<Project> = [{
-    id: "speed",
-    description: `Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.`,
-    title: "Prueba titulo",
-    url: "https://google.es",
+    id: "document-analyzer",
+    description: `Document Analyzer es una herramienta que permite subir documentos y extraer información relevante mediante el uso de Ollama en local. Diseñado para simplificar el análisis de documentos mediante conversaciones inteligentes.`,
+    title: "Document Analyzer",
+    url: "https://github.com/cristotodev/Document-Analyzer",
+    img: "https://res.cloudinary.com/cristotodev/image/upload/v1718794351/cristotodev/blog/document-analyzer_yomasg.webp",
     tags: [{
-        name: "javascript",
-        bgColorHex: "#FFFF00",
-        fontColorHex: '#000000'
+        name: "typescript",
+        bgColorHex: "#46e3f5",
+        fontColorHex: '#ffffff'
     }, {
         name: "astro",
-        bgColorHex: "#50d71e",
-        fontColorHex: '#000000'
-    }]
-}, {
-    id: "speed",
-    description: `Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.`,
-    title: "Prueba titulo",
-    url: "https://google.es",
-    tags: [{
-        name: "javascript",
-        bgColorHex: "#F0DB4F",
-        fontColorHex: '#000000'
+        bgColorHex: "#8f0595",
+        fontColorHex: '#ffffff'
     }, {
-        name: "astro",
-        bgColorHex: "#002D62",
-        fontColorHex: '#FFFFFF'
-    }]
-}, {
-    id: "speed",
-    description: `Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto`,
-    title: "Prueba titulo",
-    url: "https://google.es",
-    tags: [{
-        name: "javascript",
-        bgColorHex: "#F0DB4F",
+        name: "ollama",
+        bgColorHex: "#D3D3D3",
         fontColorHex: '#000000'
-    }, {
-        name: "astro",
-        bgColorHex: "#002D62",
-        fontColorHex: '#000000'
-    }]
-}, {
-    id: "speed",
-    description: `Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto`,
-    title: "Prueba titulo",
-    url: "https://google.es",
-    tags: [{
-        name: "javascript",
-        bgColorHex: "#F0DB4F",
-        fontColorHex: '#000000'
-    }, {
-        name: "astro",
-        bgColorHex: "#002D62",
-        fontColorHex: '#000000'
-    }]
-}, {
-    id: "speed",
-    description: `Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto`,
-    title: "Prueba titulo",
-    url: "https://google.es",
-    tags: [{
-        name: "javascript",
-        bgColorHex: "#F0DB4F",
-        fontColorHex: '#000000'
-    }, {
-        name: "astro",
-        bgColorHex: "#002D62",
-        fontColorHex: '#000000'
+    },{
+        name: "react",
+        bgColorHex: "#173db5",
+        fontColorHex: '#ffffff'
     }]
 }];
