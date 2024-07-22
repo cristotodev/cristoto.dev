@@ -18,7 +18,7 @@ tags: [{
     }]
 ---
 
-Estoy emocionado de presentar Dolos, mi primera aplicación de escritorio para GNOME. Dolos es una aplicación revolucionaria que busca simplificar la generación de datos sintéticos. Basada en tecnologías modernas como GTK4, Adwaita 1.5 y el lenguaje de diseño Blueprint, Dolos ofrece una interfaz intuitiva y poderosa para generar datos como correos electrónicos, nombres, números, entre otros. Estos datos pueden ser exportados en varios formatos, incluyendo JSON, CSV, y XML, lo que facilita su integración en diversos flujos de trabajo.
+Estoy emocionado de presentar [Dolos](https://github.com/cristotodev/Dolos), mi primera aplicación de escritorio para [GNOME](https://developer.gnome.org/documentation/index.html). Dolos es una aplicación revolucionaria que busca simplificar la generación de datos sintéticos. Basada en tecnologías modernas como GTK4, Adwaita 1.5 y el lenguaje de diseño Blueprint, Dolos ofrece una interfaz intuitiva y poderosa para generar datos como correos electrónicos, nombres, números, entre otros. Estos datos pueden ser exportados en varios formatos, incluyendo JSON, CSV, y XML, lo que facilita su integración en diversos flujos de trabajo.
 
 ## Filosofía y Licencia de Dolos
 
@@ -34,7 +34,7 @@ Elegí Python como el lenguaje de programación principal para Dolos por dos raz
 
 ## Uso de Meson en Dolos
 
-Dolos utiliza Meson como su sistema de compilación. Meson es una herramienta de compilación moderna que facilita el proceso de configuración, construcción y prueba de aplicaciones. GNOME recomienda el uso de Meson por varias razones:
+Dolos utiliza [Meson](https://mesonbuild.com/index.html) como su sistema de compilación. Meson es una herramienta de compilación moderna que facilita el proceso de configuración, construcción y prueba de aplicaciones. GNOME recomienda el uso de Meson por varias razones:
 
 - **Simplicidad y Rapidez:** Meson está diseñado para ser rápido y fácil de usar, con una sintaxis clara y concisa que reduce la complejidad en el proceso de compilación.
 - **Compatibilidad Multiplataforma:** Meson soporta múltiples plataformas y lenguajes de programación, lo que lo convierte en una herramienta versátil para proyectos diversos.
