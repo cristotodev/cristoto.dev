@@ -4,6 +4,9 @@ description: "Primera parte de una serie donde desplegamos servicios usando Podm
 publishDate: "26 Apr 2025"
 updatedDate: "26 Apr 2025"
 tags: ["podman", "traefik", "server"]
+coverImage:
+  src: "https://res.cloudinary.com/cristotodev/image/upload/v1745659667/cristotodev/blog/podman-traefik_saoofc.webp"
+  alt: "Podman y traefik"
 ---
 
 ## 📅 Introducción
@@ -27,7 +30,6 @@ Cada entrada estará dividida en partes, donde iré profundizando en la configur
     
 
 ----------
-<br/>
 
 # 🚿 Qué vamos a hacer
 
@@ -38,13 +40,12 @@ Cada entrada estará dividida en partes, donde iré profundizando en la configur
 - Solucionar problemas típicos de la primera configuración.
   
 ----------
-<br/>
 
 # 🔀 Procedimiento
 
 ## 1. Crear la red en Podman
 
-```
+```bash
 podman network create web
 ```
 
@@ -52,12 +53,11 @@ Creamos una red llamada `web` que usarán todos los contenedores.
 
 ## 2. Preparar carpetas de configuración
 
-```
+```bash
 mkdir -p ~/traefik/{config,acme}
 ```
 
 Estructura de carpetas:
-
 ```
 ~/traefik/
 ├── config/
@@ -68,7 +68,7 @@ Estructura de carpetas:
 
 Dentro de `~/traefik/config/traefik.yml`:
 
-```
+```yaml
 entryPoints:
   web:
     address: ":80"
@@ -100,7 +100,7 @@ certificatesResolvers:
 
 Dentro de `~/traefik/docker-compose.yml`:
 
-```
+```yaml
 version: '3.8'
 
 services:
@@ -128,12 +128,11 @@ networks:
 
 Desde el directorio `~/traefik/`:
 
-```
+```bash
 podman-compose up -d
 ```
 
 ----------
-<br/>
 
 # 🚧 Problemas encontrados y soluciones
 
@@ -174,14 +173,13 @@ Asegurar que el dashboard esté habilitado con `insecure: true` mientras desarro
 
 **Solución:** Abrir el puerto 8080 en el firewall:
 
-```
+```bash
 sudo ufw allow 8080/tcp
 sudo ufw reload
 ```
 > En mi caso no tengo el firewall todavía configurado. Pero si estás usando alguno como ufw debes tenerlo en cuenta.
 
 ----------
-<br/>
 
 # 📍 Estado actual del proyecto
 
@@ -191,8 +189,6 @@ sudo ufw reload
     
 
 ----------
-<br/>
-
 # 📊 Siguiente parte
 
 En la próxima entrada veremos cómo:
