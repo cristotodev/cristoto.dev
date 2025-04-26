@@ -6,7 +6,7 @@ function removeDupsAndLowerCase(array: string[]) {
 }
 
 const baseSchema = z.object({
-	title: z.string().max(60),
+	title: z.string().max(120),
 });
 
 const post = defineCollection({
@@ -33,7 +33,7 @@ const post = defineCollection({
 				.transform((str) => (str ? new Date(str) : undefined)),
 			// Series
 			seriesId: z.string().optional(), // Поле для связи с серией
-      		orderInSeries: z.number().optional(), // Опционально: для сортировки в серии
+			orderInSeries: z.number().optional(), // Опционально: для сортировки в серии
 			// End
 		}),
 });
