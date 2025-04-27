@@ -8,7 +8,7 @@ coverImage:
   src: "https://res.cloudinary.com/cristotodev/image/upload/v1745659667/cristotodev/blog/podman-traefik_saoofc.webp"
   alt: "Podman y traefik"
 seriesId: "podman-traefik"
-orderInSeries: 99
+orderInSeries: 1
 ---
 
 

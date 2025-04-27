@@ -9,7 +9,7 @@ coverImage:
   src: "https://res.cloudinary.com/cristotodev/image/upload/v1745659667/cristotodev/blog/podman-traefik_saoofc.webp"
   alt: "Podman y traefik"
 seriesId: "podman-traefik"
-orderInSeries: 100
+orderInSeries: 2
 ---
 
 En esta primera parte vamos a preparar nuestro entorno sobre **Debian** y a desplegar **Traefik** usando **Podman Compose**. Nuestro objetivo es levantar el dashboard de Traefik de manera insegura para asegurarnos que todo funciona correctamente.
