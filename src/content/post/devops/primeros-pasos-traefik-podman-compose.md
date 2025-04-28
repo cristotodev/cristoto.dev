@@ -1,10 +1,8 @@
 ---
 title: "Primeros pasos: Montando Traefik como Reverse Proxy con Podman Compose"
 description: "Primeros pasos de nuestra infraestructura moderna: desplegamos Traefik como proxy inverso utilizando Podman Compose en Debian."
-publishDate: "27 Apr 2025"
-updatedDate: "27 Apr 2025"
+publishDate: "28 Apr 2025"
 tags: ["podman", "traefik", "contenedores", "devops", "infraestructura", "proxy"]
-draft: true
 coverImage:
   src: "https://res.cloudinary.com/cristotodev/image/upload/v1745659667/cristotodev/blog/podman-traefik_saoofc.webp"
   alt: "Podman y traefik"
