@@ -1,10 +1,8 @@
 ---
 title: "Protegiendo el Dashboard y Traefik con Autenticación Básica"
 description: "Segunda parte de nuestra serie: implementamos autenticación básica para proteger el acceso al dashboard de Traefik en nuestro entorno rootless."
-publishDate: "28 Apr 2025"
-updatedDate: "28 Apr 2025"
+publishDate: "15 May 2025"
 tags: ["podman", "traefik", "contenedores", "devops", "infraestructura", "proxy", "seguridad"]
-draft: true
 coverImage:
   src: "https://res.cloudinary.com/cristotodev/image/upload/v1745659667/cristotodev/blog/podman-traefik_saoofc.webp"
   alt: "Podman y traefik"
