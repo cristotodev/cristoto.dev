@@ -40,4 +40,8 @@ export const menuLinks: { path: string; title: string }[] = [
 		path: "/books/",
 		title: "Libros",
 	},
+	{
+		path: "/coach/",
+		title: "Formación 1:1",
+	},
 ];

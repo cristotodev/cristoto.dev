@@ -1,0 +1,184 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+
+const meta = {
+    description:
+        "Mentorías técnicas 1 a 1 para empresas, desarrolladores y estudiantes. Aprende sobre microservicios, SQL, DevOps, testing y productividad con formación personalizada online.",
+    title: "Coach",
+};
+---
+
+<PageLayout meta={meta}>
+    <section class="relative max-w-3xl mx-auto px-4 overflow-hidden">
+        <div class="absolute inset-0 opacity-5 pointer-events-none">
+            <img
+                src="/bg-pattern.svg"
+                alt="Decoración"
+                class="w-full h-full object-cover"
+            />
+        </div>
+
+        <h1 class="title">Formación 1 a 1</h1>
+        <p class="mt-6 text-lg text-muted-foreground">
+            Mentorías técnicas personalizadas para resolver tus retos reales en
+            desarrollo de software.
+        </p>
+
+        <div class="mt-6 text-sm text-muted-foreground italic">
+            +6 años trabajando con equipos reales, tomando decisiones técnicas
+            complejas y formando a desarrolladores desde cero hasta nivel
+            senior.
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+                class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+            >
+                <h3 class="text-xl font-semibold mb-2">🏢 Empresas</h3>
+                <p class="text-muted-foreground text-sm">
+                    Apoyo técnico puntual o continuo para tomar mejores
+                    decisiones y optimizar procesos.
+                </p>
+            </div>
+            <div
+                class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+            >
+                <h3 class="text-xl font-semibold mb-2">👨‍💻 Profesionales</h3>
+                <p class="text-muted-foreground text-sm">
+                    Aprende de forma personalizada sobre arquitectura, testing,
+                    infraestructura, productividad y más.
+                </p>
+            </div>
+            <div
+                class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+            >
+                <h3 class="text-xl font-semibold mb-2">🎓 Estudiantes</h3>
+                <p class="text-muted-foreground text-sm">
+                    Te ayudo a conectar teoría con práctica real. Aprende a
+                    trabajar como un pro desde el inicio.
+                </p>
+            </div>
+        </div>
+
+        <hr class="my-16 border-t border-accent-one/20" />
+
+        <div class="text-left space-y-8 max-w-2xl mx-auto">
+            <div>
+                <h2 class="text-2xl font-bold mb-2 title">¿Cómo funciona?</h2>
+                <ul class="list-disc list-inside text-muted-foreground">
+                    <li>Me contactas con tu necesidad o problema.</li>
+                    <li>Agendamos una sesión 1 a 1 (60–90 min, online).</li>
+                    <li>Trabajo contigo para darte soluciones prácticas.</li>
+                    <li>
+                        Si necesitas, podemos continuar con más sesiones o
+                        seguimiento.
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-bold mb-2 title">Temas frecuentes</h2>
+                <ul class="list-disc list-inside text-muted-foreground">
+                    <li>Docker, Podman, Traefik</li>
+                    <li>
+                        Microservicios, monolitos modulares, arquitectura limpia
+                    </li>
+                    <li>SQL avanzado, modelado y optimización de consultas</li>
+                    <li>Productividad técnica, flujos de trabajo eficientes</li>
+                    <li>
+                        Testing automatizado, buenas prácticas y documentación
+                    </li>
+                    <li>
+                        Depuración, logging y observabilidad en proyectos reales
+                    </li>
+                </ul>
+                <p class="mt-4 text-muted-foreground">
+                    ¿No ves aquí lo que estás buscando? Escríbeme y te diré si
+                    puedo ayudarte. Estoy abierto a adaptar las sesiones a tus
+                    necesidades reales.
+                </p>
+            </div>
+
+            <hr class="my-16 border-t border-accent-one/20" />
+
+            <div>
+                <h2 class="text-2xl font-bold mb-2 title">
+                    Empresas con las que he colaborado
+                </h2>
+                <p class="text-muted-foreground mb-4">
+                    Estas son algunas empresas y organizaciones a las que he
+                    ayudado con formación técnica, auditoría de código o soporte
+                    en arquitectura:
+                </p>
+                <ul
+                    class="grid grid-cols-2 md:grid-cols-3 gap-6 items-center justify-center mt-10"
+                >
+                    <li>
+                        <a
+                            href="https://masorange.es/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <img
+                                src="/logos/masorange.png"
+                                alt="MasOrange"
+                                class="h-10 mx-auto grayscale hover:grayscale-0 transition duration-300"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://www.devoteam.com/es/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <img
+                                src="/logos/devoteam.png"
+                                alt="Devoteam"
+                                class="h-10 mx-auto grayscale hover:grayscale-0 transition duration-300"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://atecresa.com"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <img
+                                src="/logos/atecresa.png"
+                                alt="Atecresa"
+                                class="h-10 mx-auto grayscale hover:grayscale-0 transition duration-300"
+                            />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center">
+            <a
+                href="https://wa.me/34638743887?text=Estoy%20interesado%20en%20una%20mentoría%201%20a%201%20sobre%20..."
+                class="inline-flex items-center gap-2 text-bgColor font-semibold text-lg py-3 px-6 rounded-xl bg-gradient-to-r from-accent-one to-accent-two hover:scale-105 hover:shadow-xl transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        d="M12.04 2C6.56 2 2 6.2 2 11.2c0 2.3.98 4.39 2.61 5.95l-1.1 4.01 4.19-1.1A10.65 10.65 0 0 0 12.04 20c5.48 0 9.96-4.2 9.96-9.2S17.52 2 12.04 2Zm0 16.6c-1.66 0-3.19-.48-4.47-1.3l-.31-.2-2.49.65.66-2.43-.21-.31A7.04 7.04 0 0 1 4.8 11.2c0-3.96 3.35-7.2 7.24-7.2 3.98 0 7.22 3.24 7.22 7.2 0 3.96-3.24 7.2-7.22 7.2Zm3.38-5.3c-.19-.1-1.12-.55-1.29-.61-.17-.07-.29-.1-.41.1-.12.2-.47.61-.57.73-.1.12-.21.13-.39.03-.18-.1-.75-.27-1.42-.86-.53-.48-.89-1.07-1-1.25-.1-.17-.01-.26.09-.35.1-.1.22-.23.32-.35.11-.12.14-.2.22-.33.07-.13.04-.25-.02-.35-.06-.1-.41-.99-.57-1.35-.15-.36-.3-.31-.42-.32h-.36c-.13 0-.34.05-.51.25-.18.2-.66.64-.66 1.56 0 .92.68 1.81.77 1.93.1.12 1.32 2.01 3.2 2.82.45.2.8.32 1.08.41.45.14.86.12 1.19.07.36-.05 1.12-.46 1.28-.9.16-.44.16-.82.11-.9-.06-.08-.17-.13-.36-.23Z"
+                    ></path>
+                </svg>
+                Quiero una sesión
+            </a>
+            <p class="mt-4 text-muted-foreground text-sm italic">
+                Estoy aquí para ayudarte a desbloquear tu potencial como
+                desarrollador.
+            </p>
+        </div>
+    </section>
+</PageLayout>
