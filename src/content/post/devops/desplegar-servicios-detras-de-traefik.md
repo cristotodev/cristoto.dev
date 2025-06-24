@@ -8,7 +8,7 @@ coverImage:
   alt: "Podman y traefik"
 seriesId: "podman-traefik"
 orderInSeries: 5
-draft: true
+draft: false
 ---
 
 En esta parte de nuestra serie vamos a aprender a desplegar múltiples servicios detrás de **Traefik** usando **Podman Compose**. Esto nos permitirá crear aplicaciones de prueba y exponerlas usando rutas personalizadas con diferentes middlewares.

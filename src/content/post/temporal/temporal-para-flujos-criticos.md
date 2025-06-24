@@ -9,7 +9,7 @@ coverImage:
   alt: "Temporal"
 seriesId: "temporal"
 orderInSeries: 1
-draft: true
+draft: false
 ---
 Cuando desarrollamos aplicaciones distribuidas, nos encontramos con varios desafíos, como manejar la resiliencia, asegurar la consistencia de datos, y gestionar estados de larga duración. Aquí es donde entra en juego **Temporal**, una plataforma open source para la orquestación de flujos de trabajo (workflows) que facilita el manejo de estos problemas de forma eficiente y escalable.
 

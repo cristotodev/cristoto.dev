@@ -9,7 +9,7 @@ coverImage:
   alt: "Temporal"
 seriesId: "temporal"
 orderInSeries: 2
-draft: true
+draft: false
 ---
 
 

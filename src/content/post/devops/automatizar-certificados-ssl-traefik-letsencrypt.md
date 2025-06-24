@@ -8,7 +8,7 @@ coverImage:
   alt: "Podman y traefik"
 seriesId: "podman-traefik"
 orderInSeries: 4
-draft: true
+draft: false
 ---
 
 
