@@ -1,5 +1,6 @@
 ---
 import PageLayout from "@/layouts/Base.astro";
+import { PHONE_NUMBER } from "@/site.config";
 
 const meta = {
     description:
@@ -179,7 +180,7 @@ const meta = {
 
         <div class="mt-16 text-center">
             <a
-                href="https://wa.me/34638743887?text=Estoy%20interesado%20en%20una%20mentoría%201%20a%201%20sobre%20..."
+                href={`https://wa.me/${PHONE_NUMBER}?text=Estoy%20interesado%20en%20una%20mentoría%201%20a%201%20sobre%20...`}
                 class="inline-flex items-center gap-2 text-bgColor font-semibold text-lg py-3 px-6 rounded-xl bg-gradient-to-r from-accent-one to-accent-two hover:scale-105 hover:shadow-xl transition-all duration-300"
                 target="_blank"
                 rel="noopener noreferrer"

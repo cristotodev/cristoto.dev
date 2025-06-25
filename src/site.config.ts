@@ -30,7 +30,7 @@ export const menuLinks: { path: string; title: string }[] = [
 	},
 	{
 		path: "/about/",
-		title: "Sobre mí",
+		title: "Cómo Puedo Ayudarte",
 	},
 	{
 		path: "/posts/",
@@ -45,3 +45,5 @@ export const menuLinks: { path: string; title: string }[] = [
 		title: "Formación 1:1",
 	},
 ];
+
+export const PHONE_NUMBER = "638743887";
