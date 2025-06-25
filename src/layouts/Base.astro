@@ -112,5 +112,79 @@ const {
 				</div>
 			</div>
 		</div>
+
+		<!-- Banner de cookies -->
+		<div
+			id="cookie-banner"
+			class="fixed z-50 bg-bgColor dark:bg-gray-900 text-textColor dark:text-white p-4 md:p-5 rounded-xl shadow-xl w-[95vw] max-w-xs md:max-w-sm flex flex-col gap-3 items-start border border-accent-one/30
+		  left-1/2 -translate-x-1/2 bottom-4 md:bottom-6 md:right-6 md:left-auto md:translate-x-0"
+			style="display:none; overflow-wrap:break-word;"
+		>
+			<span class="text-base font-medium"
+				>Este sitio utiliza cookies para analizar el tráfico (Google
+				Analytics). ¿Aceptas el uso de cookies?</span
+			>
+			<div class="flex gap-2 self-end w-full justify-end">
+				<button
+					id="accept-cookies"
+					class="px-4 py-1 rounded-lg font-semibold bg-gradient-to-r from-accent-one to-accent-two text-bgColor font-semibold shadow hover:brightness-110 transition-all"
+					>Aceptar</button
+				>
+				<button
+					id="reject-cookies"
+					class="px-4 py-1 rounded-lg font-semibold bg-gray-300 dark:bg-gray-700 text-textColor dark:text-white shadow hover:brightness-110 transition-all"
+					>Rechazar</button
+				>
+			</div>
+		</div>
+		<!-- Fin banner de cookies -->
+
+		<!-- Script de consentimiento de cookies y carga condicional de Analytics -->
+		<script is:inline>
+			function loadAnalytics() {
+				const script1 = document.createElement("script");
+				script1.async = true;
+				script1.src =
+					"https://www.googletagmanager.com/gtag/js?id=G-ZB1ZW8855Q";
+				document.head.appendChild(script1);
+
+				const script2 = document.createElement("script");
+				script2.innerHTML = `
+		      window.dataLayer = window.dataLayer || [];
+		      function gtag(){window.dataLayer.push(arguments);}
+		      gtag('js', new Date());
+		      gtag('config', 'G-ZB1ZW8855Q');
+		    `;
+				document.head.appendChild(script2);
+			}
+
+			function showCookieBanner() {
+				document.getElementById("cookie-banner").style.display = "flex";
+			}
+
+			function hideCookieBanner() {
+				document.getElementById("cookie-banner").style.display = "none";
+			}
+
+			document.addEventListener("DOMContentLoaded", () => {
+				const consent = localStorage.getItem("cookie_consent");
+				if (consent === "accepted") {
+					loadAnalytics();
+				} else if (consent === null) {
+					showCookieBanner();
+				}
+
+				document.getElementById("accept-cookies").onclick = () => {
+					localStorage.setItem("cookie_consent", "accepted");
+					loadAnalytics();
+					hideCookieBanner();
+				};
+				document.getElementById("reject-cookies").onclick = () => {
+					localStorage.setItem("cookie_consent", "rejected");
+					hideCookieBanner();
+				};
+			});
+		</script>
+		<!-- Fin script cookies -->
 	</body>
 </html>
