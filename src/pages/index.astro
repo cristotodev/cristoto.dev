@@ -44,53 +44,132 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 	<section
 		class="max-w-xl mx-auto relative flex items-center justify-center h-screen -mt-24"
 	>
-		<div class="w-full text-center">
-			<span
-				class="title text-3xl bg-gradient-to-r from-accent-two/85 via-accent-one/85 to-accent-two/85 dark:from-accent-two dark:via-accent-one dark:to-accent-two bg-clip-text text-transparent"
+		<div class="w-full text-left">
+			<h1
+				class="title text-center text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-accent-two/85 via-accent-one/85 to-accent-two/85 dark:from-accent-two dark:via-accent-one dark:to-accent-two bg-clip-text text-transparent leading-tight"
 			>
-				Hey, soy cristotodev!
-			</span>
-			<p class="mt-4 mb-4 text-lg font-medium">
-				+6 años de experiencia. Desarrollador de Software, Formador y
-				Creador de Contenido sobre Programación de Tenerife, España 🇪🇸.
+				Impulsa tu Visión Digital y Carrera Tech
+			</h1>
+			<p
+				class="mt-4 mb-6 text-lg md:text-xl font-medium text-gray-700 dark:text-gray-300"
+			>
+				Soy <strong>Cristo Manuel Estévez</strong>, un desarrollador de
+				software con más de 6 años de experiencia, formador y creador de
+				contenido desde Tenerife, España 🇪🇸. Te ayudo a <strong
+					>dar vida a tus proyectos</strong
+				> y a <strong>acelerar tu crecimiento profesional</strong> en el
+				mundo tech.
 			</p>
-			<div class="flex justify-center mb-4">
-				<SocialList />
-			</div>
-			<div class="flex justify-center space-x-4 mt-4">
-				<a
-					href="/posts/"
-					class="relative flex items-center justify-center h-8 px-4 rounded-lg shadow-lg hover:brightness-110 transition-all bg-gradient-to-r from-accent-one to-accent-two"
-				>
-					<span class="text-bgColor font-semibold">
-						¡Descubre algo nuevo!
-					</span>
-				</a>
-			</div>
-			<div class="flex justify-center flex-col items-center mt-4">
+			<div class="flex justify-center flex-col items-center mb-4">
 				<a
 					href="/services"
-					class="inline-flex items-center justify-center h-10 px-4 md:px-6 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-all bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-600 dark:from-indigo-800 dark:via-indigo-600 dark:to-purple-700 border border-white/70 dark:border-none"
+					class="inline-flex items-center justify-center h-12 px-6 md:px-8 rounded-lg shadow-xl hover:scale-105 hover:brightness-110 transition-all bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-600 dark:from-indigo-800 dark:via-indigo-600 dark:to-purple-700 border border-white/70 dark:border-none text-lg"
 				>
 					<span
-						class="text-white font-bold text-sm md:text-base whitespace-normal text-center"
+						class="text-white font-bold whitespace-normal text-center"
 					>
-						🚀¡Impulsa tu Proyecto o Carrera!
+						🚀 Descubre mis Servicios
 					</span>
 				</a>
 				<p
-					class="mt-2 text-sm text-muted-foreground text-center max-w-xs"
+					class="mt-2 text-sm text-muted-foreground text-left max-w-xs"
 				>
-					Hablemos de tus ideas: desde formación y desarrollo web
-					hasta integración de IA.
+					Formación, Desarrollo Web y Apps, Integración de IA.
 				</p>
 			</div>
+			<div class="flex justify-center mt-4">
+				<a
+					href="/posts/"
+					class="inline-flex items-center justify-center h-10 px-4 rounded-lg hover:brightness-110 transition-all border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200"
+				>
+					<span class="font-semibold text-sm"> Explora mi Blog </span>
+				</a>
+			</div>
+			<div class="flex justify-center mt-4">
+				<SocialList />
+			</div>
+		</div>
+	</section>
+
+	<section class="max-w-4xl mx-auto py-16">
+		<h2 class="title text-2xl sm:text-3xl font-bold mb-8 text-accent-two">
+			Mis Servicios Clave
+		</h2>
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+			<div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md">
+				<h3 class="font-semibold text-lg mb-2 text-primary-500">
+					📈 Formación & Mentoría
+				</h3>
+				<p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+					Impulsa tu carrera con mentorías personalizadas en
+					programación, arquitectura de software y IA.
+				</p>
+				<a
+					href="/services#formacion"
+					class="text-accent-one hover:underline text-sm font-medium"
+				>
+					Más detalles &rarr;
+				</a>
+			</div>
+
+			<div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md">
+				<h3 class="font-semibold text-lg mb-2 text-primary-500">
+					💻 Desarrollo de Proyectos
+				</h3>
+				<p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+					Convertimos tus ideas en aplicaciones web y móviles robustas
+					y escalables, a medida de tus necesidades.
+				</p>
+				<a
+					href="/services#desarrollo"
+					class="text-accent-one hover:underline text-sm font-medium"
+				>
+					Más detalles &rarr;
+				</a>
+			</div>
+
+			<div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md">
+				<h3 class="font-semibold text-lg mb-2 text-primary-500">
+					🧠 Soluciones de IA
+				</h3>
+				<p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+					Automatiza y optimiza tus procesos de negocio integrando
+					inteligencia artificial de vanguardia.
+				</p>
+				<a
+					href="/services#ia"
+					class="text-accent-one hover:underline text-sm font-medium"
+				>
+					Más detalles &rarr;
+				</a>
+			</div>
+		</div>
+		<div class="text-center mt-10">
+			<a
+				href="/services"
+				class="inline-flex items-center justify-center h-10 px-5 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-all bg-gradient-to-r from-indigo-600 to-purple-500 text-white font-semibold"
+			>
+				Ver todos los Servicios
+			</a>
+		</div>
+	</section>
+
+	<section class="max-w-4xl mx-auto py-16 text-center">
+		<h2 class="title text-2xl sm:text-3xl font-bold mb-8 text-accent-two">
+			Empresas que confían en mi trabajo
+		</h2>
+		<div
+			class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 items-center justify-center"
+		>
+			<p class="col-span-full text-gray-600 dark:text-gray-400">
+				(Aquí irán los logos de las empresas con las que has colaborado)
+			</p>
 		</div>
 	</section>
 
 	<section aria-label="Blog post list" class="'mt-[-100vh] pt-[100vh]'">
 		<h2 class="title mb-6 text-xl text-accent-two">
-			<a href="/posts/">Posts</a>
+			<a href="/posts/">Posts Recientes</a>
 		</h2>
 		<ul class="space-y-4 md:space-y-2" role="list">
 			{
