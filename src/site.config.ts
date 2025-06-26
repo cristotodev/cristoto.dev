@@ -29,8 +29,12 @@ export const menuLinks: { path: string; title: string }[] = [
 		title: "Inicio",
 	},
 	{
+		path: "/services/",
+		title: "Sevicios",
+	},
+	{
 		path: "/about/",
-		title: "Cómo Puedo Ayudarte",
+		title: "Sobre Mi",
 	},
 	{
 		path: "/posts/",
@@ -39,10 +43,6 @@ export const menuLinks: { path: string; title: string }[] = [
 	{
 		path: "/books/",
 		title: "Libros",
-	},
-	{
-		path: "/coach/",
-		title: "Formación 1:1",
 	},
 ];
 

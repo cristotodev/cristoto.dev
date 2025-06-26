@@ -1,10 +1,11 @@
 ---
 import { books } from "@/data/books";
 import PageLayout from "@/layouts/Base.astro";
+import { PHONE_NUMBER } from "@/site.config"; // Asegúrate de importar PHONE_NUMBER si lo vas a usar
 
 const meta = {
     description:
-        "Descubre mi colección de libros: recomendaciones, reseñas y lecturas que me han inspirado. Explora títulos de tecnología, desarrollo personal, negocios y más.",
+        "Sumérgete en la biblioteca que ha moldeado mi trayectoria. Explora libros sobre tecnología, desarrollo de software, crecimiento personal y negocios, con reseñas detalladas para tu próxima gran lectura.",
     title: "Books",
 };
 ---
@@ -14,10 +15,13 @@ const meta = {
     <div class="prose prose-citrus max-w-none mb-8">
         <p>
             En esta sección encontrarás los libros que he leído y que seguiré
-            leyendo. Me gusta explorar diferentes géneros, desde tecnología y
-            programación hasta desarrollo personal y negocios. Cada libro ha
-            dejado una huella en mi camino como desarrollador y como persona.
-            ¡Espero que encuentres inspiración para tu próxima lectura!
+            leyendo, y que han sido clave en mi crecimiento profesional y
+            personal. Me gusta explorar diferentes géneros, desde <strong
+                >tecnología y programación</strong
+            > hasta <strong>desarrollo personal y negocios</strong>. Cada libro
+            ha dejado una huella en mi camino como desarrollador y como persona.
+            ¡Te invito a explorar mis favoritos y encontrar inspiración para tu
+            próxima gran lectura!
         </p>
     </div>
 
@@ -26,14 +30,14 @@ const meta = {
             books.map((book) => (
                 <a
                     href={`/books/${book.id}`}
-                    class="rounded-2xl shadow-lg overflow-hidden shadow-lg hover:brightness-110 transition-all bg-gradient-to-r from-accent-one to-accent-two"
+                    class="rounded-2xl shadow-lg overflow-hidden shadow-lg hover:brightness-110 transition-all bg-gradient-to-r from-accent-one to-accent-two flex flex-col"
                 >
                     <img
                         src={book.cover}
                         alt={book.title}
-                        class="w-full h-64 object-cover"
+                        class="w-full h-64 object-cover flex-shrink-0"
                     />
-                    <div class="p-4">
+                    <div class="p-4 flex-grow">
                         <h2 class="text-xl font-bold mb-2 text-bgColor font-bold">
                             {book.title}
                         </h2>
@@ -44,5 +48,27 @@ const meta = {
                 </a>
             ))
         }
+    </div>
+
+    ---
+
+    {/* Nuevo CTA al final de la página */}
+    <div class="text-center my-12">
+        <h2 class="text-2xl font-bold mb-4">
+            ¿Listo para impulsar tus conocimientos?
+        </h2>
+        <p class="text-lg mb-6">
+            Muchos de los principios que encontrarás en estos libros son la base
+            de mi metodología de trabajo. Apliquemos estos conocimientos para
+            llevar tus proyectos y tu carrera al siguiente nivel.
+        </p>
+        <a
+            href="/services"
+            class="inline-flex items-center justify-center h-10 px-6 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-all bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-600 dark:from-indigo-800 dark:via-indigo-600 dark:to-purple-700 border border-white/70 dark:border-none"
+        >
+            <span class="text-white font-bold text-base">
+                🚀 ¡Descubre mis Servicios!
+            </span>
+        </a>
     </div>
 </PageLayout>

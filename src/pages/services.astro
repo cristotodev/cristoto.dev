@@ -1,0 +1,442 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+import { PHONE_NUMBER } from "@/site.config";
+
+const meta = {
+    description:
+        "Mentorías técnicas personalizadas, desarrollo de proyectos web y aplicaciones a medida, e integración de soluciones de Inteligencia Artificial. Impulsa tu carrera, da vida a tus ideas digitales o automatiza con IA.",
+    title: "Servicios: Formación, Desarrollo e IA", // Título de la página actualizado para incluir IA
+};
+---
+
+<PageLayout meta={meta}>
+    <section class="relative max-w-3xl mx-auto px-4 overflow-hidden">
+        <div class="absolute inset-0 opacity-5 pointer-events-none">
+            <img
+                src="/bg-pattern.svg"
+                alt="Decoración"
+                class="w-full h-full object-cover"
+            />
+        </div>
+
+        <h1 class="title">
+            Servicios: Impulsa tu Carrera, Desarrolla tu Proyecto o Automatiza
+            con IA
+        </h1>
+        {/* Título principal H1 actualizado */}
+        <p class="mt-6 text-lg text-muted-foreground">
+            Soy Cristo Manuel Estévez, tu aliado estratégico en el mundo del
+            software. <br />
+            Ya sea que busques <strong>impulsar tu desarrollo personal</strong> con
+            mentorías personalizadas, necesites un experto para <strong
+                >crear e implementar tus proyectos web y aplicaciones</strong
+            >, o desees <strong
+                >integrar el poder de la Inteligencia Artificial</strong
+            > en tu negocio, te ofrezco soluciones adaptadas a tus necesidades.
+        </p>
+
+        <div class="mt-6 text-sm text-muted-foreground italic">
+            +6 años trabajando con equipos reales, tomando decisiones técnicas
+            complejas y formando a desarrolladores desde cero hasta nivel
+            senior.
+        </div>
+
+        {
+            /* CTA TEMPRANO - Aquí lo he colocado justo después de la introducción */
+        }
+        <div class="mt-10 text-center">
+            <a
+                href={`https://wa.me/${PHONE_NUMBER}?text=Hola%2C%20me%20interesa%20saber%20más%20sobre%20tus%20servicios%20de%20formación%2C%20desarrollo%20o%20IA.`}
+                class="inline-flex items-center gap-2 text-bgColor font-semibold text-lg py-3 px-6 rounded-xl bg-gradient-to-r from-accent-one to-accent-two hover:scale-105 hover:shadow-xl transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        d="M12.04 2C6.56 2 2 6.2 2 11.2c0 2.3.98 4.39 2.61 5.95l-1.1 4.01 4.19-1.1A10.65 10.65 0 0 0 12.04 20c5.48 0 9.96-4.2 9.96-9.2S17.52 2 12.04 2Zm0 16.6c-1.66 0-3.19-.48-4.47-1.3l-.31-.2-2.49.65.66-2.43-.21-.31A7.04 7.04 0 0 1 4.8 11.2c0-3.96 3.35-7.2 7.24-7.2 3.98 0 7.22 3.24 7.22 7.2 0 3.96-3.24 7.2-7.22 7.2Zm3.38-5.3c-.19-.1-1.12-.55-1.29-.61-.17-.07-.29-.1-.41.1-.12.2-.47.61-.57.73-.1.12-.21.13-.39.03-.18-.1-.75-.27-1.42-.86-.53-.48-.89-1.07-1-1.25-.1-.17-.01-.26.09-.35.1-.1.22-.23.32-.35.11-.12.14-.2.22-.33.07-.13.04-.25-.02-.35-.06-.1-.41-.99-.57-1.35-.15-.36-.3-.31-.42-.32h-.36c-.13 0-.34.05-.51.25-.18.2-.66.64-.66 1.56 0 .92.68 1.81.77 1.93.1.12 1.32 2.01 3.2 2.82.45.2.8.32 1.08.41.45.14.86.12 1.19.07.36-.05 1.12-.46 1.28-.9.16-.44.16-.82.11-.9-.06-.08-.17-.13-.36-.23Z"
+                    ></path>
+                </svg>
+                ¡Hablemos de tus necesidades!
+            </a>
+            <p class="mt-4 text-muted-foreground text-sm italic">
+                Te guiaré paso a paso para alcanzar tus objetivos.
+            </p>
+        </div>
+        {/* FIN CTA TEMPRANO */}
+
+        {/* Sección de Formación y Mentoría - Contenido actual adaptado */}
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold mb-6 title text-center">
+                Formación y Mentoría Personalizada
+            </h2>
+            <p class="mt-6 text-lg text-muted-foreground text-center">
+                Impulsa tu carrera o la de tu equipo con mi experiencia directa
+                en proyectos reales.
+            </p>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div
+                    class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+                >
+                    <h3 class="text-xl font-semibold mb-2">🏢 Empresas</h3>
+                    <p class="text-muted-foreground text-sm">
+                        Apoyo técnico puntual o continuo para tomar mejores
+                        decisiones y optimizar procesos.
+                    </p>
+                    <a
+                        href={`https://wa.me/${PHONE_NUMBER}?text=Hola%2C%20me%20interesa%20la%20mentoría%20para%20mi%20empresa.`}
+                        class="mt-4 inline-flex items-center gap-2 text-accent-one hover:underline text-sm font-medium"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Contactar para mi empresa →
+                    </a>
+                </div>
+                <div
+                    class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+                >
+                    <h3 class="text-xl font-semibold mb-2">👨‍💻 Profesionales</h3>
+                    <p class="text-muted-foreground text-sm">
+                        Aprende de forma personalizada sobre arquitectura,
+                        testing, infraestructura, productividad y más.
+                    </p>
+                    <a
+                        href={`https://wa.me/${PHONE_NUMBER}?text=Hola%2C%20me%20interesa%20la%20mentoría%20personalizada%20para%20profesionales.`}
+                        class="mt-4 inline-flex items-center gap-2 text-accent-one hover:underline text-sm font-medium"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Impulsa tu carrera →
+                    </a>
+                </div>
+                <div
+                    class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+                >
+                    <h3 class="text-xl font-semibold mb-2">🎓 Estudiantes</h3>
+                    <p class="text-muted-foreground text-sm">
+                        Te ayudo a conectar teoría con práctica real. Aprende a
+                        trabajar como un pro desde el inicio.
+                    </p>
+                    <a
+                        href={`https://wa.me/${PHONE_NUMBER}?text=Hola%2C%20me%20interesa%20la%20formación%20para%20estudiantes.`}
+                        class="mt-4 inline-flex items-center gap-2 text-accent-one hover:underline text-sm font-medium"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Empieza con buen pie →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {/* --- SECCIÓN: DESARROLLO DE PROYECTOS --- */}
+        <hr class="my-16 border-t border-accent-one/20" />
+
+        <div class="text-center">
+            <h2 class="text-2xl font-bold mb-2 title">
+                Desarrollo de Proyectos a Medida
+            </h2>
+            <p class="mt-6 text-lg text-muted-foreground">
+                ¿Necesitas una aplicación web robusta, una API personalizada o
+                un sistema backend eficiente? <br />
+                Convierto tus ideas en soluciones digitales funcionales y escalables.
+            </p>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div
+                    class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+                >
+                    <h3 class="text-xl font-semibold mb-2">
+                        Webs y Aplicaciones Personalizadas
+                    </h3>
+                    <p class="text-muted-foreground text-sm">
+                        Creación de plataformas desde cero, diseño de interfaces
+                        intuitivas y desarrollo de funcionalidades a medida para
+                        tus usuarios.
+                    </p>
+                </div>
+                <div
+                    class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+                >
+                    <h3 class="text-xl font-semibold mb-2">
+                        APIs y Sistemas Backend Robustos
+                    </h3>
+                    <p class="text-muted-foreground text-sm">
+                        Diseño e implementación de APIs seguras y eficientes,
+                        optimización de bases de datos y desarrollo de lógica de
+                        negocio compleja.
+                    </p>
+                </div>
+            </div>
+            {/* CTA ESPECÍFICO PARA PROYECTOS */}
+            <div class="mt-10 text-center">
+                <a
+                    href={`https://wa.me/${PHONE_NUMBER}?text=Hola%2C%20me%20gustaría%20solicitar%20un%20presupuesto%20para%20un%20proyecto%20de%20desarrollo.`}
+                    class="inline-flex items-center gap-2 text-bgColor font-semibold text-lg py-3 px-6 rounded-xl bg-gradient-to-r from-accent-one to-accent-two hover:scale-105 hover:shadow-xl transition-all duration-300"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            d="M12.04 2C6.56 2 2 6.2 2 11.2c0 2.3.98 4.39 2.61 5.95l-1.1 4.01 4.19-1.1A10.65 10.65 0 0 0 12.04 20c5.48 0 9.96-4.2 9.96-9.2S17.52 2 12.04 2Zm0 16.6c-1.66 0-3.19-.48-4.47-1.3l-.31-.2-2.49.65.66-2.43-.21-.31A7.04 7.04 0 0 1 4.8 11.2c0-3.96 3.35-7.2 7.24-7.2 3.98 0 7.22 3.24 7.22 7.2 0 3.96-3.24 7.2-7.22 7.2Zm3.38-5.3c-.19-.1-1.12-.55-1.29-.61-.17-.07-.29-.1-.41.1-.12.2-.47.61-.57.73-.1.12-.21.13-.39.03-.18-.1-.75-.27-1.42-.86-.53-.48-.89-1.07-1-1.25-.1-.17-.01-.26.09-.35.1-.1.22-.23.32-.35.11-.12.14-.2.22-.33.07-.13.04-.25-.02-.35-.06-.1-.41-.99-.57-1.35-.15-.36-.3-.31-.42-.32h-.36c-.13 0-.34.05-.51.25-.18.2-.66.64-.66 1.56 0 .92.68 1.81.77 1.93.1.12 1.32 2.01 3.2 2.82.45.2.8.32 1.08.41.45.14.86.12 1.19.07.36-.05 1.12-.46 1.28-.9.16-.44.16-.82.11-.9-.06-.08-.17-.13-.36-.23Z"
+                        ></path>
+                    </svg>
+                    ¡Cuéntame tu idea!
+                </a>
+                <p class="mt-4 text-muted-foreground text-sm italic">
+                    Transforma tu visión en una solución digital real.
+                </p>
+            </div>
+        </div>
+        {/* --- FIN SECCIÓN DESARROLLO DE PROYECTOS --- */}
+
+        {/* --- NUEVA SECCIÓN: INTELIGENCIA ARTIFICIAL --- */}
+        <hr class="my-16 border-t border-accent-one/20" />
+
+        <div class="text-center">
+            <h2 class="text-2xl font-bold mb-2 title">
+                Inteligencia Artificial y Agentes Personalizados
+            </h2>
+            <p class="mt-6 text-lg text-muted-foreground">
+                Automatiza procesos, mejora la toma de decisiones y crea
+                experiencias únicas con soluciones de IA a medida. <br />
+                Desde asistentes virtuales hasta agentes autónomos para tu negocio.
+            </p>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div
+                    class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+                >
+                    <h3 class="text-xl font-semibold mb-2">
+                        Agentes IA Personalizados para Negocios
+                    </h3>
+                    <p class="text-muted-foreground text-sm">
+                        Desarrollo de asistentes inteligentes que interactúan
+                        con tus clientes, optimizan flujos de trabajo o analizan
+                        grandes volúmenes de datos para tu empresa.
+                    </p>
+                </div>
+                <div
+                    class="p-6 rounded-2xl shadow bg-background border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg"
+                >
+                    <h3 class="text-xl font-semibold mb-2">
+                        Integración de IA en Aplicaciones Existentes
+                    </h3>
+                    <p class="text-muted-foreground text-sm">
+                        Incorpora funcionalidades de IA como procesamiento de
+                        lenguaje natural (NLP), visión por computadora o
+                        sistemas de recomendación en tus plataformas actuales.
+                    </p>
+                </div>
+            </div>
+            {/* CTA ESPECÍFICO PARA IA */}
+            <div class="mt-10 text-center">
+                <a
+                    href={`https://wa.me/${PHONE_NUMBER}?text=Hola%2C%20me%20interesa%20implementar%20soluciones%20de%20Inteligencia%20Artificial%20en%20mi%20negocio.`}
+                    class="inline-flex items-center gap-2 text-bgColor font-semibold text-lg py-3 px-6 rounded-xl bg-gradient-to-r from-accent-one to-accent-two hover:scale-105 hover:shadow-xl transition-all duration-300"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            d="M12.04 2C6.56 2 2 6.2 2 11.2c0 2.3.98 4.39 2.61 5.95l-1.1 4.01 4.19-1.1A10.65 10.65 0 0 0 12.04 20c5.48 0 9.96-4.2 9.96-9.2S17.52 2 12.04 2Zm0 16.6c-1.66 0-3.19-.48-4.47-1.3l-.31-.2-2.49.65.66-2.43-.21-.31A7.04 7.04 0 0 1 4.8 11.2c0-3.96 3.35-7.2 7.24-7.2 3.98 0 7.22 3.24 7.22 7.2 0 3.96-3.24 7.2-7.22 7.2Zm3.38-5.3c-.19-.1-1.12-.55-1.29-.61-.17-.07-.29-.1-.41.1-.12.2-.47.61-.57.73-.1.12-.21.13-.39.03-.18-.1-.75-.27-1.42-.86-.53-.48-.89-1.07-1-1.25-.1-.17-.01-.26.09-.35.1-.1.22-.23.32-.35.11-.12.14-.2.22-.33.07-.13.04-.25-.02-.35-.06-.1-.41-.99-.57-1.35-.15-.36-.3-.31-.42-.32h-.36c-.13 0-.34.05-.51.25-.18.2-.66.64-.66 1.56 0 .92.68 1.81.77 1.93.1.12 1.32 2.01 3.2 2.82.45.2.8.32 1.08.41.45.14.86.12 1.19.07.36-.05 1.12-.46 1.28-.9.16-.44.16-.82.11-.9-.06-.08-.17-.13-.36-.23Z"
+                        ></path>
+                    </svg>
+                    ¡Hablemos de IA!
+                </a>
+                <p class="mt-4 text-muted-foreground text-sm italic">
+                    Desbloquea el futuro de tu negocio con soluciones
+                    inteligentes.
+                </p>
+            </div>
+        </div>
+        {/* --- FIN SECCIÓN INTELIGENCIA ARTIFICIAL --- */}
+
+        <hr class="my-16 border-t border-accent-one/20" />
+
+        <div class="text-left space-y-8 max-w-2xl mx-auto">
+            <div>
+                <h2 class="text-2xl font-bold mb-2 title">
+                    ¿Cómo funciona mi método?
+                </h2>
+                <ul class="list-disc list-inside text-muted-foreground">
+                    <li>Me contactas con tu necesidad o problema.</li>
+                    <li>
+                        Analizamos tu caso y agendamos una primera conversación
+                        (online).
+                    </li>
+                    <li>
+                        Trabajo contigo para darte soluciones prácticas,
+                        desarrollar tu proyecto o implementar tu IA.
+                    </li>
+                    <li>
+                        Si necesitas, podemos continuar con más sesiones,
+                        seguimiento o fases de proyecto.
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-bold mb-2 title">
+                    Mi Expertise y Temas Frecuentes
+                </h2>
+                <ul class="list-disc list-inside text-muted-foreground">
+                    <li>
+                        <strong>Infraestructura & DevOps:</strong> Docker, Podman,
+                        Traefik, Kubernetes, Openshift, CI/CD, etc.
+                    </li>
+                    <li>
+                        <strong>Arquitectura de Software:</strong> Microservicios,
+                        monolitos modulares, arquitectura limpia.
+                    </li>
+                    <li>
+                        <strong>Bases de Datos & Big Data:</strong> SQL avanzado,
+                        modelado, optimización de consultas, NoSQL, Redis, Kafka,
+                        RabbitMQ, etc.
+                    </li>
+                    <li>
+                        <strong>Productividad & Flujos de Trabajo:</strong> Git,
+                        Github, Gitlab, Gitflow, metodologías ágiles.
+                    </li>
+                    <li>
+                        <strong>Calidad de Código:</strong> Testing automatizado,
+                        buenas prácticas y documentación.
+                    </li>
+                    <li>
+                        <strong>Operaciones:</strong> Depuración, logging y observabilidad
+                        en proyectos reales.
+                    </li>
+                    <li>
+                        <strong>Inteligencia Artificial:</strong> Agentes autónomos,
+                        asistentes virtuales, PNL, integración de modelos de IA.
+                    </li>
+                </ul>
+                <p class="mt-4 text-muted-foreground">
+                    ¿No ves aquí lo que estás buscando o tu necesidad es muy
+                    específica?
+                    <a
+                        href={`https://wa.me/${PHONE_NUMBER}?text=Hola%2C%20quisiera%20consultar%20sobre%20un%20tema%20específico%20que%20no%20aparece%20en%20la%20lista%20o%20sobre%20una%20solución%20de%20IA.`}
+                        class="text-accent-one hover:underline font-medium"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Escríbeme por WhatsApp
+                    </a> y te diré si puedo ayudarte a resolverlo o a desarrollar
+                    tu idea. Estoy abierto a adaptar mis servicios a tus necesidades
+                    reales.
+                </p>
+            </div>
+
+            <hr class="my-16 border-t border-accent-one/20" />
+
+            <div>
+                <h2 class="text-2xl font-bold mb-2 title">
+                    Clientes y Proyectos con los que he colaborado
+                </h2>
+                <p class="text-muted-foreground mb-4">
+                    Estas son algunas empresas y organizaciones a las que he
+                    ayudado con formación técnica, auditoría de código, soporte
+                    en arquitectura o desarrollo e integración de soluciones:
+                </p>
+                <ul
+                    class="grid grid-cols-2 md:grid-cols-3 gap-6 items-center justify-center mt-10"
+                >
+                    <li>
+                        <a
+                            href="https://masorange.es/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <img
+                                src="https://res.cloudinary.com/cristotodev/image/upload/v1750778687/cristotodev/businesses/masorange_n3gtil.webp"
+                                alt="MasOrange"
+                                class="h-10 mx-auto grayscale hover:grayscale-0 transition duration-300"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://www.masmovil.es/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <img
+                                src="https://res.cloudinary.com/cristotodev/image/upload/v1750778872/cristotodev/businesses/masmovil_uk86gv.webp"
+                                alt="MasMovil"
+                                class="h-10 mx-auto grayscale hover:grayscale-0 transition duration-300"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://www.devoteam.com/es/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <img
+                                src="https://res.cloudinary.com/cristotodev/image/upload/v1750778955/cristotodev/businesses/devoteam_xagedq.webp"
+                                alt="Devoteam"
+                                class="h-10 mx-auto grayscale hover:grayscale-0 transition duration-300"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://atecresa.com"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <img
+                                src="https://res.cloudinary.com/cristotodev/image/upload/v1716970320/cristotodev/businesses/atecresa_jrj6gw.webp"
+                                alt="Atecresa"
+                                class="h-10 mx-auto grayscale hover:grayscale-0 transition duration-300"
+                            />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center">
+            <h2 class="text-2xl font-bold mb-4 title">
+                ¿Listo para transformar tu visión en realidad?
+            </h2>
+            <p class="mb-6 text-lg text-muted-foreground">
+                Ya sea para tu formación personal, el desarrollo de tu próximo
+                proyecto o la integración de soluciones de IA, estoy aquí para
+                ayudarte a alcanzar tus objetivos con estrategia y experiencia.
+            </p>
+            <a
+                href={`https://wa.me/${PHONE_NUMBER}?text=Hola%2C%20me%20gustaría%20hablar%20contigo%20sobre%20tus%20servicios%20de%20formación%2C%20desarrollo%20o%20IA.`}
+                class="inline-flex items-center gap-2 text-bgColor font-semibold text-lg py-3 px-6 rounded-xl bg-gradient-to-r from-accent-one to-accent-two hover:scale-105 hover:shadow-xl transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        d="M12.04 2C6.56 2 2 6.2 2 11.2c0 2.3.98 4.39 2.61 5.95l-1.1 4.01 4.19-1.1A10.65 10.65 0 0 0 12.04 20c5.48 0 9.96-4.2 9.96-9.2S17.52 2 12.04 2Zm0 16.6c-1.66 0-3.19-.48-4.47-1.3l-.31-.2-2.49.65.66-2.43-.21-.31A7.04 7.04 0 0 1 4.8 11.2c0-3.96 3.35-7.2 7.24-7.2 3.98 0 7.22 3.24 7.22 7.2 0 3.96-3.24 7.2-7.22 7.2Zm3.38-5.3c-.19-.1-1.12-.55-1.29-.61-.17-.07-.29-.1-.41.1-.12.2-.47.61-.57.73-.1.12-.21.13-.39.03-.18-.1-.75-.27-1.42-.86-.53-.48-.89-1.07-1-1.25-.1-.17-.01-.26.09-.35.1-.1.22-.23.32-.35.11-.12.14-.2.22-.33.07-.13.04-.25-.02-.35-.06-.1-.41-.99-.57-1.35-.15-.36-.3-.31-.42-.32h-.36c-.13 0-.34.05-.51.25-.18.2-.66.64-.66 1.56 0 .92.68 1.81.77 1.93.1.12 1.32 2.01 3.2 2.82.45.2.8.32 1.08.41.45.14.86.12 1.19.07.36-.05 1.12-.46 1.28-.9.16-.44.16-.82.11-.9-.06-.08-.17-.13-.36-.23Z"
+                    ></path>
+                </svg>
+                ¡Contacta para una consulta!
+            </a>
+        </div>
+        {/* FIN CTA FINAL GLOBAL */}
+    </section>
+</PageLayout>

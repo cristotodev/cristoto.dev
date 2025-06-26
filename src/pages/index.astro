@@ -21,8 +21,6 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 ---
 
 <PageLayout meta={{ title: "Home" }}>
-	<!-- Hero section -->
-	<!-- Background blur -->
 	<div
 		class="absolute top-0 left-1/2 md:top-[-15%] -ml-[50vw] min-h-screen w-screen pointer-events-none blur-3xl opacity-50 overflow-x-hidden"
 	>
@@ -69,22 +67,27 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 					</span>
 				</a>
 			</div>
-			<div class="flex justify-center mt-2">
+			<div class="flex justify-center flex-col items-center mt-4">
 				<a
-					href="/coach"
-					class="relative flex items-center justify-center h-8 px-4 sm:px-6 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-all bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-600 dark:from-indigo-800 dark:via-indigo-600 dark:to-purple-700 border border-white/70 dark:border-none animate-pulse"
+					href="/services"
+					class="inline-flex items-center justify-center h-10 px-4 md:px-6 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-all bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-600 dark:from-indigo-800 dark:via-indigo-600 dark:to-purple-700 border border-white/70 dark:border-none"
 				>
 					<span
-						class="text-white font-bold text-xs sm:text-base whitespace-normal break-words text-center"
+						class="text-white font-bold text-sm md:text-base whitespace-normal text-center"
 					>
-						🚀 ¡Reserva tu Formación 1:1 ahora!
+						🚀¡Impulsa tu Proyecto o Carrera!
 					</span>
 				</a>
+				<p
+					class="mt-2 text-sm text-muted-foreground text-center max-w-xs"
+				>
+					Hablemos de tus ideas: desde formación y desarrollo web
+					hasta integración de IA.
+				</p>
 			</div>
 		</div>
 	</section>
 
-	<!-- Posts Section -->
 	<section aria-label="Blog post list" class="'mt-[-100vh] pt-[100vh]'">
 		<h2 class="title mb-6 text-xl text-accent-two">
 			<a href="/posts/">Posts</a>
