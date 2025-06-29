@@ -44,6 +44,10 @@ export const menuLinks: { path: string; title: string }[] = [
 		path: "/books/",
 		title: "Libros",
 	},
+	{
+		path: "/contact/",
+		title: "Contacto",
+	},
 ];
 
 export const PHONE_NUMBER = "638743887";

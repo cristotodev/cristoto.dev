@@ -1,0 +1,100 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+
+const pageTitle = "Contacto";
+const pageDescription =
+    "Hablemos de cómo puedo ayudarte a impulsar tu proyecto o carrera. Contacta conmigo para mentorías, desarrollo web, soluciones de IA o cualquier consulta.";
+
+const emailAddress = "cristom.estevez@gmail.com";
+const whatsappNumber = "+34638743887";
+const whatsappMessage =
+    "Hola Cristo, me gustaría saber más sobre tus servicios de desarrollo/mentoría/IA. ¿Podríamos hablar?";
+const linkedinProfile = "https://es.linkedin.com/in/cristotodev";
+
+const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+---
+
+<PageLayout meta={{ title: pageTitle, description: pageDescription }}>
+    <div class="max-w-3xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <h1
+            class="title text-4xl sm:text-5xl lg:text-6xl text-center mb-8 bg-gradient-to-r from-accent-two/85 via-accent-one/85 to-accent-two/85 dark:from-accent-two dark:via-accent-one dark:to-accent-two bg-clip-text text-transparent leading-tight"
+        >
+            Hablemos.
+        </h1>
+        <p
+            class="text-lg md:text-xl text-center text-gray-700 dark:text-gray-300 mb-12"
+        >
+            Estoy aquí para ayudarte a transformar tus ideas en realidad digital
+            y acelerar tu crecimiento. Elige la forma que te resulte más cómoda.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div
+                class="bg-gray-50 dark:bg-gray-800 p-8 rounded-lg shadow-md text-center"
+            >
+                <h2 class="text-2xl font-bold mb-4 text-accent-one">
+                    WhatsApp
+                </h2>
+                <p class="text-gray-700 dark:text-gray-300 mb-6">
+                    Para consultas rápidas o para iniciar una conversación sobre
+                    tu proyecto, escríbeme directamente.
+                </p>
+                <a
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center h-12 px-6 sm:px-8 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-all bg-green-600 text-white font-bold text-base md:text-lg"
+                >
+                    <span class="whitespace-nowrap">💬 Enviar WhatsApp</span>
+                </a>
+            </div>
+
+            <div
+                class="bg-gray-50 dark:bg-gray-800 p-8 rounded-lg shadow-md text-center"
+            >
+                <h2 class="text-2xl font-bold mb-4 text-accent-one">
+                    Correo Electrónico
+                </h2>
+                <p class="text-gray-700 dark:text-gray-300 mb-6">
+                    Si prefieres enviar una consulta detallada o tienes
+                    documentos para compartir, escríbeme un email.
+                </p>
+                <a
+                    href={`mailto:${emailAddress}?subject=${encodeURIComponent("Consulta desde tu web")}`}
+                    class="inline-flex items-center justify-center h-12 px-6 sm:px-8 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-all bg-blue-600 text-white font-bold text-base md:text-lg"
+                >
+                    <span class="whitespace-nowrap">📧 Enviar un Email</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <h2 class="text-2xl font-bold mb-4 text-accent-two">
+                Conéctate en LinkedIn
+            </h2>
+            <p class="text-gray-700 dark:text-gray-300 mb-6">
+                También podemos conectar en LinkedIn para estar al tanto de
+                novedades y oportunidades.
+            </p>
+            <a
+                href={linkedinProfile}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center h-10 px-6 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-all bg-blue-700 text-white font-bold text-base"
+            >
+                🔗 Visitar mi LinkedIn
+            </a>
+        </div>
+
+        <div class="mt-12 text-center text-gray-600 dark:text-gray-400">
+            <p class="text-sm">
+                Estoy en <strong>Tenerife, Islas Canarias</strong>, y trabajo
+                con clientes a nivel local e internacional.
+            </p>
+            <p class="text-sm mt-2">
+                Mi objetivo es responder a todas las consultas en un plazo de
+                <strong>24-48 horas hábiles</strong>.
+            </p>
+        </div>
+    </div>
+</PageLayout>
