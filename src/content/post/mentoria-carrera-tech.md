@@ -1,12 +1,12 @@
 ---
 title: "¿Estancado en tu carrera tech? Por qué la mentoría personalizada es tu próximo gran paso"
 description: "Si te sientes estancado en tu carrera tecnológica, descubre cómo la mentoría personalizada puede acelerar tu crecimiento, abrir nuevas puertas y darte la dirección que necesitas para alcanzar tus metas."
-publishDate: "3 Jul 2025"
+publishDate: "8 Jul 2025"
 tags: ["mentoría tech", "carrera profesional", "desarrollo personal", "crecimiento profesional", "formación tech", "habilidades tech"]
 coverImage:
   src: "https://res.cloudinary.com/cristotodev/image/upload/v1751380398/cristotodev/blog/mentoria_rgylnl.webp" 
   alt: "Mentoría Personalizada en Carrera Tech"
-draft: true
+draft: false
 ---
 
 ¿Alguna vez has sentido que, a pesar de todo tu esfuerzo, tu carrera tecnológica ha llegado a un punto de estancamiento? Tal vez dominas tu stack actual, pero te preguntas cuál es el siguiente paso. Quizás te sientes abrumado por la cantidad de nuevas tecnologías y no sabes por dónde empezar a aprender. O quizás simplemente sientes que necesitas un impulso, una dirección clara que te ayude a alcanzar tu máximo potencial.
