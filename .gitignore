@@ -20,3 +20,8 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+
+# Claude Code files (only keep CLAUDE.md)
+.claude/
+claude_todo.json
+claude_cache/

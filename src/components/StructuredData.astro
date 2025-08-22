@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { siteConfig } from "@/site.config";
+
+interface Props {
+	post: CollectionEntry<"post">;
+	url: string;
+}
+
+const { post, url } = Astro.props;
+const { title, description, publishDate, updatedDate, tags } = post.data;
+
+const structuredData: Record<string, any> = {
+	"@context": "https://schema.org",
+	"@type": "Article",
+	"headline": title,
+	"description": description,
+	"image": {
+		"@type": "ImageObject",
+		"url": `https://cristoto.dev/og-image/${post.id}.png`,
+		"width": 1200,
+		"height": 630
+	},
+	"author": {
+		"@type": "Person",
+		"name": siteConfig.author,
+		"url": "https://cristoto.dev/about/",
+		"sameAs": [
+			"https://github.com/cristotodev",
+			"https://twitter.com/cristotodev",
+			"https://www.youtube.com/@cristotodev",
+			"https://www.instagram.com/cristoto.dev/"
+		]
+	},
+	"publisher": {
+		"@type": "Organization",
+		"name": siteConfig.title,
+		"url": "https://cristoto.dev/",
+		"logo": {
+			"@type": "ImageObject",
+			"url": "https://cristoto.dev/icon.svg"
+		}
+	},
+	"datePublished": publishDate.toISOString(),
+	"dateModified": (updatedDate || publishDate).toISOString(),
+	"mainEntityOfPage": {
+		"@type": "WebPage",
+		"@id": url
+	},
+	"keywords": tags.join(", "),
+	"inLanguage": "es-ES",
+	"articleSection": post.id.includes('/') ? post.id.split('/')[0] : undefined
+};
+
+// Si el post pertenece a una serie, agregamos información adicional
+if (post.data.seriesId) {
+	structuredData["isPartOf"] = {
+		"@type": "Series",
+		"name": post.data.seriesId,
+		"url": `https://cristoto.dev/series/${post.data.seriesId}/`
+	};
+	
+	if (post.data.orderInSeries) {
+		structuredData["position"] = post.data.orderInSeries;
+	}
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData, null, 0)} />

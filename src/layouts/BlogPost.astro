@@ -5,6 +5,7 @@ import TOC from "@/components/blog/TOC.astro";
 import WebMentions from "@/components/blog/webmentions/index.astro";
 import BaseLayout from "./Base.astro";
 import SeriesPanel from "@/components/SeriesPanel.astro";
+import StructuredData from "@/components/StructuredData.astro";
 import { Icon } from "astro-icon/components";
 
 interface Props {
@@ -17,7 +18,10 @@ const { ogImage, title, description, updatedDate, publishDate, seriesId } = post
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
 const { headings } = await render(post);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 ---
+
+<StructuredData post={post} url={canonicalURL} />
 
 <BaseLayout meta={{ articleDate, description, ogImage: socialImage, title }}>
 	<div class="fixed left-0 top-0 z-10 flex h-16 md:h-20 w-full bg-bgColor overflow-hidden">
