@@ -1,0 +1,76 @@
+---
+interface Props {
+	tags: string[];
+	category?: string;
+	currentPost?: any;
+}
+
+const { tags, category, currentPost } = Astro.props;
+
+// Schema for tags/topics
+const topicsSchema = {
+	"@context": "https://schema.org",
+	"@type": "ItemList",
+	"name": "Etiquetas del artículo",
+	"numberOfItems": tags.length,
+	"itemListElement": tags.map((tag, index) => ({
+		"@type": "ListItem",
+		"position": index + 1,
+		"item": {
+			"@type": "Thing",
+			"name": tag,
+			"url": `/tags/${tag.toLowerCase()}`
+		}
+	}))
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(topicsSchema, null, 0)} />
+
+<!-- Semantic Tags Section -->
+<section aria-label="Etiquetas y categorías del artículo" class="mt-4 flex flex-wrap items-center gap-2 mx-1">
+	{/* Category */}
+	{category && (
+		<div class="flex items-center gap-2" itemscope itemtype="https://schema.org/Thing">
+			<svg aria-hidden="true" class="flex-shrink-0 inline-block h-5 w-5 text-accent-base" focusable="false" viewBox="0 0 24 24" fill="currentColor">
+				<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+			</svg>
+			<span class="text-sm font-medium text-accent-base" itemprop="name">Categoría: {category}</span>
+			<meta itemprop="url" content={`/categories/${category.toLowerCase()}`} />
+		</div>
+	)}
+
+	{/* Tags */}
+	{tags?.length > 0 && (
+		<>
+			<svg aria-hidden="true" class="flex-shrink-0 inline-block h-6 w-6 text-accent-base" focusable="false" viewBox="0 0 24 24" fill="currentColor">
+				<path d="M5.5 7A1.5 1.5 0 0 1 4 5.5V4a2 2 0 0 1 2-2h1.5A1.5 1.5 0 0 1 9 3.5V4h6V3.5A1.5 1.5 0 0 1 16.5 2H18a2 2 0 0 1 2 2v1.5A1.5 1.5 0 0 1 18.5 7H18v10h.5a1.5 1.5 0 0 1 1.5 1.5V20a2 2 0 0 1-2 2h-1.5a1.5 1.5 0 0 1-1.5-1.5V20H9v.5A1.5 1.5 0 0 1 7.5 22H6a2 2 0 0 1-2-2v-1.5A1.5 1.5 0 0 1 5.5 17H6V7h-.5z"/>
+			</svg>
+			<div class="flex flex-wrap gap-2" role="list" aria-label="Etiquetas del artículo">
+				{tags.map((tag) => (
+					<a 
+						href={`/tags/${tag.toLowerCase()}`}
+						class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-two/10 text-accent-two hover:bg-accent-two/20 transition-colors"
+						role="listitem"
+						aria-label={`Ver todos los artículos etiquetados como ${tag}`}
+						itemscope 
+						itemtype="https://schema.org/Thing"
+					>
+						<span itemprop="name">{tag}</span>
+						<meta itemprop="url" content={`/tags/${tag.toLowerCase()}`} />
+					</a>
+				))}
+			</div>
+		</>
+	)}
+
+	{/* No tags fallback */}
+	{(!tags || tags.length === 0) && (
+		<div class="flex items-center gap-2">
+			<svg aria-hidden="true" class="flex-shrink-0 inline-block h-6 w-6 text-lighter" focusable="false" viewBox="0 0 24 24" fill="currentColor">
+				<path d="M5.5 7A1.5 1.5 0 0 1 4 5.5V4a2 2 0 0 1 2-2h1.5A1.5 1.5 0 0 1 9 3.5V4h6V3.5A1.5 1.5 0 0 1 16.5 2H18a2 2 0 0 1 2 2v1.5A1.5 1.5 0 0 1 18.5 7H18v10h.5a1.5 1.5 0 0 1 1.5 1.5V20a2 2 0 0 1-2 2h-1.5a1.5 1.5 0 0 1-1.5-1.5V20H9v.5A1.5 1.5 0 0 1 7.5 22H6a2 2 0 0 1-2-2v-1.5A1.5 1.5 0 0 1 5.5 17H6V7h-.5z"/>
+			</svg>
+			<span class="text-sm text-lighter">Sin etiquetas</span>
+		</div>
+	)}
+</section>

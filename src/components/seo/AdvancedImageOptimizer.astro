@@ -1,0 +1,400 @@
+---
+import { optimizeAltText, generateImageSchema, analyzeImageUsage } from "@/utils/image-optimization";
+
+interface Props {
+	content: string;
+	postTitle?: string;
+	category?: string;
+	tags?: string[];
+	author?: string;
+	publishDate?: string;
+}
+
+const { content, postTitle, category, tags = [], author, publishDate } = Astro.props;
+
+const analysis = analyzeImageUsage(content);
+
+// Generate intelligent alt text improvements
+const generateSmartAltText = (filename: string, context: any) => {
+	let altText = filename.replace(/[-_]/g, ' ').replace(/\.[^/.]+$/, '');
+	
+	// Detect image type from filename/path
+	if (filename.includes('screenshot') || filename.includes('captura')) {
+		altText = `Captura de pantalla: ${altText}`;
+	} else if (filename.includes('diagram') || filename.includes('esquema')) {
+		altText = `Diagrama: ${altText}`;
+	} else if (filename.includes('code') || filename.includes('codigo')) {
+		altText = `Ejemplo de código: ${altText}`;
+	} else if (filename.includes('result') || filename.includes('resultado')) {
+		altText = `Resultado: ${altText}`;
+	}
+	
+	return optimizeAltText(altText, context);
+};
+---
+
+<!-- Advanced Image Schema -->
+{analysis.imageCount > 0 && (
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Article",
+		"image": analysis.imageCount > 0 ? "/og-image.png" : undefined,
+		"associatedMedia": {
+			"@type": "ImageGallery",
+			"numberOfItems": analysis.imageCount,
+			"description": `Galería de ${analysis.imageCount} imágenes sobre ${postTitle || 'el tema'}`
+		}
+	}, null, 0)} />
+)}
+
+<!-- Advanced Image Optimization Script -->
+<script define:vars={{ postTitle, category, tags, author, publishDate }}>
+	document.addEventListener('DOMContentLoaded', () => {
+		// Smart Alt Text Generator
+		const generateIntelligentAltText = (img, context) => {
+			const src = img.src || img.dataset.src || '';
+			const filename = src.split('/').pop() || '';
+			const currentAlt = img.alt || '';
+			
+			// If alt is missing or too short, generate intelligent alt text
+			if (!currentAlt || currentAlt.length < 5) {
+				let newAlt = filename.replace(/[-_]/g, ' ').replace(/\.[^/.]+$/, '');
+				
+				// Detect image type and add context
+				if (filename.includes('screenshot') || filename.includes('captura')) {
+					newAlt = `Captura de pantalla: ${newAlt}`;
+				} else if (filename.includes('diagram') || filename.includes('esquema')) {
+					newAlt = `Diagrama: ${newAlt}`;
+				} else if (filename.includes('code') || filename.includes('codigo')) {
+					newAlt = `Ejemplo de código: ${newAlt}`;
+				} else if (filename.includes('result') || filename.includes('resultado')) {
+					newAlt = `Resultado: ${newAlt}`;
+				} else if (filename.includes('tutorial') || filename.includes('step')) {
+					newAlt = `Paso del tutorial: ${newAlt}`;
+				}
+				
+				// Add contextual information
+				if (context.postTitle && !newAlt.toLowerCase().includes(context.postTitle.toLowerCase().substring(0, 20))) {
+					newAlt += ` - ${context.postTitle}`;
+				}
+				
+				if (context.category && !newAlt.toLowerCase().includes(context.category)) {
+					newAlt += ` (${context.category})`;
+				}
+				
+				// Limit length for SEO (max 125 characters)
+				if (newAlt.length > 125) {
+					newAlt = newAlt.substring(0, 122) + '...';
+				}
+				
+				img.alt = newAlt;
+				
+				// Add data attribute to mark as AI-enhanced
+				img.dataset.altEnhanced = 'true';
+			}
+		};
+		
+		// Advanced Lazy Loading with WebP Support
+		const setupAdvancedLazyLoading = () => {
+			const images = document.querySelectorAll('img');
+			
+			// Check WebP support
+			const webpSupported = (() => {
+				const canvas = document.createElement('canvas');
+				return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+			})();
+			
+			const imageObserver = new IntersectionObserver((entries, observer) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						const img = entry.target;
+						
+						// Enhance alt text
+						generateIntelligentAltText(img, { postTitle, category, tags });
+						
+						// WebP optimization
+						if (webpSupported && img.src && !img.src.includes('.webp')) {
+							const webpSrc = img.src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+							// Check if WebP version exists (this would need server-side support)
+							const testImg = new Image();
+							testImg.onload = () => {
+								img.src = webpSrc;
+								img.dataset.format = 'webp';
+							};
+							testImg.onerror = () => {
+								// Fallback to original format
+								img.dataset.format = 'fallback';
+							};
+							testImg.src = webpSrc;
+						}
+						
+						// Add loading animation
+						img.style.opacity = '0';
+						img.style.transition = 'opacity 0.3s ease-in-out';
+						
+						const handleLoad = () => {
+							img.style.opacity = '1';
+							img.classList.add('loaded');
+							img.removeEventListener('load', handleLoad);
+						};
+						
+						img.addEventListener('load', handleLoad);
+						
+						// If image is already loaded
+						if (img.complete) {
+							handleLoad();
+						}
+						
+						observer.unobserve(img);
+					}
+				});
+			}, {
+				rootMargin: '50px 0px',
+				threshold: 0.01
+			});
+			
+			images.forEach(img => {
+				// Add responsive behavior
+				if (!img.style.maxWidth) {
+					img.style.maxWidth = '100%';
+					img.style.height = 'auto';
+				}
+				
+				// Add loading indicator
+				img.style.backgroundColor = '#f3f4f6';
+				img.style.backgroundImage = `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f9fafb' fill-opacity='0.4'%3E%3Cpolygon points='20 0 30 15 20 30 10 15'/%3E%3C/g%3E%3C/svg%3E")`;
+				img.style.backgroundRepeat = 'no-repeat';
+				img.style.backgroundPosition = 'center';
+				
+				imageObserver.observe(img);
+			});
+		};
+		
+		// Modern Image Formats Support
+		const optimizeImageFormats = () => {
+			// Check AVIF support
+			const avifSupported = (() => {
+				const canvas = document.createElement('canvas');
+				canvas.width = canvas.height = 1;
+				return canvas.toDataURL('image/avif').indexOf('data:image/avif') === 0;
+			})();
+			
+			// Enhance images with modern formats
+			document.querySelectorAll('img').forEach(img => {
+				const originalSrc = img.src;
+				
+				if (avifSupported && !originalSrc.includes('.avif')) {
+					// Try AVIF first (best compression)
+					const avifSrc = originalSrc.replace(/\.(jpg|jpeg|png|webp)$/i, '.avif');
+					const testImg = new Image();
+					
+					testImg.onload = () => {
+						img.src = avifSrc;
+						img.dataset.format = 'avif';
+					};
+					
+					testImg.onerror = () => {
+						// Fallback to WebP or original
+						img.dataset.format = 'fallback';
+					};
+					
+					testImg.src = avifSrc;
+				}
+			});
+		};
+		
+		// Preload Critical Images
+		const preloadCriticalImages = () => {
+			const heroImages = document.querySelectorAll('article img');
+			const firstImage = heroImages[0];
+			
+			if (firstImage && firstImage.getBoundingClientRect().top < window.innerHeight * 1.2) {
+				// Preload first image
+				const link = document.createElement('link');
+				link.rel = 'preload';
+				link.as = 'image';
+				link.href = firstImage.src || firstImage.dataset.src;
+				link.fetchpriority = 'high';
+				document.head.appendChild(link);
+				
+				// Mark as critical
+				firstImage.loading = 'eager';
+				firstImage.fetchpriority = 'high';
+				firstImage.dataset.critical = 'true';
+			}
+		};
+		
+		// Image Performance Monitoring
+		const monitorImagePerformance = () => {
+			let totalImages = 0;
+			let loadedImages = 0;
+			let failedImages = 0;
+			
+			document.querySelectorAll('img').forEach(img => {
+				totalImages++;
+				
+				const handleLoad = () => {
+					loadedImages++;
+					console.log(`✅ Image loaded: ${img.src.split('/').pop()} (${loadedImages}/${totalImages})`);
+					
+					// Report to analytics if available
+					if (typeof gtag !== 'undefined') {
+						gtag('event', 'image_load_success', {
+							'image_name': img.src.split('/').pop(),
+							'alt_text': img.alt,
+							'loading_time': performance.now()
+						});
+					}
+				};
+				
+				const handleError = () => {
+					failedImages++;
+					console.warn(`❌ Image failed to load: ${img.src}`);
+					
+					// Report error to analytics
+					if (typeof gtag !== 'undefined') {
+						gtag('event', 'image_load_error', {
+							'image_name': img.src.split('/').pop(),
+							'error_type': 'load_failure'
+						});
+					}
+					
+					// Add fallback placeholder
+					img.alt = img.alt || 'Imagen no disponible';
+					img.style.backgroundColor = '#f3f4f6';
+					img.style.color = '#6b7280';
+					img.style.display = 'flex';
+					img.style.alignItems = 'center';
+					img.style.justifyContent = 'center';
+					img.style.minHeight = '150px';
+					img.style.fontSize = '14px';
+					img.textContent = '📷 Imagen no disponible';
+				};
+				
+				img.addEventListener('load', handleLoad);
+				img.addEventListener('error', handleError);
+				
+				// If already loaded
+				if (img.complete && img.naturalWidth > 0) {
+					handleLoad();
+				}
+			});
+		};
+		
+		// Initialize all optimizations
+		setupAdvancedLazyLoading();
+		optimizeImageFormats();
+		preloadCriticalImages();
+		monitorImagePerformance();
+		
+		// Performance monitoring
+		if (typeof PerformanceObserver !== 'undefined') {
+			const observer = new PerformanceObserver((list) => {
+				list.getEntries().forEach((entry) => {
+					if (entry.entryType === 'largest-contentful-paint') {
+						console.log('LCP:', entry.startTime, 'ms');
+					}
+				});
+			});
+			observer.observe({ entryTypes: ['largest-contentful-paint'] });
+		}
+	});
+</script>
+
+<!-- Performance CSS for images -->
+<style>
+	/* Image optimization styles */
+	img {
+		max-width: 100%;
+		height: auto;
+		border-radius: 8px;
+	}
+	
+	/* Loading states */
+	img:not(.loaded) {
+		filter: blur(2px);
+		transition: filter 0.3s ease;
+	}
+	
+	img.loaded {
+		filter: none;
+	}
+	
+	/* Critical images */
+	img[data-critical="true"] {
+		content-visibility: visible;
+		contain-intrinsic-size: 800px 600px;
+	}
+	
+	/* Format badges (for development) */
+	img[data-format="webp"]::after {
+		content: "WebP";
+		position: absolute;
+		top: 4px;
+		right: 4px;
+		background: #22c55e;
+		color: white;
+		padding: 2px 6px;
+		font-size: 10px;
+		border-radius: 2px;
+		pointer-events: none;
+	}
+	
+	img[data-format="avif"]::after {
+		content: "AVIF";
+		background: #3b82f6;
+	}
+	
+	/* Figure improvements */
+	figure {
+		margin: 2rem 0;
+		text-align: center;
+	}
+	
+	figcaption {
+		margin-top: 0.5rem;
+		font-size: 0.875rem;
+		color: rgb(107 114 128);
+		font-style: italic;
+	}
+	
+	/* Accessibility */
+	@media (prefers-reduced-motion: reduce) {
+		img {
+			transition: none;
+		}
+	}
+	
+	/* High contrast mode */
+	@media (prefers-contrast: high) {
+		img {
+			filter: contrast(1.2);
+		}
+	}
+</style>
+
+<!-- Development insights -->
+{import.meta.env.DEV && (
+	<div class="fixed bottom-4 right-4 max-w-sm p-4 bg-blue-100 dark:bg-blue-900 rounded-lg shadow-lg z-50">
+		<h4 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">
+			🖼️ Image Optimization (DEV)
+		</h4>
+		<div class="text-sm text-blue-700 dark:text-blue-300">
+			<div>Total images: <strong>{analysis.imageCount}</strong></div>
+			<div>Missing alt text: <strong>{analysis.missingAltTexts}</strong></div>
+			<div>Large images: <strong>{analysis.largeImages.length}</strong></div>
+		</div>
+		{analysis.suggestions.length > 0 && (
+			<details class="mt-2">
+				<summary class="text-sm font-medium text-blue-800 dark:text-blue-200 cursor-pointer">
+					Suggestions ({analysis.suggestions.length})
+				</summary>
+				<ul class="mt-1 text-xs text-blue-600 dark:text-blue-400 space-y-1">
+					{analysis.suggestions.slice(0, 3).map(suggestion => (
+						<li>• {suggestion}</li>
+					))}
+				</ul>
+			</details>
+		)}
+	</div>
+)}

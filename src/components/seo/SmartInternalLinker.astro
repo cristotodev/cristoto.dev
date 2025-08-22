@@ -1,0 +1,352 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import { analyzeInternalLinking } from "@/utils/smart-internal-linking";
+
+interface Props {
+	currentPost: CollectionEntry<"post">;
+	content: string;
+	maxSuggestions?: number;
+	showInProduction?: boolean;
+}
+
+const { currentPost, content, maxSuggestions = 5, showInProduction = false } = Astro.props;
+
+// Get all posts for analysis
+const allPosts = await getCollection("post");
+
+// Analyze internal linking opportunities
+const linkingAnalysis = analyzeInternalLinking(content, currentPost, allPosts, maxSuggestions);
+
+// Show only in development or if explicitly enabled
+const shouldShow = import.meta.env.DEV || showInProduction;
+
+// Helper function to get quality color
+const getQualityColor = (score: number) => {
+	if (score >= 0.8) return 'text-green-600';
+	if (score >= 0.6) return 'text-yellow-600';
+	if (score >= 0.4) return 'text-orange-600';
+	return 'text-red-600';
+};
+---
+
+<!-- Smart Internal Linking Schema -->
+{linkingAnalysis.suggestions.length > 0 && (
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Article",
+		"mainEntity": {
+			"@type": "ItemList",
+			"name": "Enlaces internos relacionados",
+			"numberOfItems": linkingAnalysis.suggestions.length,
+			"itemListElement": linkingAnalysis.suggestions.slice(0, 3).map((suggestion, index) => ({
+				"@type": "ListItem",
+				"position": index + 1,
+				"item": {
+					"@type": "Article",
+					"name": suggestion.targetTitle,
+					"url": suggestion.targetUrl
+				}
+			}))
+		}
+	}, null, 0)} />
+)}
+
+<!-- Smart Internal Linking Panel (Development) -->
+{shouldShow && linkingAnalysis.suggestions.length > 0 && (
+	<div class="fixed bottom-4 left-4 max-w-sm w-full z-50" id="internal-linking-panel">
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 max-h-96 overflow-auto">
+			<!-- Header -->
+			<div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+				<h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+					🔗 Enlaces Internos
+					<span class="px-2 py-1 rounded text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+						{linkingAnalysis.suggestions.length}
+					</span>
+				</h3>
+				<button 
+					id="close-linking-panel" 
+					class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+					aria-label="Cerrar panel"
+				>
+					✕
+				</button>
+			</div>
+
+			<!-- Analysis Summary -->
+			<div class="p-4 bg-gray-50 dark:bg-gray-700">
+				<div class="grid grid-cols-2 gap-3 text-sm">
+					<div>
+						<div class="font-medium text-gray-700 dark:text-gray-300">Densidad</div>
+						<div class="text-lg font-bold text-gray-900 dark:text-white">
+							{linkingAnalysis.linkDensity}%
+						</div>
+					</div>
+					<div>
+						<div class="font-medium text-gray-700 dark:text-gray-300">Variedad Anchor</div>
+						<div class="text-lg font-bold text-gray-900 dark:text-white">
+							{linkingAnalysis.anchorTextVariety}%
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Link Suggestions -->
+			<div class="p-4 space-y-3">
+				<h4 class="font-medium text-gray-900 dark:text-white">Sugerencias de Enlaces</h4>
+				{linkingAnalysis.suggestions.map((suggestion, index) => (
+					<div class="border border-gray-200 dark:border-gray-600 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+						<div class="flex items-start justify-between">
+							<div class="flex-1">
+								<div class="flex items-center gap-2">
+									<span class="text-sm font-medium text-gray-900 dark:text-white">
+										{suggestion.anchor}
+									</span>
+									<span class={`text-xs px-2 py-1 rounded ${getQualityColor(suggestion.relevanceScore)}`}>
+										{Math.round(suggestion.relevanceScore * 100)}%
+									</span>
+									<span class="text-xs px-2 py-1 rounded bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300">
+										{suggestion.linkType}
+									</span>
+								</div>
+								<div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+									→ {suggestion.targetTitle}
+								</div>
+								<div class="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">
+									{suggestion.context.substring(0, 80)}...
+								</div>
+							</div>
+							<button 
+								class="apply-link-btn ml-2 px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+								data-anchor={suggestion.anchor}
+								data-url={suggestion.targetUrl}
+								data-title={suggestion.targetTitle}
+								data-position={suggestion.position}
+							>
+								Aplicar
+							</button>
+						</div>
+					</div>
+				))}
+			</div>
+
+			<!-- Opportunities -->
+			{linkingAnalysis.opportunities.length > 0 && (
+				<div class="p-4 border-t border-gray-200 dark:border-gray-700">
+					<h4 class="font-medium text-gray-900 dark:text-white mb-2">Oportunidades</h4>
+					<ul class="space-y-1 text-sm">
+						{linkingAnalysis.opportunities.slice(0, 3).map(opportunity => (
+							<li class="text-gray-600 dark:text-gray-400">• {opportunity}</li>
+						))}
+					</ul>
+				</div>
+			)}
+
+			<!-- Actions -->
+			<div class="p-4 border-t border-gray-200 dark:border-gray-700">
+				<div class="flex gap-2">
+					<button 
+						id="apply-all-links" 
+						class="flex-1 px-3 py-2 text-sm bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+					>
+						📝 Aplicar Todos
+					</button>
+					<button 
+						id="export-links" 
+						class="px-3 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+					>
+						💾 Exportar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+)}
+
+<!-- Automatic Internal Linking for Production -->
+<script define:vars={{ linkingAnalysis, shouldShow }}>
+	document.addEventListener('DOMContentLoaded', () => {
+		const article = document.querySelector('article [data-pagefind-body]');
+		if (!article) return;
+
+		// Apply automatic linking in production
+		if (!shouldShow && linkingAnalysis.suggestions.length > 0) {
+			applyAutomaticLinking();
+		}
+
+		// Development panel functionality
+		if (shouldShow) {
+			setupDevelopmentPanel();
+		}
+
+		function applyAutomaticLinking() {
+			// Apply only high-relevance suggestions automatically
+			const highQualitySuggestions = linkingAnalysis.suggestions
+				.filter(s => s.relevanceScore > 0.7)
+				.slice(0, 3); // Limit to 3 automatic links
+
+			highQualitySuggestions.forEach(suggestion => {
+				applyLinkSuggestion(suggestion);
+			});
+		}
+
+		function setupDevelopmentPanel() {
+			const panel = document.getElementById('internal-linking-panel');
+			const closeBtn = document.getElementById('close-linking-panel');
+			const applyAllBtn = document.getElementById('apply-all-links');
+			const exportBtn = document.getElementById('export-links');
+			const applyBtns = document.querySelectorAll('.apply-link-btn');
+
+			if (!panel) return;
+
+			// Close panel
+			closeBtn?.addEventListener('click', () => {
+				panel.style.display = 'none';
+				localStorage.setItem('internal-linking-hidden', 'true');
+			});
+
+			// Apply individual links
+			applyBtns.forEach(btn => {
+				btn.addEventListener('click', (e) => {
+					const target = e.target;
+					const suggestion = {
+						anchor: target.dataset.anchor,
+						targetUrl: target.dataset.url,
+						targetTitle: target.dataset.title,
+						position: parseInt(target.dataset.position)
+					};
+					
+					if (applyLinkSuggestion(suggestion)) {
+						target.textContent = '✓ Aplicado';
+						target.disabled = true;
+						target.classList.add('bg-green-600');
+					}
+				});
+			});
+
+			// Apply all links
+			applyAllBtn?.addEventListener('click', () => {
+				let applied = 0;
+				linkingAnalysis.suggestions.forEach(suggestion => {
+					if (applyLinkSuggestion(suggestion)) {
+						applied++;
+					}
+				});
+
+				applyAllBtn.textContent = `✓ ${applied} Aplicados`;
+				applyAllBtn.disabled = true;
+
+				// Disable individual buttons
+				applyBtns.forEach(btn => {
+					btn.textContent = '✓ Aplicado';
+					btn.disabled = true;
+					btn.classList.add('bg-green-600');
+				});
+			});
+
+			// Export suggestions
+			exportBtn?.addEventListener('click', () => {
+				const exportData = {
+					timestamp: new Date().toISOString(),
+					url: window.location.href,
+					post: linkingAnalysis.currentPost?.title || 'Unknown',
+					analysis: {
+						linkDensity: linkingAnalysis.linkDensity,
+						anchorTextVariety: linkingAnalysis.anchorTextVariety,
+						suggestions: linkingAnalysis.suggestions,
+						opportunities: linkingAnalysis.opportunities
+					}
+				};
+
+				const blob = new Blob([JSON.stringify(exportData, null, 2)], { 
+					type: 'application/json' 
+				});
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = `internal-links-${new Date().toISOString().split('T')[0]}.json`;
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				URL.revokeObjectURL(url);
+			});
+
+			// Check if should be hidden
+			if (localStorage.getItem('internal-linking-hidden') === 'true') {
+				panel.style.display = 'none';
+			}
+		}
+
+		function applyLinkSuggestion(suggestion) {
+			try {
+				let content = article.innerHTML;
+				const regex = new RegExp(`\\b${escapeRegex(suggestion.anchor)}\\b`, 'i');
+				
+				// Check if already linked
+				if (content.includes(`>${suggestion.anchor}<`)) {
+					return false; // Already linked
+				}
+
+				// Apply the link
+				const linkedText = `<a href="${suggestion.targetUrl}" class="internal-link text-accent-base hover:underline" title="${suggestion.targetTitle}">${suggestion.anchor}</a>`;
+				content = content.replace(regex, linkedText);
+				
+				article.innerHTML = content;
+
+				// Track application
+				if (typeof gtag !== 'undefined') {
+					gtag('event', 'internal_link_applied', {
+						'anchor_text': suggestion.anchor,
+						'target_url': suggestion.targetUrl,
+						'relevance_score': suggestion.relevanceScore
+					});
+				}
+
+				return true;
+			} catch (error) {
+				console.warn('Failed to apply link suggestion:', error);
+				return false;
+			}
+		}
+
+		function escapeRegex(string) {
+			return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		}
+
+		// Performance tracking
+		if (typeof gtag !== 'undefined') {
+			gtag('event', 'internal_linking_analysis', {
+				'suggestions_count': linkingAnalysis.suggestions.length,
+				'link_density': linkingAnalysis.linkDensity,
+				'anchor_variety': linkingAnalysis.anchorTextVariety
+			});
+		}
+	});
+</script>
+
+<style>
+	.internal-link {
+		position: relative;
+	}
+	
+	.internal-link:hover::after {
+		content: '🔗 Enlace interno';
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		background: rgba(0, 0, 0, 0.8);
+		color: white;
+		padding: 4px 8px;
+		border-radius: 4px;
+		font-size: 12px;
+		white-space: nowrap;
+		z-index: 1000;
+		pointer-events: none;
+	}
+	
+	/* Smooth transitions for applied links */
+	.apply-link-btn:disabled {
+		opacity: 0.7;
+		cursor: not-allowed;
+	}
+</style>

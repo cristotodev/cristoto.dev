@@ -1,0 +1,241 @@
+---
+import { optimizeAltText, generateImageSchema } from "@/utils/image-optimization";
+
+interface Props {
+	src: string;
+	alt?: string;
+	title?: string;
+	width?: number;
+	height?: number;
+	loading?: "eager" | "lazy";
+	fetchpriority?: "high" | "low" | "auto";
+	class?: string;
+	caption?: string;
+	author?: string;
+	contextTitle?: string;
+	contextCategory?: string;
+	contextTags?: string[];
+	isHero?: boolean;
+}
+
+const { 
+	src, 
+	alt = "", 
+	title,
+	width, 
+	height, 
+	loading = "lazy",
+	fetchpriority = "auto",
+	class: className = "",
+	caption,
+	author,
+	contextTitle,
+	contextCategory,
+	contextTags = [],
+	isHero = false
+} = Astro.props;
+
+// Generate optimized alt text
+const optimizedAlt = optimizeAltText(alt, {
+	postTitle: contextTitle,
+	category: contextCategory,
+	tags: contextTags,
+	isHero
+});
+
+// Generate WebP and AVIF sources
+const generateModernSources = (originalSrc: string) => {
+	const baseSrc = originalSrc.replace(/\.[^/.]+$/, '');
+	return {
+		avif: `${baseSrc}.avif`,
+		webp: `${baseSrc}.webp`,
+		original: originalSrc
+	};
+};
+
+const sources = generateModernSources(src);
+
+// Generate responsive sizes
+const sizes = width && height 
+	? `(max-width: 768px) 100vw, (max-width: 1024px) 50vw, ${width}px`
+	: "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 800px";
+
+// Generate schema for the image
+const imageSchema = generateImageSchema(src, optimizedAlt, {
+	caption,
+	author,
+	representativeOfPage: isHero
+});
+---
+
+<!-- Image Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(imageSchema, null, 0)} />
+
+<!-- Smart Image with Modern Formats -->
+<figure class={`smart-image-figure ${className}`} itemscope itemtype="https://schema.org/ImageObject">
+	<picture>
+		<!-- AVIF (best compression) -->
+		<source 
+			srcset={sources.avif} 
+			type="image/avif"
+		/>
+		
+		<!-- WebP (good compression, wide support) -->
+		<source 
+			srcset={sources.webp} 
+			type="image/webp"
+		/>
+		
+		<!-- Fallback -->
+		<img 
+			src={sources.original}
+			alt={optimizedAlt}
+			{title}
+			{width}
+			{height}
+			{loading}
+			{fetchpriority}
+			{sizes}
+			class={`smart-image ${className}`}
+			itemprop="contentUrl"
+			data-original-alt={alt}
+			data-enhanced-alt={optimizedAlt}
+		/>
+	</picture>
+	
+	{caption && (
+		<figcaption 
+			class="image-caption text-sm text-textColor/70 mt-2 italic text-center"
+			itemprop="caption"
+		>
+			{caption}
+		</figcaption>
+	)}
+	
+	<!-- Hidden metadata for SEO -->
+	<meta itemprop="name" content={optimizedAlt} />
+	<meta itemprop="description" content={optimizedAlt} />
+	{author && <meta itemprop="author" content={author} />}
+	{width && <meta itemprop="width" content={width} />}
+	{height && <meta itemprop="height" content={height} />}
+</figure>
+
+<style>
+	.smart-image-figure {
+		@apply my-6 text-center;
+		contain: layout style;
+	}
+	
+	.smart-image {
+		@apply w-full h-auto rounded-lg shadow-md;
+		max-width: 100%;
+		object-fit: cover;
+		background-color: #f3f4f6;
+		background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f9fafb' fill-opacity='0.4'%3E%3Cpolygon points='20 0 30 15 20 30 10 15'/%3E%3C/g%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: center;
+		transition: opacity 0.3s ease;
+	}
+	
+	.smart-image:not([src]) {
+		opacity: 0.7;
+	}
+	
+	.smart-image[loading="lazy"] {
+		content-visibility: auto;
+		contain-intrinsic-size: 800px 600px;
+	}
+	
+	.image-caption {
+		@apply text-sm text-textColor/70 mt-2 italic;
+	}
+	
+	/* Loading animation */
+	.smart-image:not(.loaded) {
+		animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	}
+	
+	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.8; }
+	}
+	
+	/* High contrast mode */
+	@media (prefers-contrast: high) {
+		.smart-image {
+			filter: contrast(1.2);
+		}
+	}
+	
+	/* Reduced motion */
+	@media (prefers-reduced-motion: reduce) {
+		.smart-image {
+			transition: none;
+			animation: none;
+		}
+	}
+	
+	/* Dark mode adjustments */
+	@media (prefers-color-scheme: dark) {
+		.smart-image {
+			background-color: #374151;
+		}
+	}
+</style>
+
+<script>
+	// Enhanced image loading with error handling
+	document.addEventListener('DOMContentLoaded', () => {
+		const smartImages = document.querySelectorAll('.smart-image');
+		
+		smartImages.forEach(img => {
+			const handleLoad = () => {
+				img.classList.add('loaded');
+				img.style.opacity = '1';
+				
+				// Report successful load
+				if (typeof gtag !== 'undefined') {
+					gtag('event', 'smart_image_load', {
+						'image_src': img.src.split('/').pop(),
+						'alt_text': img.alt,
+						'enhanced': img.dataset.enhancedAlt !== img.dataset.originalAlt
+					});
+				}
+			};
+			
+			const handleError = () => {
+				console.warn('Smart image failed to load:', img.src);
+				
+				// Try fallback formats
+				const picture = img.closest('picture');
+				if (picture) {
+					const sources = picture.querySelectorAll('source');
+					sources.forEach(source => {
+						source.remove();
+					});
+				}
+				
+				// Add error state
+				img.style.backgroundColor = '#fee2e2';
+				img.style.border = '2px dashed #fca5a5';
+				img.alt = img.alt || 'Imagen no disponible';
+				
+				// Report error
+				if (typeof gtag !== 'undefined') {
+					gtag('event', 'smart_image_error', {
+						'image_src': img.src.split('/').pop(),
+						'error_type': 'load_failure'
+					});
+				}
+			};
+			
+			img.addEventListener('load', handleLoad);
+			img.addEventListener('error', handleError);
+			
+			// If already loaded
+			if (img.complete && img.naturalWidth > 0) {
+				handleLoad();
+			}
+		});
+	});
+</script>

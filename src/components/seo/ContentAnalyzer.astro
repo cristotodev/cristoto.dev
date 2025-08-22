@@ -1,0 +1,336 @@
+---
+import { analyzeContent } from "@/utils/content-analysis";
+
+interface Props {
+	content: string;
+	title: string;
+	description: string;
+	tags?: string[];
+	showInProduction?: boolean;
+}
+
+const { content, title, description, tags = [], showInProduction = false } = Astro.props;
+
+// Analyze content
+const analysis = analyzeContent(content, title, description, tags);
+
+// Show only in development or if explicitly enabled in production
+const shouldShow = import.meta.env.DEV || showInProduction;
+
+// Helper function to get score color
+const getScoreColor = (score: number) => {
+	if (score >= 80) return 'text-green-600 bg-green-100 dark:bg-green-900 dark:text-green-300';
+	if (score >= 60) return 'text-yellow-600 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-300';
+	if (score >= 40) return 'text-orange-600 bg-orange-100 dark:bg-orange-900 dark:text-orange-300';
+	return 'text-red-600 bg-red-100 dark:bg-red-900 dark:text-red-300';
+};
+
+// Helper function to get density color
+const getDensityColor = (isOptimal: boolean) => 
+	isOptimal ? 'text-green-600' : 'text-orange-600';
+---
+
+{shouldShow && (
+	<div class="fixed top-4 right-4 max-w-md w-full z-50" id="content-analyzer">
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 max-h-[80vh] overflow-auto">
+			<!-- Header -->
+			<div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+				<h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+					📊 Análisis SEO
+					<span class={`px-2 py-1 rounded text-sm font-medium ${getScoreColor(analysis.contentQuality.score)}`}>
+						{analysis.contentQuality.score}/100
+					</span>
+				</h3>
+				<button 
+					id="close-analyzer" 
+					class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+					aria-label="Cerrar análisis"
+				>
+					✕
+				</button>
+			</div>
+
+			<!-- Content Metrics -->
+			<div class="p-4 space-y-4">
+				<!-- Overview -->
+				<div class="grid grid-cols-2 gap-3 text-sm">
+					<div class="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+						<div class="font-medium text-gray-700 dark:text-gray-300">Palabras</div>
+						<div class="text-xl font-bold text-gray-900 dark:text-white">{analysis.wordCount}</div>
+					</div>
+					<div class="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+						<div class="font-medium text-gray-700 dark:text-gray-300">Lectura</div>
+						<div class="text-xl font-bold text-gray-900 dark:text-white">{analysis.readingTime} min</div>
+					</div>
+				</div>
+
+				<!-- Quality Factors -->
+				<div class="space-y-2">
+					<h4 class="font-medium text-gray-900 dark:text-white">Factores de Calidad</h4>
+					{Object.entries(analysis.contentQuality.factors).map(([key, factor]) => (
+						<div class="flex items-center justify-between text-sm">
+							<span class="text-gray-700 dark:text-gray-300 capitalize">{key}</span>
+							<div class="flex items-center gap-2">
+								<span class={`px-2 py-1 rounded text-xs ${getScoreColor(factor.score)}`}>
+									{factor.score}
+								</span>
+								<span class="text-gray-500 dark:text-gray-400 text-xs max-w-32 truncate" title={factor.message}>
+									{factor.message}
+								</span>
+							</div>
+						</div>
+					))}
+				</div>
+
+				<!-- Top Keywords -->
+				{analysis.keywordDensity.length > 0 && (
+					<div class="space-y-2">
+						<h4 class="font-medium text-gray-900 dark:text-white">Keywords Principales</h4>
+						<div class="space-y-1 max-h-32 overflow-y-auto">
+							{analysis.keywordDensity.slice(0, 5).map(keyword => (
+								<div class="flex items-center justify-between text-sm">
+									<span class="text-gray-700 dark:text-gray-300 font-mono text-xs">
+										{keyword.keyword}
+									</span>
+									<div class="flex items-center gap-2">
+										<span class={`font-medium ${getDensityColor(keyword.isOptimal)}`}>
+											{keyword.density}%
+										</span>
+										<span class="text-gray-500 dark:text-gray-400 text-xs">
+											({keyword.count}x)
+										</span>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				)}
+
+				<!-- Heading Structure -->
+				{analysis.headingStructure.structure.length > 0 && (
+					<div class="space-y-2">
+						<h4 class="font-medium text-gray-900 dark:text-white">Estructura de Títulos</h4>
+						<div class="text-sm space-y-1">
+							<div class="flex gap-4 text-xs text-gray-600 dark:text-gray-400">
+								<span>H1: {analysis.headingStructure.h1Count}</span>
+								<span>H2: {analysis.headingStructure.h2Count}</span>
+								<span>H3: {analysis.headingStructure.h3Count}</span>
+							</div>
+						</div>
+					</div>
+				)}
+
+				<!-- Readability -->
+				<div class="space-y-2">
+					<h4 class="font-medium text-gray-900 dark:text-white">Legibilidad</h4>
+					<div class="flex items-center justify-between">
+						<span class="text-sm text-gray-700 dark:text-gray-300">Puntuación Flesch</span>
+						<span class={`px-2 py-1 rounded text-sm font-medium ${getScoreColor(analysis.readabilityScore)}`}>
+							{Math.round(analysis.readabilityScore)}/100
+						</span>
+					</div>
+				</div>
+
+				<!-- Warnings -->
+				{analysis.warnings.length > 0 && (
+					<div class="space-y-2">
+						<h4 class="font-medium text-red-700 dark:text-red-400">⚠️ Advertencias</h4>
+						<ul class="space-y-1 text-sm">
+							{analysis.warnings.slice(0, 3).map(warning => (
+								<li class="text-red-600 dark:text-red-400">• {warning}</li>
+							))}
+						</ul>
+					</div>
+				)}
+
+				<!-- Suggestions -->
+				{analysis.seoSuggestions.length > 0 && (
+					<div class="space-y-2">
+						<h4 class="font-medium text-blue-700 dark:text-blue-400">💡 Sugerencias</h4>
+						<ul class="space-y-1 text-sm max-h-32 overflow-y-auto">
+							{analysis.seoSuggestions.slice(0, 5).map(suggestion => (
+								<li class="text-blue-600 dark:text-blue-400">• {suggestion}</li>
+							))}
+						</ul>
+					</div>
+				)}
+
+				<!-- Actions -->
+				<div class="pt-2 border-t border-gray-200 dark:border-gray-700">
+					<div class="flex gap-2">
+						<button 
+							id="export-analysis" 
+							class="flex-1 px-3 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+						>
+							📋 Exportar
+						</button>
+						<button 
+							id="toggle-analyzer" 
+							class="px-3 py-2 text-sm bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+						>
+							👁️ Minimizar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Minimized version -->
+		<div id="analyzer-minimized" class="hidden bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-3">
+			<div class="flex items-center justify-between">
+				<div class="flex items-center gap-2">
+					<span class="text-sm font-medium text-gray-900 dark:text-white">SEO</span>
+					<span class={`px-2 py-1 rounded text-xs font-medium ${getScoreColor(analysis.contentQuality.score)}`}>
+						{analysis.contentQuality.score}
+					</span>
+				</div>
+				<button 
+					id="expand-analyzer" 
+					class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-sm"
+				>
+					📊
+				</button>
+			</div>
+		</div>
+	</div>
+)}
+
+<!-- Schema for Content Analysis -->
+{analysis.contentQuality.score > 70 && (
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "AnalysisNewsArticle",
+		"wordCount": analysis.wordCount,
+		"timeRequired": `PT${analysis.readingTime}M`,
+		"about": tags.slice(0, 3).map(tag => ({
+			"@type": "Thing",
+			"name": tag
+		}))
+	}, null, 0)} />
+)}
+
+<script define:vars={{ analysis }}>
+	document.addEventListener('DOMContentLoaded', () => {
+		const analyzer = document.getElementById('content-analyzer');
+		const minimized = document.getElementById('analyzer-minimized');
+		const closeBtn = document.getElementById('close-analyzer');
+		const toggleBtn = document.getElementById('toggle-analyzer');
+		const expandBtn = document.getElementById('expand-analyzer');
+		const exportBtn = document.getElementById('export-analysis');
+
+		if (!analyzer) return;
+
+		// Close analyzer
+		closeBtn?.addEventListener('click', () => {
+			analyzer.style.display = 'none';
+			localStorage.setItem('content-analyzer-hidden', 'true');
+		});
+
+		// Toggle minimized state
+		toggleBtn?.addEventListener('click', () => {
+			analyzer.style.display = 'none';
+			minimized.classList.remove('hidden');
+		});
+
+		expandBtn?.addEventListener('click', () => {
+			minimized.classList.add('hidden');
+			analyzer.style.display = 'block';
+		});
+
+		// Export analysis
+		exportBtn?.addEventListener('click', () => {
+			const reportData = {
+				timestamp: new Date().toISOString(),
+				url: window.location.href,
+				analysis: analysis,
+				summary: {
+					score: analysis.contentQuality.score,
+					wordCount: analysis.wordCount,
+					readingTime: analysis.readingTime,
+					keywordsCount: analysis.keywordDensity.length,
+					warningsCount: analysis.warnings.length,
+					suggestionsCount: analysis.seoSuggestions.length
+				}
+			};
+
+			const blob = new Blob([JSON.stringify(reportData, null, 2)], { 
+				type: 'application/json' 
+			});
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `seo-analysis-${new Date().toISOString().split('T')[0]}.json`;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+
+			// Track export
+			if (typeof gtag !== 'undefined') {
+				gtag('event', 'seo_analysis_export', {
+					'score': analysis.contentQuality.score,
+					'word_count': analysis.wordCount,
+					'warnings': analysis.warnings.length
+				});
+			}
+		});
+
+		// Check if should be hidden
+		if (localStorage.getItem('content-analyzer-hidden') === 'true') {
+			analyzer.style.display = 'none';
+		}
+
+		// Auto-minimize after 10 seconds if score is good
+		if (analysis.contentQuality.score >= 80) {
+			setTimeout(() => {
+				if (analyzer.style.display !== 'none') {
+					toggleBtn?.click();
+				}
+			}, 10000);
+		}
+
+		// Report to analytics
+		if (typeof gtag !== 'undefined') {
+			gtag('event', 'content_analysis_view', {
+				'content_score': analysis.contentQuality.score,
+				'word_count': analysis.wordCount,
+				'reading_time': analysis.readingTime,
+				'warnings_count': analysis.warnings.length
+			});
+		}
+	});
+</script>
+
+<style>
+	/* Custom scrollbar for analyzer */
+	#content-analyzer ::-webkit-scrollbar {
+		width: 4px;
+	}
+	
+	#content-analyzer ::-webkit-scrollbar-track {
+		background: #f1f1f1;
+		border-radius: 2px;
+	}
+	
+	#content-analyzer ::-webkit-scrollbar-thumb {
+		background: #c1c1c1;
+		border-radius: 2px;
+	}
+	
+	#content-analyzer ::-webkit-scrollbar-thumb:hover {
+		background: #a8a8a8;
+	}
+
+	/* Dark mode scrollbar */
+	.dark #content-analyzer ::-webkit-scrollbar-track {
+		background: #374151;
+	}
+	
+	.dark #content-analyzer ::-webkit-scrollbar-thumb {
+		background: #6b7280;
+	}
+	
+	.dark #content-analyzer ::-webkit-scrollbar-thumb:hover {
+		background: #9ca3af;
+	}
+</style>

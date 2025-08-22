@@ -24,16 +24,17 @@ const structuredData = {
 
 <script type="application/ld+json" set:html={JSON.stringify(structuredData, null, 0)} />
 
-<nav aria-label="Breadcrumb" class="mb-6">
-	<ol class="flex items-center space-x-2 text-sm text-textColor/70">
+<nav aria-label="Breadcrumb" class="mb-6" role="navigation">
+	<ol class="flex flex-wrap items-center gap-1 text-sm text-textColor/70" itemscope itemtype="https://schema.org/BreadcrumbList">
 		{items.map((item, index) => (
-			<li class="flex items-center">
+			<li class="flex items-center" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 				{index > 0 && (
 					<svg
-						class="w-4 h-4 mx-2"
+						class="w-4 h-4 mx-2 text-textColor/50"
 						fill="currentColor"
 						viewBox="0 0 20 20"
 						xmlns="http://www.w3.org/2000/svg"
+						aria-hidden="true"
 					>
 						<path
 							fill-rule="evenodd"
@@ -45,16 +46,18 @@ const structuredData = {
 				{item.url ? (
 					<a
 						href={item.url}
-						class="hover:text-accent-base transition-colors"
+						class="hover:text-accent-base transition-colors underline-offset-2 hover:underline"
+						itemprop="item"
 						{...(index === items.length - 1 && { "aria-current": "page" })}
 					>
-						{item.label}
+						<span itemprop="name">{item.label}</span>
 					</a>
 				) : (
-					<span class="text-textColor" aria-current="page">
+					<span class="text-textColor font-medium" aria-current="page" itemprop="name">
 						{item.label}
 					</span>
 				)}
+				<meta itemprop="position" content={String(index + 1)} />
 			</li>
 		))}
 	</ol>

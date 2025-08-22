@@ -8,9 +8,11 @@ import SeriesPanel from "@/components/SeriesPanel.astro";
 import StructuredData from "@/components/StructuredData.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import AutoSchema from "@/components/seo/AutoSchema.astro";
-import ImageOptimizer from "@/components/ImageOptimizer.astro";
+import AdvancedImageOptimizer from "@/components/seo/AdvancedImageOptimizer.astro";
+import ContentAnalyzer from "@/components/seo/ContentAnalyzer.astro";
+import { siteConfig } from "@/site.config";
 import RelatedPosts from "@/components/RelatedPosts.astro";
-import InternalLinker from "@/components/InternalLinker.astro";
+import SmartInternalLinker from "@/components/seo/SmartInternalLinker.astro";
 import { Icon } from "astro-icon/components";
 
 interface Props {
@@ -107,22 +109,32 @@ const breadcrumbItems = [
 			<!-- Auto-detected Schema Markup -->
 			<AutoSchema post={post} content={rawContent} />
 			
-			<!-- Image Optimization -->
-			<ImageOptimizer 
+			<!-- Advanced Image Optimization -->
+			<AdvancedImageOptimizer 
 				content={rawContent} 
 				postTitle={title}
 				category={category || undefined}
 				tags={tags}
+				author={siteConfig.author}
+				publishDate={publishDate.toISOString()}
 			/>
 			
 			<!-- Internal Linking -->
-			<InternalLinker currentPost={post} content={rawContent} />
+			<SmartInternalLinker currentPost={post} content={rawContent} />
 			
 			<!-- Related Posts -->
 			<RelatedPosts currentPost={post} />
 			
 			<WebMentions />
 		</article>
+		
+		<!-- Content Analysis (Development and SEO insights) -->
+		<ContentAnalyzer 
+			content={rawContent}
+			title={title}
+			description={description}
+			tags={tags}
+		/>
 		{!!headings.length && (
 			<aside 
 				id="toc-panel" 

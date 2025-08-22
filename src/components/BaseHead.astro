@@ -48,9 +48,18 @@ const socialImageURL = new URL(
 <meta content={optimizedTitle} name="title" />
 <meta content={optimizedDescription} name="description" />
 <meta content={siteConfig.author} name="author" />
+<meta content={siteConfig.title} name="publisher" />
+<meta content={siteConfig.lang} name="language" />
+<meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots" />
+
+{/* Keywords */}
+{tags && tags.length > 0 && (
+	<meta content={tags.join(", ")} name="keywords" />
+)}
 
 {/* Theme Colour */}
-<meta content="" name="theme-color" />
+<meta content="#3b82f6" name="theme-color" />
+<meta content="#3b82f6" name="msapplication-TileColor" />
 
 {/* Open Graph / Facebook */}
 <meta content={articleDate ? "article" : "website"} property="og:type" />
@@ -67,6 +76,10 @@ const socialImageURL = new URL(
 		<>
 			<meta content={siteConfig.author} property="article:author" />
 			<meta content={articleDate} property="article:published_time" />
+			{category && <meta content={category} property="article:section" />}
+			{tags && tags.slice(0, 6).map(tag => (
+				<meta content={tag} property="article:tag" />
+			))}
 		</>
 	)
 }
@@ -102,3 +115,34 @@ const socialImageURL = new URL(
 }
 
 <meta content={Astro.generator} name="generator" />
+
+{/* Performance Optimizations */}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+{/* Critical CSS preload */}
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+
+{/* Schema.org JSON-LD */}
+<script type="application/ld+json" set:html={JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"name": siteConfig.title,
+	"description": siteConfig.description,
+	"url": canonicalURL.origin,
+	"author": {
+		"@type": "Person",
+		"name": siteConfig.author
+	},
+	"potentialAction": {
+		"@type": "SearchAction",
+		"target": `${canonicalURL.origin}/search?q={search_term_string}`,
+		"query-input": "required name=search_term_string"
+	}
+}, null, 0)} />
+
+{/* Security Headers */}
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-Frame-Options" content="DENY" />
+<meta http-equiv="X-XSS-Protection" content="1; mode=block" />

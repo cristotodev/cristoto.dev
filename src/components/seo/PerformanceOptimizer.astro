@@ -1,0 +1,118 @@
+---
+// Performance optimization component
+// Adds critical resource hints and optimizations
+---
+
+<!-- Critical Resource Hints -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="dns-prefetch" href="https://www.google-analytics.com" />
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
+<!-- Preload Critical Resources -->
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/css/critical.css" as="style" />
+
+<!-- Early Hints for Navigation -->
+<link rel="prefetch" href="/posts/" />
+<link rel="prefetch" href="/about/" />
+<link rel="prefetch" href="/contact/" />
+
+<!-- Resource Hints for External Services -->
+<link rel="preconnect" href="https://analytics.google.com" />
+<link rel="preconnect" href="https://www.googletagmanager.com" />
+
+<script>
+	// Performance optimizations
+	document.addEventListener('DOMContentLoaded', () => {
+		// Prefetch links on hover
+		const links = document.querySelectorAll('a[href^="/"]');
+		links.forEach(link => {
+			link.addEventListener('mouseenter', () => {
+				const url = link.getAttribute('href');
+				if (url && !document.querySelector(`link[rel="prefetch"][href="${url}"]`)) {
+					const prefetchLink = document.createElement('link');
+					prefetchLink.rel = 'prefetch';
+					prefetchLink.href = url;
+					document.head.appendChild(prefetchLink);
+				}
+			});
+		});
+
+		// Lazy load images below the fold
+		if ('IntersectionObserver' in window) {
+			const imageObserver = new IntersectionObserver((entries, observer) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						const img = entry.target;
+						if (img.dataset.src) {
+							img.src = img.dataset.src;
+							img.removeAttribute('data-src');
+						}
+						if (img.dataset.srcset) {
+							img.srcset = img.dataset.srcset;
+							img.removeAttribute('data-srcset');
+						}
+						img.classList.remove('lazy');
+						observer.unobserve(img);
+					}
+				});
+			});
+
+			document.querySelectorAll('img[data-src]').forEach(img => {
+				imageObserver.observe(img);
+			});
+		}
+
+		// Preload next page on scroll to bottom
+		let nextPagePreloaded = false;
+		const preloadNextPage = () => {
+			if (nextPagePreloaded) return;
+			
+			const scrollPosition = window.pageYOffset;
+			const documentHeight = document.documentElement.scrollHeight;
+			const windowHeight = window.innerHeight;
+			
+			if (scrollPosition + windowHeight >= documentHeight * 0.8) {
+				const nextPageLink = document.querySelector('a[rel="next"]');
+				if (nextPageLink) {
+					const prefetchLink = document.createElement('link');
+					prefetchLink.rel = 'prefetch';
+					prefetchLink.href = nextPageLink.href;
+					document.head.appendChild(prefetchLink);
+					nextPagePreloaded = true;
+				}
+			}
+		};
+
+		window.addEventListener('scroll', preloadNextPage, { passive: true });
+	});
+</script>
+
+<!-- Inline Critical CSS -->
+<style>
+	/* Critical above-the-fold styles */
+	.lazy {
+		opacity: 0;
+		transition: opacity 0.3s;
+	}
+	
+	.lazy-loaded {
+		opacity: 1;
+	}
+	
+	/* Prevent layout shift */
+	img {
+		height: auto;
+		max-width: 100%;
+	}
+	
+	/* Critical font loading */
+	@font-face {
+		font-family: 'Inter';
+		font-style: normal;
+		font-weight: 400;
+		font-display: swap;
+		src: url('/fonts/inter.woff2') format('woff2');
+	}
+</style>
