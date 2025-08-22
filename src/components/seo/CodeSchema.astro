@@ -1,0 +1,81 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	programmingLanguage: string;
+	codeRepository?: string;
+	runtimePlatform?: string;
+	codeSampleType?: "full-solution" | "code-snippet" | "inline-code";
+	applicationCategory?: string;
+}
+
+const { 
+	title, 
+	description, 
+	programmingLanguage, 
+	codeRepository, 
+	runtimePlatform, 
+	codeSampleType = "code-snippet",
+	applicationCategory 
+} = Astro.props;
+
+const softwareSourceCodeSchema = {
+	"@context": "https://schema.org",
+	"@type": "SoftwareSourceCode",
+	"name": title,
+	"description": description,
+	"programmingLanguage": {
+		"@type": "ComputerLanguage",
+		"name": programmingLanguage
+	},
+	"codeSampleType": codeSampleType,
+	...(codeRepository && { "codeRepository": codeRepository }),
+	...(runtimePlatform && { "runtimePlatform": runtimePlatform }),
+	...(applicationCategory && { "applicationCategory": applicationCategory }),
+	"author": {
+		"@type": "Person",
+		"name": "Cristo Manuel Estévez Hernández",
+		"url": "https://cristoto.dev/about/"
+	},
+	"datePublished": new Date().toISOString(),
+	"inLanguage": "es-ES"
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(softwareSourceCodeSchema, null, 0)} />
+
+<!-- Code Info Card -->
+<div class="code-info-card mt-6 p-4 bg-accent-base/5 border border-accent-base/20 rounded-lg">
+	<div class="flex items-start justify-between">
+		<div class="flex-grow">
+			<h3 class="font-semibold text-accent-base mb-2">{title}</h3>
+			<p class="text-sm text-textColor/80 mb-3">{description}</p>
+			<div class="flex flex-wrap gap-2">
+				<span class="inline-block px-2 py-1 bg-accent-base text-white text-xs rounded">
+					{programmingLanguage}
+				</span>
+				{runtimePlatform && (
+					<span class="inline-block px-2 py-1 bg-accent-two/20 text-accent-two text-xs rounded">
+						{runtimePlatform}
+					</span>
+				)}
+				{codeSampleType && (
+					<span class="inline-block px-2 py-1 bg-special-lighter text-textColor text-xs rounded">
+						{codeSampleType === "full-solution" ? "Solución Completa" :
+						 codeSampleType === "code-snippet" ? "Fragmento" : "Código Inline"}
+					</span>
+				)}
+			</div>
+		</div>
+		{codeRepository && (
+			<a 
+				href={codeRepository}
+				class="ml-4 text-accent-base hover:text-accent-base/80 text-sm font-medium"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Ver Repo →
+			</a>
+		)}
+	</div>
+</div>

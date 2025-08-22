@@ -1,0 +1,210 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { getAllPosts } from "@/data/post";
+import { suggestInternalLinks } from "@/utils/internal-linking";
+
+interface Props {
+	currentPost: CollectionEntry<"post">;
+	content: string;
+}
+
+const { currentPost, content } = Astro.props;
+
+const allPosts = await getAllPosts();
+const linkSuggestions = suggestInternalLinks(
+	content,
+	{
+		id: currentPost.id,
+		title: currentPost.data.title,
+		tags: currentPost.data.tags || []
+	},
+	allPosts
+);
+---
+
+<!-- Internal linking enhancement script -->
+<script define:vars={{ linkSuggestions }}>
+	document.addEventListener('DOMContentLoaded', () => {
+		const article = document.querySelector('article [data-pagefind-body]');
+		if (!article) return;
+		
+		let articleHTML = article.innerHTML;
+		const processedPositions = new Set();
+		
+		// Sort suggestions by position (process from end to start to maintain positions)
+		const sortedSuggestions = linkSuggestions
+			.sort((a, b) => b.position - a.position)
+			.filter(suggestion => suggestion.confidence > 0.5); // Only high confidence links
+		
+		// Process each suggestion
+		sortedSuggestions.forEach(suggestion => {
+			const { anchor, targetPost, position, confidence } = suggestion;
+			
+			// Skip if we've already processed nearby text
+			const nearbyProcessed = Array.from(processedPositions).some(pos => 
+				Math.abs(pos - position) < anchor.length + 10
+			);
+			
+			if (nearbyProcessed) return;
+			
+			// Create link HTML
+			const linkHTML = `<a href="${targetPost.url}" class="internal-link" data-confidence="${confidence.toFixed(2)}" title="${targetPost.description || targetPost.title}">${anchor}</a>`;
+			
+			// Find the anchor text in current HTML and replace it
+			// Use word boundaries to avoid partial matches
+			const regex = new RegExp(`\\b${anchor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+			const match = articleHTML.match(regex);
+			
+			if (match) {
+				articleHTML = articleHTML.replace(regex, linkHTML);
+				processedPositions.add(position);
+			}
+		});
+		
+		// Update article content
+		article.innerHTML = articleHTML;
+		
+		// Add visual enhancements for internal links
+		const internalLinks = article.querySelectorAll('.internal-link');
+		internalLinks.forEach(link => {
+			// Add hover effect
+			link.addEventListener('mouseenter', function() {
+				this.style.background = 'linear-gradient(120deg, rgba(var(--accent-base-rgb), 0.1) 0%, rgba(var(--accent-base-rgb), 0.2) 100%)';
+				this.style.borderRadius = '3px';
+				this.style.padding = '1px 3px';
+				
+				// Show preview tooltip
+				const confidence = this.getAttribute('data-confidence');
+				const title = this.getAttribute('title');
+				
+				if (title) {
+					const tooltip = document.createElement('div');
+					tooltip.className = 'link-tooltip';
+					tooltip.innerHTML = `
+						<div class="tooltip-content">
+							<strong>${title}</strong>
+							<div class="tooltip-meta">Relevancia: ${(parseFloat(confidence) * 100).toFixed(0)}%</div>
+						</div>
+					`;
+					
+					document.body.appendChild(tooltip);
+					
+					// Position tooltip
+					const rect = this.getBoundingClientRect();
+					tooltip.style.left = rect.left + 'px';
+					tooltip.style.top = (rect.bottom + 10) + 'px';
+					
+					// Remove tooltip after delay
+					setTimeout(() => tooltip.remove(), 3000);
+				}
+			});
+			
+			link.addEventListener('mouseleave', function() {
+				this.style.background = '';
+				this.style.borderRadius = '';
+				this.style.padding = '';
+			});
+			
+			// Track internal link clicks
+			link.addEventListener('click', function() {
+				if (typeof gtag !== 'undefined') {
+					gtag('event', 'internal_link_click', {
+						'link_url': this.href,
+						'link_text': this.textContent,
+						'confidence': this.getAttribute('data-confidence'),
+						'source_page': window.location.pathname
+					});
+				}
+			});
+		});
+		
+		// Log internal linking stats for development
+		if (import.meta.env.DEV && internalLinks.length > 0) {
+			console.log(`🔗 Added ${internalLinks.length} internal links:`, 
+				Array.from(internalLinks).map(link => ({
+					text: link.textContent,
+					url: link.href,
+					confidence: link.getAttribute('data-confidence')
+				}))
+			);
+		}
+	});
+</script>
+
+<!-- Development insights -->
+{import.meta.env.DEV && linkSuggestions.length > 0 && (
+	<div class="mt-4 p-4 bg-green-100 dark:bg-green-900 rounded-lg">
+		<h3 class="font-semibold text-green-800 dark:text-green-200 mb-2">
+			Internal Links Detected (DEV)
+		</h3>
+		<ul class="text-sm text-green-700 dark:text-green-300 space-y-1">
+			{linkSuggestions.map(suggestion => (
+				<li>
+					• <strong>"{suggestion.anchor}"</strong> → {suggestion.targetPost.title} 
+					<span class="text-xs">({(suggestion.confidence * 100).toFixed(0)}% confidence)</span>
+				</li>
+			))}
+		</ul>
+	</div>
+)}
+
+<style is:global>
+	/* Internal link styles */
+	.internal-link {
+		@apply text-accent-base font-medium;
+		text-decoration: underline;
+		text-decoration-color: rgba(var(--accent-base-rgb), 0.3);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 2px;
+		transition: all 0.2s ease;
+	}
+	
+	.internal-link:hover {
+		@apply text-accent-base;
+		text-decoration-color: rgba(var(--accent-base-rgb), 0.8);
+	}
+	
+	/* Tooltip styles */
+	.link-tooltip {
+		position: absolute;
+		z-index: 1000;
+		background: white;
+		border: 1px solid rgba(var(--accent-base-rgb), 0.2);
+		border-radius: 8px;
+		padding: 8px 12px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		font-size: 14px;
+		max-width: 300px;
+		pointer-events: none;
+	}
+	
+	.dark .link-tooltip {
+		background: var(--bg-color);
+		border-color: rgba(var(--accent-base-rgb), 0.3);
+		color: var(--text-color);
+	}
+	
+	.tooltip-content strong {
+		display: block;
+		margin-bottom: 4px;
+		color: var(--accent-base);
+	}
+	
+	.tooltip-meta {
+		font-size: 12px;
+		color: var(--text-color-lighter);
+	}
+	
+	/* Visual indicator for auto-linked content */
+	.internal-link::after {
+		content: "🔗";
+		font-size: 0.7em;
+		margin-left: 2px;
+		opacity: 0;
+		transition: opacity 0.2s ease;
+	}
+	
+	.internal-link:hover::after {
+		opacity: 0.6;
+	}
+</style>

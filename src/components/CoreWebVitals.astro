@@ -1,0 +1,244 @@
+---
+// Core Web Vitals optimization component
+// Focuses on LCP, FID, and CLS improvements
+---
+
+<!-- Critical resource preloading -->
+<link rel="preload" href="/icon.svg" as="image" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+
+<!-- DNS prefetch for external resources -->
+<link rel="dns-prefetch" href="//webmention.io">
+<link rel="dns-prefetch" href="//www.google-analytics.com">
+
+<!-- Core Web Vitals optimization script -->
+<script>
+	// Performance monitoring and optimization
+	(function() {
+		// Largest Contentful Paint (LCP) optimization
+		const optimizeLCP = () => {
+			// Preload hero images
+			const heroImage = document.querySelector('article img:first-of-type, [data-hero-image]');
+			if (heroImage && !heroImage.complete) {
+				const preloadLink = document.createElement('link');
+				preloadLink.rel = 'preload';
+				preloadLink.as = 'image';
+				preloadLink.href = heroImage.src || heroImage.dataset.src;
+				document.head.appendChild(preloadLink);
+			}
+			
+			// Optimize font loading
+			const criticalFonts = document.querySelectorAll('link[rel="preload"][as="font"]');
+			if (criticalFonts.length === 0) {
+				// Add font preloading if not present
+				const fontPreload = document.createElement('link');
+				fontPreload.rel = 'preload';
+				fontPreload.as = 'font';
+				fontPreload.type = 'font/woff2';
+				fontPreload.crossOrigin = 'anonymous';
+				// Add your critical font URL here if needed
+			}
+		};
+		
+		// First Input Delay (FID) optimization
+		const optimizeFID = () => {
+			// Defer non-critical JavaScript
+			const scripts = document.querySelectorAll('script:not([async]):not([defer])');
+			scripts.forEach(script => {
+				if (!script.src.includes('gtag') && !script.textContent.includes('dataLayer')) {
+					script.defer = true;
+				}
+			});
+			
+			// Break up long tasks
+			const breakUpLongTasks = (callback, ...args) => {
+				if ('requestIdleCallback' in window) {
+					requestIdleCallback(() => callback(...args));
+				} else {
+					setTimeout(() => callback(...args), 0);
+				}
+			};
+			
+			// Use for non-critical operations
+			window.breakUpLongTasks = breakUpLongTasks;
+		};
+		
+		// Cumulative Layout Shift (CLS) optimization
+		const optimizeCLS = () => {
+			// Add explicit dimensions to images without them
+			const images = document.querySelectorAll('img:not([width]):not([height])');
+			images.forEach(img => {
+				img.addEventListener('load', function() {
+					// Set intrinsic dimensions to prevent layout shift
+					if (!this.width || !this.height) {
+						this.style.aspectRatio = `${this.naturalWidth} / ${this.naturalHeight}`;
+					}
+				});
+			});
+			
+			// Reserve space for dynamic content
+			const dynamicElements = document.querySelectorAll('[data-dynamic-content]');
+			dynamicElements.forEach(el => {
+				if (!el.style.minHeight) {
+					el.style.minHeight = el.dataset.minHeight || '100px';
+				}
+			});
+			
+			// Prevent layout shifts from web fonts
+			document.documentElement.style.setProperty('font-display', 'swap');
+		};
+		
+		// Resource hints optimization
+		const optimizeResourceHints = () => {
+			// Prefetch next likely pages
+			const internalLinks = document.querySelectorAll('a[href^="/posts/"]:not([data-prefetched])');
+			const linkPrefetchObserver = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						const link = entry.target;
+						const prefetchLink = document.createElement('link');
+						prefetchLink.rel = 'prefetch';
+						prefetchLink.href = link.href;
+						document.head.appendChild(prefetchLink);
+						link.dataset.prefetched = 'true';
+						linkPrefetchObserver.unobserve(link);
+					}
+				});
+			}, { threshold: 0.5 });
+			
+			// Only prefetch first 3 visible links to avoid overdoing it
+			Array.from(internalLinks).slice(0, 3).forEach(link => {
+				linkPrefetchObserver.observe(link);
+			});
+		};
+		
+		// Critical rendering path optimization
+		const optimizeCriticalPath = () => {
+			// Inline critical CSS (this would be done at build time typically)
+			const criticalCSS = document.querySelector('style[data-astro-dev-id]');
+			if (criticalCSS) {
+				criticalCSS.media = 'all';
+			}
+			
+			// Lazy load non-critical CSS
+			const nonCriticalCSS = document.querySelectorAll('link[rel="stylesheet"]:not([data-critical])');
+			nonCriticalCSS.forEach(link => {
+				link.media = 'print';
+				link.onload = function() { this.media = 'all'; };
+			});
+		};
+		
+		// Initialize optimizations
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', () => {
+				optimizeLCP();
+				optimizeFID();
+				optimizeCLS();
+				optimizeResourceHints();
+				optimizeCriticalPath();
+			});
+		} else {
+			optimizeLCP();
+			optimizeFID();
+			optimizeCLS();
+			optimizeResourceHints();
+			optimizeCriticalPath();
+		}
+		
+		// Performance monitoring (only in production)
+		if (typeof gtag !== 'undefined' && !window.location.hostname.includes('localhost')) {
+			// Web Vitals reporting
+			const reportWebVitals = (metric: any) => {
+				gtag('event', metric.name, {
+					event_category: 'Web Vitals',
+					event_label: metric.id,
+					value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+					non_interaction: true,
+				});
+			};
+			
+			// Import and use web-vitals library if available
+			// if (typeof webVitals !== 'undefined') {
+			//	 webVitals.getCLS(reportWebVitals);
+			//	 webVitals.getFID(reportWebVitals);
+			//	 webVitals.getFCP(reportWebVitals);
+			//	 webVitals.getLCP(reportWebVitals);
+			//	 webVitals.getTTFB(reportWebVitals);
+			// }
+		}
+		
+		// Performance budget monitoring (development only) 
+		// Commented out due to TypeScript issues
+		// if (import.meta.env.DEV) {
+		//   setTimeout(() => {
+		//     const performanceEntries = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+		//     if (performanceEntries) {
+		//       console.log('Performance metrics available');
+		//     }
+		//   }, 2000);
+		// }
+	})();
+</script>
+
+<!-- Service Worker registration for caching (production only) -->
+{import.meta.env.PROD && (
+	<script>
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', () => {
+				navigator.serviceWorker.register('/sw.js')
+					.then(registration => {
+						console.log('SW registered: ', registration);
+					})
+					.catch(registrationError => {
+						console.log('SW registration failed: ', registrationError);
+					});
+			});
+		}
+	</script>
+)}
+
+<!-- Critical CSS inlining placeholder -->
+<style data-critical>
+	/* Critical above-the-fold styles would go here in a real implementation */
+	/* This would typically be extracted and inlined during build */
+	
+	/* Prevent layout shift from loading states */
+	.loading-skeleton {
+		background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+		background-size: 200% 100%;
+		animation: loading 1.5s infinite;
+	}
+	
+	@keyframes loading {
+		0% { background-position: 200% 0; }
+		100% { background-position: -200% 0; }
+	}
+	
+	/* Font loading optimization */
+	@font-face {
+		font-family: system-ui;
+		font-display: swap;
+	}
+	
+	/* Reduce layout shift from images */
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+	
+	/* Loading states to prevent CLS */
+	.lazy-loading {
+		min-height: 200px;
+		background: #f5f5f5;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.lazy-loading::before {
+		content: "Cargando...";
+		color: #999;
+		font-size: 14px;
+	}
+</style>

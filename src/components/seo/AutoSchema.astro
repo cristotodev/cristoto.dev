@@ -1,0 +1,67 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { detectSchema } from "@/utils/schema-detection";
+import FAQSchema from "./FAQSchema.astro";
+import HowToSchema from "./HowToSchema.astro";
+import CodeSchema from "./CodeSchema.astro";
+
+interface Props {
+	post: CollectionEntry<"post">;
+	content: string;
+}
+
+const { post, content } = Astro.props;
+const { title, tags = [] } = post.data;
+
+// Detect what type of schema to use
+const detectedSchema = detectSchema(content, title, tags);
+
+// Category-specific defaults for code schema
+const pathSegments = post.id.split('/');
+const category = pathSegments.length > 1 ? pathSegments[0] : '';
+
+const categoryLanguageMap: Record<string, string> = {
+	'javascript': 'JavaScript',
+	'typescript': 'TypeScript', 
+	'python': 'Python',
+	'sql': 'SQL',
+	'devops': 'Bash',
+	'react': 'JavaScript',
+	'vue': 'JavaScript',
+	'angular': 'TypeScript'
+};
+
+const defaultLanguage = categoryLanguageMap[category.toLowerCase()] || 'JavaScript';
+---
+
+{/* FAQ Schema disabled by user request */}
+
+{detectedSchema.type === 'howto' && detectedSchema.confidence > 0.4 && (
+	<HowToSchema 
+		title={title}
+		description={post.data.description || `Tutorial completo: ${title}`}
+		steps={detectedSchema.data}
+		totalTime="15-30 minutos"
+	/>
+)}
+
+{detectedSchema.type === 'code' && detectedSchema.confidence > 0.3 && (
+	<CodeSchema 
+		title={`Código: ${title}`}
+		description={post.data.description || `Ejemplo de código para ${title}`}
+		programmingLanguage={detectedSchema.data.programmingLanguage || defaultLanguage}
+		codeSampleType={detectedSchema.data.codeBlocks > 3 ? "full-solution" : "code-snippet"}
+		runtimePlatform={detectedSchema.data.programmingLanguage === 'javascript' ? 'Node.js/Browser' : undefined}
+		applicationCategory={category ? `${category} development` : 'software development'}
+	/>
+)}
+
+<!-- Debug info (only in development) -->
+{import.meta.env.DEV && (
+	<div class="mt-4 p-3 bg-yellow-100 dark:bg-yellow-900 rounded text-xs">
+		<strong>Schema Detection (DEV):</strong>
+		<br>Type: {detectedSchema.type}
+		<br>Confidence: {(detectedSchema.confidence * 100).toFixed(1)}%
+		<br>Category: {category}
+	</div>
+)}

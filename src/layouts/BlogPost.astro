@@ -7,6 +7,10 @@ import BaseLayout from "./Base.astro";
 import SeriesPanel from "@/components/SeriesPanel.astro";
 import StructuredData from "@/components/StructuredData.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import AutoSchema from "@/components/seo/AutoSchema.astro";
+import ImageOptimizer from "@/components/ImageOptimizer.astro";
+import RelatedPosts from "@/components/RelatedPosts.astro";
+import InternalLinker from "@/components/InternalLinker.astro";
 import { Icon } from "astro-icon/components";
 
 interface Props {
@@ -18,8 +22,11 @@ const { ogImage, title, description, updatedDate, publishDate, seriesId, tags } 
 
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
-const { headings } = await render(post);
+const { headings, Content } = await render(post);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+
+// Get raw content for schema detection
+const rawContent = post.body || "";
 
 // Generate breadcrumbs
 const pathSegments = post.id.split('/');
@@ -96,6 +103,24 @@ const breadcrumbItems = [
 			<div class="prose prose-citrus max-w-none flex-grow prose-headings:font-semibold prose-headings:text-accent-base prose-headings:before:text-accent-two sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none">
 				<slot />
 			</div>
+			
+			<!-- Auto-detected Schema Markup -->
+			<AutoSchema post={post} content={rawContent} />
+			
+			<!-- Image Optimization -->
+			<ImageOptimizer 
+				content={rawContent} 
+				postTitle={title}
+				category={category || undefined}
+				tags={tags}
+			/>
+			
+			<!-- Internal Linking -->
+			<InternalLinker currentPost={post} content={rawContent} />
+			
+			<!-- Related Posts -->
+			<RelatedPosts currentPost={post} />
+			
 			<WebMentions />
 		</article>
 		{!!headings.length && (

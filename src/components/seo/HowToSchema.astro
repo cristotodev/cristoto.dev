@@ -1,0 +1,121 @@
+---
+interface HowToStep {
+	name: string;
+	text: string;
+	url?: string;
+	image?: string;
+}
+
+interface Props {
+	title: string;
+	description: string;
+	steps: HowToStep[];
+	totalTime?: string;
+	estimatedCost?: string;
+	supply?: string[];
+	tool?: string[];
+}
+
+const { title, description, steps, totalTime, estimatedCost, supply, tool } = Astro.props;
+
+// Simple markdown processor for basic formatting
+const processMarkdown = (text: string) => {
+	return text
+		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+		.replace(/\*(.*?)\*/g, '<em>$1</em>')
+		.replace(/`(.*?)`/g, '<code>$1</code>')
+		.replace(/\n/g, '<br>');
+};
+
+const howToSchema = {
+	"@context": "https://schema.org",
+	"@type": "HowTo",
+	"name": title,
+	"description": description,
+	...(totalTime && { "totalTime": totalTime }),
+	...(estimatedCost && { "estimatedCost": { "@type": "MonetaryAmount", "currency": "EUR", "value": estimatedCost } }),
+	...(supply && { "supply": supply.map(item => ({ "@type": "HowToSupply", "name": item })) }),
+	...(tool && { "tool": tool.map(item => ({ "@type": "HowToTool", "name": item })) }),
+	"step": steps.map((step, index) => ({
+		"@type": "HowToStep",
+		"position": index + 1,
+		"name": step.name,
+		"text": step.text,
+		...(step.url && { "url": step.url }),
+		...(step.image && { "image": step.image })
+	}))
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(howToSchema, null, 0)} />
+
+<!-- HowTo Visual Component -->
+<div class="howto-section mt-8 p-6 bg-special-lighter rounded-lg">
+	<div class="mb-6">
+		<h2 class="text-2xl font-semibold mb-3 text-textColor">{title}</h2>
+		<p class="text-textColor/80">{description}</p>
+		
+		{(totalTime || estimatedCost || supply || tool) && (
+			<div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+				{totalTime && (
+					<div class="flex items-center">
+						<svg class="w-4 h-4 mr-2 text-accent-base" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+						</svg>
+						<span><strong>Tiempo:</strong> {totalTime}</span>
+					</div>
+				)}
+				{estimatedCost && (
+					<div class="flex items-center">
+						<svg class="w-4 h-4 mr-2 text-accent-base" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+						</svg>
+						<span><strong>Coste:</strong> €{estimatedCost}</span>
+					</div>
+				)}
+			</div>
+		)}
+		
+		{(supply && supply.length > 0) && (
+			<div class="mt-4">
+				<h3 class="font-medium text-accent-base mb-2">Material necesario:</h3>
+				<ul class="list-disc list-inside text-sm text-textColor/80">
+					{supply.map(item => <li>{item}</li>)}
+				</ul>
+			</div>
+		)}
+		
+		{(tool && tool.length > 0) && (
+			<div class="mt-4">
+				<h3 class="font-medium text-accent-base mb-2">Herramientas:</h3>
+				<ul class="list-disc list-inside text-sm text-textColor/80">
+					{tool.map(item => <li>{item}</li>)}
+				</ul>
+			</div>
+		)}
+	</div>
+	
+	<div class="steps-container">
+		<h3 class="text-lg font-semibold mb-4 text-textColor">Pasos a seguir:</h3>
+		<ol class="space-y-4">
+			{steps.map((step, index) => (
+				<li class="flex">
+					<div class="flex-shrink-0 w-8 h-8 bg-accent-base dark:bg-accent-two text-white dark:text-bgColor rounded-full flex items-center justify-center font-bold text-sm mr-4">
+						{index + 1}
+					</div>
+					<div class="flex-grow">
+						<h4 class="font-medium text-accent-base mb-2" set:html={processMarkdown(step.name)} />
+						<div class="text-textColor prose max-w-none prose-p:my-2 prose-strong:text-textColor prose-strong:font-semibold">
+							<div set:html={processMarkdown(step.text)} />
+						</div>
+						{step.url && (
+							<a href={step.url} class="inline-block mt-2 text-accent-base hover:underline text-sm">
+								Ver más detalles →
+							</a>
+						)}
+					</div>
+				</li>
+			))}
+		</ol>
+	</div>
+</div>

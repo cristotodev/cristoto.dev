@@ -1,0 +1,202 @@
+---
+import { analyzeImageUsage } from "@/utils/image-optimization";
+
+interface Props {
+	content: string;
+	postTitle?: string;
+	category?: string;
+	tags?: string[];
+}
+
+const { content, postTitle, category, tags = [] } = Astro.props;
+
+const analysis = analyzeImageUsage(content);
+---
+
+<!-- Image optimization scripts -->
+<script>
+	// Lazy loading with intersection observer
+	document.addEventListener('DOMContentLoaded', () => {
+		const images = document.querySelectorAll('img[loading="lazy"], img.lazy');
+		
+		// Enhanced intersection observer with better performance
+		const imageObserver = new IntersectionObserver((entries, observer) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					const img = entry.target as HTMLImageElement;
+					
+					// Add fade-in effect
+					img.style.opacity = '0';
+					img.style.transition = 'opacity 0.3s ease-in-out';
+					
+					img.onload = () => {
+						img.style.opacity = '1';
+						img.classList.add('loaded');
+					};
+					
+					// If image has data-src, load it
+					if (img.dataset.src) {
+						img.src = img.dataset.src;
+						delete img.dataset.src;
+					}
+					
+					observer.unobserve(img);
+				}
+			});
+		}, {
+			rootMargin: '50px 0px',
+			threshold: 0.01
+		});
+		
+		images.forEach(img => {
+			// Add loading placeholder
+			if (!img.style.backgroundColor) {
+				img.style.backgroundColor = '#f3f4f6';
+				img.style.backgroundImage = 'linear-gradient(45deg, #f9fafb 25%, transparent 25%), linear-gradient(-45deg, #f9fafb 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f9fafb 75%), linear-gradient(-45deg, transparent 75%, #f9fafb 75%)';
+				img.style.backgroundSize = '20px 20px';
+				img.style.backgroundPosition = '0 0, 0 10px, 10px -10px, -10px 0px';
+			}
+			
+			imageObserver.observe(img);
+		});
+		
+		// Optimize existing images in markdown content
+		const contentImages = document.querySelectorAll('article img');
+		contentImages.forEach(img => {
+			// Add missing alt texts with context
+			if (!img.alt || img.alt.length < 5) {
+				const fileName = img.src.split('/').pop()?.split('.')[0] || '';
+				img.alt = `${fileName} - ${postTitle || 'Tutorial'} sobre ${category || 'programación'}`;
+			}
+			
+			// Add lazy loading to images not already optimized
+			if (!img.hasAttribute('loading')) {
+				img.loading = 'lazy';
+			}
+			
+			// Add responsive behavior
+			if (!img.style.maxWidth) {
+				img.style.maxWidth = '100%';
+				img.style.height = 'auto';
+			}
+			
+			// Add figure wrapper for better SEO if not already wrapped
+			if (img.parentElement?.tagName !== 'FIGURE') {
+				const figure = document.createElement('figure');
+				figure.className = 'image-figure my-6';
+				img.parentNode?.insertBefore(figure, img);
+				figure.appendChild(img);
+				
+				// Add caption if alt text is descriptive
+				if (img.alt && img.alt.length > 20) {
+					const caption = document.createElement('figcaption');
+					caption.className = 'text-sm text-textColor/70 mt-2 italic text-center';
+					caption.textContent = img.alt;
+					figure.appendChild(caption);
+				}
+			}
+		});
+		
+		// WebP support detection and fallback
+		const testWebP = () => {
+			const webP = new Image();
+			webP.onload = webP.onerror = () => {
+				const supported = webP.height === 2;
+				if (!supported) {
+					document.querySelectorAll('img[data-webp-src]').forEach(img => {
+						const fallback = img.getAttribute('data-fallback-src') || 
+							img.getAttribute('src')?.replace(/\.webp$/, '.jpg');
+						if (fallback) img.src = fallback;
+					});
+				}
+			};
+			webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+		};
+		
+		testWebP();
+	});
+	
+	// Preload critical images
+	const preloadCriticalImages = () => {
+		const heroImage = document.querySelector('article img:first-of-type');
+		if (heroImage && heroImage.getBoundingClientRect().top < window.innerHeight) {
+			heroImage.loading = 'eager';
+			
+			// Create preload link
+			const link = document.createElement('link');
+			link.rel = 'preload';
+			link.as = 'image';
+			link.href = heroImage.src;
+			document.head.appendChild(link);
+		}
+	};
+	
+	// Run on page load
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', preloadCriticalImages);
+	} else {
+		preloadCriticalImages();
+	}
+</script>
+
+<!-- Performance hints for images -->
+{analysis.imageCount > 5 && (
+	<link rel="preload" as="image" href="/placeholder.svg" />
+)}
+
+<!-- Development insights -->
+{import.meta.env.DEV && analysis.suggestions.length > 0 && (
+	<div class="mt-4 p-4 bg-blue-100 dark:bg-blue-900 rounded-lg">
+		<h3 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">
+			Image Optimization Suggestions (DEV)
+		</h3>
+		<ul class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+			{analysis.suggestions.map(suggestion => (
+				<li>• {suggestion}</li>
+			))}
+		</ul>
+		<div class="mt-2 text-xs text-blue-600 dark:text-blue-400">
+			Images found: {analysis.imageCount} | Missing alt texts: {analysis.missingAltTexts}
+		</div>
+	</div>
+)}
+
+<style>
+	/* Image optimization styles */
+	.image-figure {
+		@apply text-center;
+	}
+	
+	.image-figure img {
+		@apply rounded-lg shadow-md;
+	}
+	
+	.image-figure figcaption {
+		@apply text-sm text-lighter mt-2 italic;
+	}
+	
+	/* Loading animation */
+	img:not(.loaded) {
+		animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	}
+	
+	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.8; }
+	}
+	
+	/* Responsive images */
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+	
+	/* WebP fallback styles */
+	.webp-fallback {
+		background-color: #f3f4f6;
+		min-height: 200px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+</style>

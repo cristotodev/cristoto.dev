@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+	src: string | ImageMetadata;
+	alt: string;
+	width?: number;
+	height?: number;
+	sizes?: string;
+	loading?: "lazy" | "eager";
+	class?: string;
+	quality?: number;
+	format?: "webp" | "avif" | "png" | "jpg";
+	placeholder?: "blur" | "none";
+}
+
+const {
+	src,
+	alt,
+	width,
+	height,
+	sizes = "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw",
+	loading = "lazy",
+	class: className,
+	quality = 80,
+	format = "webp",
+	placeholder = "blur",
+	...rest
+} = Astro.props;
+
+// Generate optimized alt text if not provided or too short
+const optimizedAlt = alt.length < 10 ? `${alt} - Tutorial de programación en Cristotodev` : alt;
+
+// Check if it's an external image
+const isExternal = typeof src === 'string' && (src.startsWith('http') || src.startsWith('//'));
+---
+
+{isExternal ? (
+	<!-- External image with lazy loading -->
+	<img
+		src={src}
+		alt={optimizedAlt}
+		width={width}
+		height={height}
+		loading={loading}
+		class={className}
+		style={placeholder === "blur" ? "background: linear-gradient(45deg, #f3f4f6, #e5e7eb); background-size: 20px 20px;" : ""}
+		{...rest}
+	/>
+) : (
+	<!-- Local image with Astro optimization -->
+	<Image
+		src={src}
+		alt={optimizedAlt}
+		width={width || 800}
+		height={height}
+		sizes={sizes}
+		loading={loading}
+		class={className}
+		quality={quality}
+		format={format}
+		{...rest}
+	/>
+)}
+
+<!-- Generate WebP version for better compression -->
+{!isExternal && format !== "webp" && (
+	<link 
+		rel="prefetch" 
+		as="image" 
+		type="image/webp"
+		href={typeof src === 'string' ? src.replace(/\.(jpg|jpeg|png)$/i, '.webp') : '#'}
+	/>
+)}
