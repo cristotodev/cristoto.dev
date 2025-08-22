@@ -21,6 +21,8 @@ export interface SiteMeta {
 	description?: string;
 	ogImage?: string | undefined;
 	title: string;
+	category?: string;
+	tags?: string[];
 }
 
 /** Webmentions */

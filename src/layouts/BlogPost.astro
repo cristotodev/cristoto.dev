@@ -6,6 +6,7 @@ import WebMentions from "@/components/blog/webmentions/index.astro";
 import BaseLayout from "./Base.astro";
 import SeriesPanel from "@/components/SeriesPanel.astro";
 import StructuredData from "@/components/StructuredData.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import { Icon } from "astro-icon/components";
 
 interface Props {
@@ -13,17 +14,28 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { ogImage, title, description, updatedDate, publishDate, seriesId } = post.data;
+const { ogImage, title, description, updatedDate, publishDate, seriesId, tags } = post.data;
 
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
 const { headings } = await render(post);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+
+// Generate breadcrumbs
+const pathSegments = post.id.split('/');
+const category = pathSegments.length > 1 ? pathSegments[0] : null;
+
+const breadcrumbItems = [
+	{ label: "Inicio", url: "/" },
+	{ label: "Blog", url: "/posts/" },
+	...(category ? [{ label: category.charAt(0).toUpperCase() + category.slice(1), url: `/posts/` }] : []),
+	{ label: title }
+];
 ---
 
 <StructuredData post={post} url={canonicalURL} />
 
-<BaseLayout meta={{ articleDate, description, ogImage: socialImage, title }}>
+<BaseLayout meta={{ articleDate, description, ogImage: socialImage, title, ...(category && { category }), tags }}>
 	<div class="fixed left-0 top-0 z-10 flex h-16 md:h-20 w-full bg-bgColor overflow-hidden">
 		<!-- Background 
 			TODO: This approach is not optimal and requires improvements. 
@@ -72,6 +84,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 
 	<!-- SeriesPanel is inserted into the named slot "sidebar" -->
 	{seriesId && (<SeriesPanel slot="sidebar" seriesId={seriesId} />)}
+
+	<div class="container mx-auto px-4 pt-20">
+		<Breadcrumbs items={breadcrumbItems} />
+	</div>
 
 	<Masthead content={post} />
 	

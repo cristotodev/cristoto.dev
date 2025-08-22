@@ -1,0 +1,35 @@
+# Robots.txt para cristoto.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cristoto.dev/sitemap-index.xml
+
+# Disallow admin or private areas (if any exist in the future)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow search engines to access important content
+Allow: /posts/
+Allow: /series/
+Allow: /notes/
+Allow: /about/
+Allow: /services/
+Allow: /contact/
+
+# Allow social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Prevent crawling of API endpoints (if any)
+Disallow: /api/
+
+# Crawl delay for good citizenship (optional)
+# Crawl-delay: 1

@@ -1,10 +1,10 @@
 ---
-import { Image } from "astro:assets";
 import { type CollectionEntry, getCollection } from "astro:content";
 import FormattedDate from "@/components/FormattedDate.astro";
 import { Icon } from "astro-icon/components";
 import Badge from '@/components/Badge.astro';
 import Separator from "../Separator.astro";
+import { optimizeH1 } from "@/utils/seo";
 
 interface Props {
 	content: CollectionEntry<"post">;
@@ -31,6 +31,11 @@ const postSeries = content.data.seriesId
             return null;
           })
     : null;
+
+// Optimize H1 for SEO
+const pathSegments = content.id.split('/');
+const category = pathSegments.length > 1 ? pathSegments[0] : undefined;
+const optimizedTitle = optimizeH1(content.data.title, category, content.data.tags);
 ---
 
 <div class="md:sticky md:top-8 md:z-10 flex items-end">
@@ -67,7 +72,7 @@ const postSeries = content.data.seriesId
 		title={content.data.title}
 		data-pagefind-body
 	>
-		{content.data.title}
+		{optimizedTitle}
 	</h1>
 </div>
 

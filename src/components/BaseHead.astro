@@ -2,14 +2,20 @@
 import { WEBMENTION_PINGBACK, WEBMENTION_URL } from "astro:env/client";
 import { siteConfig } from "@/site.config";
 import type { SiteMeta } from "@/types";
+import { optimizeMetaDescription, optimizeTitle } from "@/utils/seo";
 import "@/styles/global.css";
 
-type Props = SiteMeta;
+type Props = SiteMeta & {
+	category?: string;
+	tags?: string[];
+};
 
-const { articleDate, description, ogImage, title } = Astro.props;
+const { articleDate, description, ogImage, title, category, tags } = Astro.props;
 
-const titleSeparator = "•";
-const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
+// Optimize title and description for SEO
+const optimizedTitle = optimizeTitle(title, category, siteConfig.title);
+const optimizedDescription = optimizeMetaDescription(description || siteConfig.description, tags);
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(
 	ogImage ? ogImage : "/social-card.png",
@@ -19,7 +25,7 @@ const socialImageURL = new URL(
 
 <meta charset="utf-8" />
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<title>{siteTitle}</title>
+<title>{optimizedTitle}</title>
 
 {/* Icons */}
 <link href="/icon.svg" rel="icon" type="image/svg+xml" />
@@ -39,8 +45,8 @@ const socialImageURL = new URL(
 <link href={canonicalURL} rel="canonical" />
 
 {/* Primary Meta Tags */}
-<meta content={siteTitle} name="title" />
-<meta content={description} name="description" />
+<meta content={optimizedTitle} name="title" />
+<meta content={optimizedDescription} name="description" />
 <meta content={siteConfig.author} name="author" />
 
 {/* Theme Colour */}
@@ -49,7 +55,7 @@ const socialImageURL = new URL(
 {/* Open Graph / Facebook */}
 <meta content={articleDate ? "article" : "website"} property="og:type" />
 <meta content={title} property="og:title" />
-<meta content={description} property="og:description" />
+<meta content={optimizedDescription} property="og:description" />
 <meta content={canonicalURL} property="og:url" />
 <meta content={siteConfig.title} property="og:site_name" />
 <meta content={siteConfig.ogLocale} property="og:locale" />
@@ -69,7 +75,7 @@ const socialImageURL = new URL(
 <meta content="summary_large_image" property="twitter:card" />
 <meta content={canonicalURL} property="twitter:url" />
 <meta content={title} property="twitter:title" />
-<meta content={description} property="twitter:description" />
+<meta content={optimizedDescription} property="twitter:description" />
 <meta content={socialImageURL} property="twitter:image" />
 
 {/* Sitemap */}
