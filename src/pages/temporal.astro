@@ -1,0 +1,503 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/Base.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import { siteConfig } from "@/site.config";
+import { collectionDateSort } from "@/utils/date";
+
+const title = "Workflows Distribuidos con Temporal";
+const description = "Domina Temporal para crear aplicaciones resilientes y escalables. Aprende orquestación de microservicios, workflows críticos, manejo de fallos y arquitecturas distribuidas robustas.";
+
+// Get all Temporal posts
+const allPosts = await getCollection("post");
+const temporalPosts = allPosts.filter(post => 
+  post.id.startsWith('temporal/') || 
+  post.data.tags?.some(tag => ['temporal', 'orquestación', 'microservicios', 'workflows'].includes(tag.toLowerCase()))
+).sort(collectionDateSort);
+
+const meta = {
+  title: `${title} • ${siteConfig.title}`,
+  description,
+  category: "temporal",
+  tags: ["temporal", "workflows", "orquestación", "microservicios", "distributed systems"]
+};
+---
+
+<BaseLayout meta={meta}>
+  <div class="container mx-auto px-4">
+    
+    <!-- Hero Section -->
+    <header class="py-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-accent-base mb-6">
+        ⚡ Workflows Distribuidos con Temporal
+      </h1>
+      <p class="text-xl text-light/80 max-w-4xl mx-auto leading-relaxed">
+        Construye <strong>aplicaciones resilientes y escalables</strong> con Temporal. 
+        Domina la orquestación de microservicios, workflows críticos de negocio, 
+        manejo inteligente de fallos y arquitecturas distribuidas que nunca fallan.
+      </p>
+      
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-4 py-2 rounded-full text-sm font-medium">
+          💪 Fault Tolerant
+        </div>
+        <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium">
+          🔄 Auto Recovery
+        </div>
+        <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-4 py-2 rounded-full text-sm font-medium">
+          📊 Observabilidad Total
+        </div>
+      </div>
+    </header>
+
+    <!-- What is Temporal -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-6">
+        🤔 ¿Qué es Temporal y por qué lo necesitas?
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">😰 Problemas sin Temporal</h3>
+          <ul class="space-y-2 text-light/80">
+            <li class="flex items-start gap-2">
+              <span class="text-red-500 mt-1">❌</span>
+              <span>Workflows complejos llenos de callbacks y estados manuales</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-500 mt-1">❌</span>
+              <span>Fallos en producción = pérdida de datos/dinero</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-500 mt-1">❌</span>
+              <span>Debugging de sistemas distribuidos es una pesadilla</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-500 mt-1">❌</span>
+              <span>Retry logic y timeouts manejados manualmente</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-500 mt-1">❌</span>
+              <span>Sin visibilidad del estado actual de procesos críticos</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">🚀 Con Temporal</h3>
+          <ul class="space-y-2 text-light/80">
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">✅</span>
+              <span><strong>Código simple:</strong> Workflows como funciones normales</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">✅</span>
+              <span><strong>Durabilidad garantizada:</strong> Nunca pierdes el estado</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">✅</span>
+              <span><strong>Observabilidad total:</strong> Ve exactamente qué pasa</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">✅</span>
+              <span><strong>Retry inteligente:</strong> Automático con backoff exponencial</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">✅</span>
+              <span><strong>Testing fácil:</strong> Workflows deterministas y testeable</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8">
+        💼 Casos de Uso Perfectos para Temporal
+      </h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">💳</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Procesamiento de Pagos</h3>
+          <p class="text-light/80 text-sm">
+            Orquesta pagos con múltiples proveedores, maneja fallos, reembolsos automáticos, 
+            y garantiza consistencia financiera.
+          </p>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">📦</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">E-commerce & Fulfillment</h3>
+          <p class="text-light/80 text-sm">
+            Desde pedido hasta entrega: validación, inventario, envío, 
+            notificaciones y manejo de devoluciones.
+          </p>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">🎬</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Procesamiento de Media</h3>
+          <p class="text-light/80 text-sm">
+            Pipelines de video/audio: upload, transcoding, thumbnail generation, 
+            distribución CDN y notificaciones.
+          </p>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">🏭</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">ETL & Data Pipelines</h3>
+          <p class="text-light/80 text-sm">
+            Extracción, transformación y carga de datos con retry automático, 
+            monitorización y recuperación de fallos.
+          </p>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">👥</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Onboarding de Usuarios</h3>
+          <p class="text-light/80 text-sm">
+            Flujos complejos de registro: verificación email, KYC, 
+            configuración de cuentas y campañas de bienvenida.
+          </p>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">🤖</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Machine Learning</h3>
+          <p class="text-light/80 text-sm">
+            Pipelines ML: entrenamiento, validación, deployment, 
+            A/B testing y rollback automático.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learning Path -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8 flex items-center gap-2">
+        🎯 Ruta de Aprendizaje Temporal
+      </h2>
+      
+      <div class="grid md:grid-cols-4 gap-6">
+        <!-- Fundamentos -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🏗️ Fundamentos
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Conceptos: Workflows y Activities</li>
+            <li>• Instalación con Docker</li>
+            <li>• Tu primer workflow</li>
+            <li>• Temporal Web UI</li>
+            <li>• SDK básico</li>
+          </ul>
+        </div>
+
+        <!-- Workflows -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            ⚡ Workflows Avanzados
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Timers y schedules</li>
+            <li>• Condicionales y bucles</li>
+            <li>• Parallel execution</li>
+            <li>• Signals y queries</li>
+            <li>• Child workflows</li>
+          </ul>
+        </div>
+
+        <!-- Resilencia -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🛡️ Resilencia
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Retry policies inteligentes</li>
+            <li>• Error handling</li>
+            <li>• Timeouts estratégicos</li>
+            <li>• Saga patterns</li>
+            <li>• Circuit breakers</li>
+          </ul>
+        </div>
+
+        <!-- Producción -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🚀 Producción
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Deployment estrategies</li>
+            <li>• Monitoring y alertas</li>
+            <li>• Scaling y performance</li>
+            <li>• Security best practices</li>
+            <li>• Testing strategies</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Code Example -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-6">
+        💻 Ejemplo: Workflow de E-commerce
+      </h2>
+      
+      <p class="text-light/80 mb-6">
+        Así de simple es crear un workflow complejo de procesamiento de pedidos con Temporal:
+      </p>
+      
+      <div class="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <span class="text-gray-300 text-sm font-medium ml-2">order-workflow.ts</span>
+          </div>
+          <div class="text-gray-400 text-xs">TypeScript</div>
+        </div>
+        <div class="overflow-x-auto max-h-96 overflow-y-auto">
+          <pre class="p-4 text-sm leading-relaxed" set:html={`<code class="language-typescript"><span class="text-purple-400">import</span> <span class="text-yellow-300">{</span> <span class="text-white">proxyActivities</span>, <span class="text-white">defineWorkflow</span>, <span class="text-white">sleep</span> <span class="text-yellow-300">}</span> <span class="text-purple-400">from</span> <span class="text-green-300">'@temporalio/workflow'</span>;
+<span class="text-purple-400">import</span> <span class="text-purple-400">type</span> <span class="text-yellow-300">{</span> <span class="text-cyan-400">OrderData</span>, <span class="text-cyan-400">OrderResult</span>, <span class="text-cyan-400">PaymentInfo</span> <span class="text-yellow-300">}</span> <span class="text-purple-400">from</span> <span class="text-green-300">'./types'</span>;
+
+<span class="text-gray-500">// Definir activities como proxy</span>
+<span class="text-blue-400">const</span> <span class="text-yellow-300">{</span>
+  <span class="text-white">validateOrder</span>,
+  <span class="text-white">reserveInventory</span>,
+  <span class="text-white">processPayment</span>,
+  <span class="text-white">createShipment</span>,
+  <span class="text-white">sendConfirmationEmail</span>,
+  <span class="text-white">releaseInventory</span>
+<span class="text-yellow-300">}</span> = <span class="text-green-400">proxyActivities</span>&lt;<span class="text-purple-400">typeof</span> <span class="text-white">activities</span>&gt;(<span class="text-yellow-300">{</span>
+  <span class="text-white">startToCloseTimeout</span>: <span class="text-green-300">'10 minutes'</span>,
+  <span class="text-white">retry</span>: <span class="text-yellow-300">{</span>
+    <span class="text-white">maximumAttempts</span>: <span class="text-yellow-300">3</span>,
+    <span class="text-white">backoffCoefficient</span>: <span class="text-yellow-300">2</span>
+  <span class="text-yellow-300">}</span>
+<span class="text-yellow-300">}</span>);
+
+<span class="text-gray-500">// Workflow de procesamiento de pedido</span>
+<span class="text-blue-400">export</span> <span class="text-blue-400">const</span> <span class="text-white">orderProcessingWorkflow</span> = <span class="text-green-400">defineWorkflow</span>(
+  <span class="text-blue-400">async</span> <span class="text-blue-400">function</span> <span class="text-green-400">orderProcessing</span>(<span class="text-white">orderData</span>: <span class="text-cyan-400">OrderData</span>): <span class="text-cyan-400">Promise</span>&lt;<span class="text-cyan-400">OrderResult</span>&gt; <span class="text-yellow-300">{</span>
+    <span class="text-gray-500">// 1. Validar pedido</span>
+    <span class="text-blue-400">await</span> <span class="text-green-400">validateOrder</span>(<span class="text-white">orderData</span>);
+    
+    <span class="text-gray-500">// 2. Reservar inventario</span>
+    <span class="text-blue-400">const</span> <span class="text-white">reservation</span> = <span class="text-blue-400">await</span> <span class="text-green-400">reserveInventory</span>(<span class="text-white">orderData</span>.<span class="text-white">items</span>);
+    
+    <span class="text-blue-400">try</span> <span class="text-yellow-300">{</span>
+      <span class="text-gray-500">// 3. Procesar pago con retry personalizado</span>
+      <span class="text-blue-400">const</span> <span class="text-white">payment</span> = <span class="text-blue-400">await</span> <span class="text-green-400">processPayment</span>(<span class="text-white">orderData</span>.<span class="text-white">paymentInfo</span>, <span class="text-yellow-300">{</span>
+        <span class="text-white">startToCloseTimeout</span>: <span class="text-green-300">'5 minutes'</span>,
+        <span class="text-white">retry</span>: <span class="text-yellow-300">{</span>
+          <span class="text-white">maximumAttempts</span>: <span class="text-yellow-300">5</span>,
+          <span class="text-white">backoffCoefficient</span>: <span class="text-yellow-300">2.0</span>
+        <span class="text-yellow-300">}</span>
+      <span class="text-yellow-300">}</span>);
+      
+      <span class="text-gray-500">// 4. Crear envío (operación larga)</span>
+      <span class="text-blue-400">await</span> <span class="text-green-400">createShipment</span>(<span class="text-white">orderData</span>, <span class="text-white">payment</span>, <span class="text-yellow-300">{</span>
+        <span class="text-white">startToCloseTimeout</span>: <span class="text-green-300">'1 hour'</span>
+      <span class="text-yellow-300">}</span>);
+      
+      <span class="text-gray-500">// 5. Enviar confirmación por email</span>
+      <span class="text-blue-400">await</span> <span class="text-green-400">sendConfirmationEmail</span>(
+        <span class="text-white">orderData</span>.<span class="text-white">customerEmail</span>,
+        <span class="text-white">payment</span>.<span class="text-white">orderId</span>
+      );
+      
+      <span class="text-blue-400">return</span> <span class="text-yellow-300">{</span>
+        <span class="text-white">status</span>: <span class="text-green-300">'completed'</span> <span class="text-blue-400">as</span> <span class="text-blue-400">const</span>,
+        <span class="text-white">orderId</span>: <span class="text-white">payment</span>.<span class="text-white">orderId</span>,
+        <span class="text-white">totalAmount</span>: <span class="text-white">payment</span>.<span class="text-white">amount</span>
+      <span class="text-yellow-300">}</span>;
+      
+    <span class="text-yellow-300">}</span> <span class="text-blue-400">catch</span> (<span class="text-white">error</span>: <span class="text-cyan-400">any</span>) <span class="text-yellow-300">{</span>
+      <span class="text-gray-500">// Auto-rollback en caso de error</span>
+      <span class="text-blue-400">await</span> <span class="text-green-400">releaseInventory</span>(<span class="text-white">reservation</span>);
+      
+      <span class="text-blue-400">throw</span> <span class="text-blue-400">new</span> <span class="text-cyan-400">Error</span>(<span class="text-green-300">'Order processing failed'</span>);
+    <span class="text-yellow-300">}</span>
+  <span class="text-yellow-300">}</span>
+);
+</code>`}></pre>
+        </div>
+      </div>
+      
+      <div class="mt-4 text-sm text-light/70">
+        🎯 <strong>¡Eso es todo!</strong> Temporal maneja automáticamente: retry logic, persistencia, 
+        timeouts, monitoring, y recovery tras fallos.
+      </div>
+    </section>
+
+    <!-- Tutorials List -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-semibold text-accent-base">
+          📚 Todos los Tutoriales Temporal
+        </h2>
+        <span class="bg-accent-base/10 text-accent-base px-3 py-1 rounded-full text-sm font-medium">
+          {temporalPosts.length} tutoriales
+        </span>
+      </div>
+
+      {temporalPosts.length === 0 ? (
+        <p class="text-light/60">Próximamente más tutoriales de Temporal...</p>
+      ) : (
+        <div class="grid gap-6">
+          {temporalPosts.map((post) => (
+            <PostPreview post={post} withDesc={true} />
+          ))}
+        </div>
+      )}
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8">
+        ❓ Preguntas Frecuentes sobre Temporal
+      </h2>
+      
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Temporal reemplaza a Kubernetes?</h3>
+          <p class="text-light/80">
+            <strong>No, son complementarios</strong>. Kubernetes gestiona contenedores y infraestructura, 
+            mientras Temporal gestiona workflows y lógica de negocio. De hecho, Temporal funciona 
+            perfectamente dentro de Kubernetes.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Es Temporal solo para aplicaciones grandes?</h3>
+          <p class="text-light/80">
+            Para nada. <strong>Temporal es útil desde aplicaciones pequeñas</strong>. Si tienes workflows 
+            de más de 2 pasos o necesitas garantizar que procesos críticos nunca se pierdan, 
+            Temporal te ahorra mucho código y dolores de cabeza.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Qué lenguajes de programación soporta?</h3>
+          <p class="text-light/80">
+            Temporal tiene <strong>SDKs oficiales para Java, Go, Python, TypeScript/Node.js, .NET y PHP</strong>. 
+            También hay SDKs community-driven para Rust, Ruby y otros lenguajes. Mis tutoriales 
+            se enfocan principalmente en Python y TypeScript.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Temporal es difícil de aprender?</h3>
+          <p class="text-light/80">
+            <strong>Es más fácil que las alternativas</strong>. Una vez entiendes los conceptos básicos 
+            (Workflows y Activities), escribir código Temporal es más simple que manejar callbacks, 
+            colas y estados manuales. La curva de aprendizaje vale la pena.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Cuándo NO usar Temporal?</h3>
+          <p class="text-light/80">
+            No uses Temporal para <strong>request/response simples</strong> (APIs REST normales), 
+            operaciones que no necesitan durabilidad, o cuando latencia ultra-baja es crítica (trading algorítmico). 
+            Para todo lo demás, probablemente te beneficiará.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="text-center py-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-4">
+        ⚡ ¿Listo para crear aplicaciones indestructibles?
+      </h2>
+      <p class="text-lg text-light/80 mb-6 max-w-3xl mx-auto">
+        Empieza con nuestro tutorial de <strong>Temporal para flujos críticos</strong> 
+        y aprende a construir workflows que nunca fallan, sin importar qué pase.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a 
+          href="/posts/temporal/temporal-para-flujos-criticos/" 
+          class="inline-flex items-center gap-2 bg-accent-base text-white px-6 py-3 rounded-lg font-medium hover:bg-accent-base/90 transition-colors"
+        >
+          🚀 Empezar con Temporal
+        </a>
+        <a 
+          href="/services/" 
+          class="inline-flex items-center gap-2 border border-accent-base text-accent-base px-6 py-3 rounded-lg font-medium hover:bg-accent-base/10 transition-colors"
+        >
+          💼 Arquitectura de Sistemas
+        </a>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<!-- FAQ Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Temporal reemplaza a Kubernetes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, son complementarios. Kubernetes gestiona contenedores y infraestructura, mientras Temporal gestiona workflows y lógica de negocio."
+      }
+    },
+    {
+      "@type": "Question", 
+      "name": "¿Es Temporal solo para aplicaciones grandes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Para nada. Temporal es útil desde aplicaciones pequeñas. Si tienes workflows de más de 2 pasos o necesitas garantizar que procesos críticos nunca se pierdan, Temporal te ahorra mucho código."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué lenguajes de programación soporta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Temporal tiene SDKs oficiales para Java, Go, Python, TypeScript/Node.js, .NET y PHP. También hay SDKs community-driven para otros lenguajes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Temporal es difícil de aprender?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Es más fácil que las alternativas. Una vez entiendes los conceptos básicos (Workflows y Activities), escribir código Temporal es más simple que manejar callbacks, colas y estados manuales."
+      }
+    }
+  ]
+}, null, 0)} />
+
+<!-- Course Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Workflows Distribuidos con Temporal",
+  "description": "Domina Temporal para crear aplicaciones resilientes y escalables. Aprende orquestación de microservicios, workflows críticos, manejo de fallos y arquitecturas distribuidas robustas.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Cristotodev",
+    "url": "https://cristoto.dev"
+  },
+  "educationalLevel": "Intermediate to Advanced",
+  "courseMode": "online",
+  "inLanguage": "es",
+  "teaches": [
+    "Temporal workflow development",
+    "Distributed systems orchestration",
+    "Fault-tolerant application design",
+    "Microservices coordination",
+    "Resilient architecture patterns"
+  ]
+}, null, 0)} />

@@ -13,7 +13,7 @@ export const siteConfig: SiteConfig = {
 		},
 	},
 	// Used as the default description meta property and webmanifest description
-	description: "Soy Cristo (cristotodev en redes sociales) un apasionado del desarrollo de software",
+	description: "Blog especializado en desarrollo de software: tutoriales de SQL, DevOps con Podman y Traefik, workflows con Temporal. Contenido técnico en español para desarrolladores.",
 	// HTML lang property, found in src/layouts/Base.astro L:18 & astro.config.ts L:48
 	lang: "es-ES",
 	// Meta property, found in src/components/BaseHead.astro L:42
@@ -30,7 +30,7 @@ export const menuLinks: { path: string; title: string }[] = [
 	},
 	{
 		path: "/services/",
-		title: "Sevicios",
+		title: "Servicios",
 	},
 	{
 		path: "/about/",

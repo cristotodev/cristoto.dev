@@ -113,7 +113,7 @@ const breadcrumbItems = [
 			<AdvancedImageOptimizer 
 				content={rawContent} 
 				postTitle={title}
-				category={category || undefined}
+				{...(category && { category })}
 				tags={tags}
 				author={siteConfig.author}
 				publishDate={publishDate.toISOString()}

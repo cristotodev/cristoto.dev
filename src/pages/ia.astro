@@ -1,0 +1,528 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/Base.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import { siteConfig } from "@/site.config";
+import { collectionDateSort } from "@/utils/date";
+
+const title = "Inteligencia Artificial Aplicada para Desarrolladores";
+const description = "Aprende IA práctica: implementación de chatbots con Ollama, automatización con IA generativa, optimización para PYMEs y desarrollo de aplicaciones inteligentes con herramientas reales.";
+
+// Get all IA posts
+const allPosts = await getCollection("post");
+const iaPosts = allPosts.filter(post => 
+  post.data.tags?.some(tag => ['ia', 'inteligencia artificial', 'chatgpt', 'ollama', 'ia generativa', 'automatización'].includes(tag.toLowerCase())) ||
+  post.id.includes('ia') ||
+  post.id.includes('inteligencia')
+).sort(collectionDateSort);
+
+const meta = {
+  title: `${title} • ${siteConfig.title}`,
+  description,
+  category: "ia",
+  tags: ["inteligencia artificial", "ia generativa", "automatización", "chatbots", "machine learning"]
+};
+---
+
+<BaseLayout meta={meta}>
+  <div class="container mx-auto px-4">
+    
+    <!-- Hero Section -->
+    <header class="py-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-accent-base mb-6">
+        🤖 IA Aplicada para Desarrolladores
+      </h1>
+      <p class="text-xl text-light/80 max-w-4xl mx-auto leading-relaxed">
+        Domina <strong>inteligencia artificial práctica</strong> y aplicada. 
+        Desde chatbots locales con Ollama hasta automatización empresarial, 
+        aprende a integrar IA real en tus proyectos y multiplica tu productividad.
+      </p>
+      
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-4 py-2 rounded-full text-sm font-medium">
+          💻 IA Local & Privada
+        </div>
+        <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium">
+          🚀 Automatización Real
+        </div>
+        <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-4 py-2 rounded-full text-sm font-medium">
+          💰 ROI Demostrable
+        </div>
+      </div>
+    </header>
+
+    <!-- IA Landscape -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-6">
+        🧠 El Panorama de IA para Desarrolladores
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">🎭 IA Generativa vs IA Práctica</h3>
+          <p class="text-light/80 mb-4">
+            Más allá del hype de ChatGPT, existe un ecosistema completo de herramientas IA 
+            que pueden transformar tu desarrollo diario y crear aplicaciones realmente inteligentes.
+          </p>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• <strong>IA Generativa:</strong> Contenido, código, imágenes</li>
+            <li>• <strong>IA de Automatización:</strong> Procesos, decisiones</li>
+            <li>• <strong>IA de Análisis:</strong> Datos, insights, predicciones</li>
+            <li>• <strong>IA Conversacional:</strong> Chatbots, asistentes</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">🛠️ Stack Tecnológico Moderno</h3>
+          <div class="space-y-3 text-sm">
+            <div class="bg-bgColor rounded-lg p-3">
+              <strong class="text-accent-base">Local & Privado:</strong> Ollama, LM Studio, GPT4All
+            </div>
+            <div class="bg-bgColor rounded-lg p-3">
+              <strong class="text-accent-base">APIs Cloud:</strong> OpenAI, Anthropic, Cohere
+            </div>
+            <div class="bg-bgColor rounded-lg p-3">
+              <strong class="text-accent-base">Especializado:</strong> Stability AI, Replicate, Hugging Face
+            </div>
+            <div class="bg-bgColor rounded-lg p-3">
+              <strong class="text-accent-base">Frameworks:</strong> LangChain, CrewAI, AutoGen
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8">
+        💼 Aplicaciones Reales de IA para Desarrolladores
+      </h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">💬</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Asistentes de Código</h3>
+          <p class="text-light/80 text-sm mb-3">
+            Tu propio GitHub Copilot local con Ollama. Code completion, 
+            debugging y explicación de código sin enviar datos a terceros.
+          </p>
+          <div class="text-xs text-accent-base/80">
+            Tech: Ollama + VS Code + CodeLlama
+          </div>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">📊</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Análisis Inteligente</h3>
+          <p class="text-light/80 text-sm mb-3">
+            Automatiza análisis de datos, generación de reportes, 
+            insights de negocio y predicciones basadas en patrones históricos.
+          </p>
+          <div class="text-xs text-accent-base/80">
+            Tech: OpenAI + Pandas + Streamlit
+          </div>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">🤖</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Chatbots Empresariales</h3>
+          <p class="text-light/80 text-sm mb-3">
+            Chatbots que entienden tu negocio específico, 
+            integrados con sistemas internos y bases de conocimiento.
+          </p>
+          <div class="text-xs text-accent-base/80">
+            Tech: LangChain + Vector DB + FastAPI
+          </div>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">✍️</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Automatización de Contenido</h3>
+          <p class="text-light/80 text-sm mb-3">
+            Generación automática de documentación, emails, 
+            posts de redes sociales y contenido marketing personalizado.
+          </p>
+          <div class="text-xs text-accent-base/80">
+            Tech: GPT-4 + Custom Prompts + APIs
+          </div>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">🔍</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Búsqueda Semántica</h3>
+          <p class="text-light/80 text-sm mb-3">
+            Sistemas de búsqueda que entienden el contexto, 
+            RAG (Retrieval Augmented Generation) para documentación interna.
+          </p>
+          <div class="text-xs text-accent-base/80">
+            Tech: Embeddings + Chroma + Similarity Search
+          </div>
+        </div>
+
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl mb-3">⚡</div>
+          <h3 class="text-lg font-semibold text-accent-base mb-3">Optimización de Procesos</h3>
+          <p class="text-light/80 text-sm mb-3">
+            IA que aprende de tus procesos empresariales 
+            y sugiere optimizaciones automáticas en tiempo real.
+          </p>
+          <div class="text-xs text-accent-base/80">
+            Tech: Machine Learning + Process Mining
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learning Path -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8 flex items-center gap-2">
+        🎯 Ruta de Aprendizaje IA Práctica
+      </h2>
+      
+      <div class="grid md:grid-cols-4 gap-6">
+        <!-- Fundamentos -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6 relative">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🧠 Fundamentos
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Conceptos básicos ML/IA</li>
+            <li>• Prompt Engineering</li>
+            <li>• APIs de IA (OpenAI, etc)</li>
+            <li>• Costos y limitaciones</li>
+            <li>• Ética y consideraciones</li>
+          </ul>
+        </div>
+
+        <!-- Local AI -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6 relative">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🏠 IA Local
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Instalación Ollama</li>
+            <li>• Modelos locales (Llama, etc)</li>
+            <li>• GPU vs CPU optimization</li>
+            <li>• Integración con IDEs</li>
+            <li>• Privacidad y seguridad</li>
+          </ul>
+        </div>
+
+        <!-- Aplicaciones -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6 relative">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🛠️ Aplicaciones
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Chatbots con contexto</li>
+            <li>• RAG systems</li>
+            <li>• Automatización workflows</li>
+            <li>• Content generation</li>
+            <li>• Data analysis automation</li>
+          </ul>
+        </div>
+
+        <!-- Empresa -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6 relative">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🏢 Empresarial
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• ROI y métricas</li>
+            <li>• Escalado en producción</li>
+            <li>• Compliance y governance</li>
+            <li>• Team training</li>
+            <li>• Transformación digital</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Code Example -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-6">
+        💻 Ejemplo: Asistente de Código Local
+      </h2>
+      
+      <p class="text-light/80 mb-6">
+        Así de fácil es crear tu propio asistente de programación con Ollama:
+      </p>
+      
+      <div class="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <span class="text-gray-300 text-sm font-medium ml-2">code-assistant.ts</span>
+          </div>
+          <div class="text-gray-400 text-xs">TypeScript</div>
+        </div>
+        <div class="overflow-x-auto max-h-96 overflow-y-auto">
+          <pre class="p-4 text-sm leading-relaxed text-gray-100"><code class="language-typescript">{`// Tu asistente de código personal con Ollama
+import { Ollama } from 'ollama';
+
+interface OllamaResponse {
+  response: string;
+  done: boolean;
+}
+
+interface CodeAssistantConfig {
+  model?: string;
+  baseURL?: string;
+}
+
+class CodeAssistant {
+  private model: string;
+  private client: Ollama;
+
+  constructor(config: CodeAssistantConfig = {}) {
+    this.model = config.model || 'codellama';
+    this.client = new Ollama({
+      host: config.baseURL || 'http://localhost:11434'
+    });
+  }
+
+  async explainCode(code: string, language = 'typescript') {
+    const prompt = \`Explica este código: \${code}\`;
+    
+    const response = await this.client.generate({
+      model: this.model,
+      prompt,
+      stream: false
+    });
+
+    return response.response;
+  }
+
+  async debugCode(code: string, errorMessage: string) {
+    const response = await this.client.generate({
+      model: this.model,
+      prompt: \`Debug: \${code} - Error: \${errorMessage}\`
+    });
+
+    return response.response;
+  }
+}
+
+// Uso en tu workflow diario
+const assistant = new CodeAssistant({
+  model: 'codellama',
+  baseURL: 'http://localhost:11434'
+});
+
+// Explicar código
+assistant.explainCode('const sum = (a, b) => a + b', 'javascript')
+  .then(explanation => {
+    console.log('🤖 Explicación:', explanation);
+  });`}</code></pre>
+        </div>
+      </div>
+      
+      <div class="mt-4 text-sm text-light/70">
+        🔐 <strong>100% local y privado</strong> - Tu código nunca sale de tu máquina, 
+        pero tienes toda la potencia de IA para programar mejor.
+      </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8">
+        📈 ROI Real de IA en Desarrollo
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl font-bold text-accent-base mb-2">40%</div>
+          <div class="text-lg font-medium mb-2">Menos tiempo debugging</div>
+          <div class="text-sm text-light/70">
+            Con asistentes de código que explican errores y sugieren fixes automáticamente
+          </div>
+        </div>
+        
+        <div class="text-center bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl font-bold text-accent-base mb-2">60%</div>
+          <div class="text-lg font-medium mb-2">Reducción en tareas repetitivas</div>
+          <div class="text-sm text-light/70">
+            Automatización de documentación, tests y código boilerplate
+          </div>
+        </div>
+        
+        <div class="text-center bg-special-lighter border border-special-light rounded-lg p-6">
+          <div class="text-3xl font-bold text-accent-base mb-2">3x</div>
+          <div class="text-lg font-medium mb-2">Velocidad de prototipado</div>
+          <div class="text-sm text-light/70">
+            Desde idea hasta MVP funcional usando IA para acelerar desarrollo
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tutorials List -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-semibold text-accent-base">
+          📚 Todos los Tutoriales de IA
+        </h2>
+        <span class="bg-accent-base/10 text-accent-base px-3 py-1 rounded-full text-sm font-medium">
+          {iaPosts.length} tutoriales
+        </span>
+      </div>
+
+      {iaPosts.length === 0 ? (
+        <p class="text-light/60">Próximamente más tutoriales de IA...</p>
+      ) : (
+        <div class="grid gap-6">
+          {iaPosts.map((post) => (
+            <PostPreview post={post} withDesc={true} />
+          ))}
+        </div>
+      )}
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8">
+        ❓ Preguntas Frecuentes sobre IA para Desarrolladores
+      </h2>
+      
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Necesito ser experto en Machine Learning para usar IA?</h3>
+          <p class="text-light/80">
+            <strong>Para nada</strong>. Mis tutoriales se enfocan en IA práctica y aplicada. 
+            Aprenderás a usar herramientas ya existentes para crear aplicaciones inteligentes, 
+            no a construir modelos desde cero. Es como usar una base de datos sin ser DBA.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿La IA va a reemplazar a los desarrolladores?</h3>
+          <p class="text-light/80">
+            <strong>No, pero los desarrolladores que usen IA sí van a reemplazar a los que no</strong>. 
+            La IA es una herramienta que multiplica tu productividad, no un reemplazo. 
+            Los mejores desarrolladores del futuro serán aquellos que sepan combinar creatividad humana con eficiencia de IA.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Es seguro usar IA con código propietario?</h3>
+          <p class="text-light/80">
+            <strong>Con las herramientas correctas, sí</strong>. Ollama y modelos locales mantienen todo en tu máquina. 
+            Para APIs cloud, usa fine-tuning con datos sintéticos y nunca envíes código sensible. 
+            Te enseño las mejores prácticas de seguridad.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Cuánto cuesta implementar IA en mi empresa?</h3>
+          <p class="text-light/80">
+            <strong>Menos de lo que imaginas</strong>. Puedes empezar con herramientas gratuitas como Ollama 
+            o APIs que cuestan céntimos por uso. Una implementación básica puede costar menos de $100/mes 
+            y generar miles en productividad.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Por dónde empiezo si soy completamente nuevo en IA?</h3>
+          <p class="text-light/80">
+            <strong>Empieza con casos de uso simples</strong>: automatizar emails, generar documentación, 
+            o crear un chatbot básico. Mi recomendación es empezar con el tutorial de 
+            "Tu propio GitHub Copilot con Ollama" - es práctico e inmediatamente útil.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="text-center py-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-4">
+        🚀 ¿Listo para multiplicar tu productividad con IA?
+      </h2>
+      <p class="text-lg text-light/80 mb-6 max-w-3xl mx-auto">
+        Empieza con nuestro tutorial de <strong>GitHub Copilot casero con Ollama</strong> 
+        y descubre cómo la IA puede transformar tu forma de programar desde hoy mismo.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a 
+          href="/posts/tu-propio-github-copilot-con-ollama/" 
+          class="inline-flex items-center gap-2 bg-accent-base text-white px-6 py-3 rounded-lg font-medium hover:bg-accent-base/90 transition-colors"
+        >
+          🤖 Empezar con IA Local
+        </a>
+        <a 
+          href="/services/" 
+          class="inline-flex items-center gap-2 border border-accent-base text-accent-base px-6 py-3 rounded-lg font-medium hover:bg-accent-base/10 transition-colors"
+        >
+          💼 Consultoría en IA
+        </a>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<!-- FAQ Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Necesito ser experto en Machine Learning para usar IA?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Para nada. Los tutoriales se enfocan en IA práctica y aplicada. Aprenderás a usar herramientas ya existentes para crear aplicaciones inteligentes, no a construir modelos desde cero."
+      }
+    },
+    {
+      "@type": "Question", 
+      "name": "¿La IA va a reemplazar a los desarrolladores?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, pero los desarrolladores que usen IA sí van a reemplazar a los que no. La IA es una herramienta que multiplica tu productividad, no un reemplazo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es seguro usar IA con código propietario?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Con las herramientas correctas, sí. Ollama y modelos locales mantienen todo en tu máquina. Para APIs cloud, usa fine-tuning con datos sintéticos y nunca envíes código sensible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta implementar IA en mi empresa?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Menos de lo que imaginas. Puedes empezar con herramientas gratuitas como Ollama o APIs que cuestan céntimos por uso. Una implementación básica puede costar menos de $100/mes."
+      }
+    }
+  ]
+}, null, 0)} />
+
+<!-- Course Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Inteligencia Artificial Aplicada para Desarrolladores",
+  "description": "Aprende IA práctica: implementación de chatbots con Ollama, automatización con IA generativa, optimización para PYMEs y desarrollo de aplicaciones inteligentes.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Cristotodev",
+    "url": "https://cristoto.dev"
+  },
+  "educationalLevel": "Beginner to Intermediate",
+  "courseMode": "online",
+  "inLanguage": "es",
+  "teaches": [
+    "Local AI implementation",
+    "Chatbot development", 
+    "Process automation with AI",
+    "RAG systems",
+    "AI integration in applications"
+  ]
+}, null, 0)} />

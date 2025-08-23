@@ -102,10 +102,44 @@ SELECT e.nombre_empleado, m.nombre_empleado AS jefe FROM empleados e
 JOIN empleados m ON e.jefe_id = m.id;
 ```
 
+## ❓ Preguntas Frecuentes sobre JOINs
+
+### ¿Cuál es la diferencia principal entre INNER JOIN y LEFT JOIN?
+**INNER JOIN** solo devuelve las filas que tienen coincidencias en ambas tablas. **LEFT JOIN** devuelve todas las filas de la tabla izquierda, incluso si no hay coincidencias en la tabla derecha (rellenando con NULL).
+
+### ¿Cuándo debería usar un CROSS JOIN?
+El **CROSS JOIN** se usa raramente en aplicaciones reales porque genera un producto cartesiano. Es útil para generar combinaciones de datos (como crear un calendario de fechas × productos), pero úsalo con cuidado ya que puede generar millones de filas.
+
+### ¿Por qué mi consulta con JOIN es lenta?
+Las consultas JOIN lentas suelen deberse a falta de índices en las columnas de unión. Asegúrate de tener índices en las columnas que usas en la cláusula `ON`. También revisa si estás haciendo JOINs innecesarios o si puedes filtrar datos antes del JOIN.
+
+### ¿Puedo hacer JOIN entre más de dos tablas?
+Sí, puedes encadenar múltiples JOINs en una sola consulta. El orden importa: SQL procesa los JOINs de izquierda a derecha. Por ejemplo: `tabla1 JOIN tabla2 ON ... JOIN tabla3 ON ...`
+
+### ¿Qué es un SELF JOIN y cuándo se usa?
+Un **SELF JOIN** es cuando una tabla se une consigo misma usando alias. Es común para datos jerárquicos como empleados-jefes, categorías-subcategorías, o cualquier relación padre-hijo dentro de la misma tabla.
+
+## Consejos de Rendimiento para JOINs
+
+### 🚀 Optimización de Consultas
+- **Usa índices** en las columnas de las cláusulas JOIN
+- **Filtra primero** con WHERE antes de hacer JOINs cuando sea posible
+- **Evita SELECT *** - especifica solo las columnas necesarias
+- **Considera el orden** de los JOINs para tablas con diferentes tamaños
+
+### 📊 Análisis de Rendimiento
+```sql
+-- Usa EXPLAIN para analizar el plan de ejecución
+EXPLAIN SELECT e.nombre, d.nombre_departamento 
+FROM empleados e 
+INNER JOIN departamentos d ON e.id_departamento = d.id;
+```
+
 ## Conclusión
 
-Los JOINs en SQL son herramientas poderosas para combinar datos de múltiples tablas. Al entender y aplicar correctamente los diferentes tipos de JOINs (`INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, `FULL JOIN`, `CROSS JOIN`, `SELF JOIN`), puedes realizar consultas más complejas y obtener insights valiosos de tus bases de datos. Experimenta con estos ejemplos y adapta los JOINs a tus necesidades específicas para mejorar tu eficiencia y precisión en la extracción de datos.
+Los JOINs en SQL son herramientas poderosas para combinar datos de múltiples tablas. Al entender y aplicar correctamente los diferentes tipos de JOINs (`INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, `FULL JOIN`, `CROSS JOIN`, `SELF JOIN`), puedes realizar consultas más complejas y obtener insights valiosos de tus bases de datos. 
 
+Recuerda siempre considerar el rendimiento mediante el uso de índices apropiados y la optimización de tus consultas. Experimenta con estos ejemplos y adapta los JOINs a tus necesidades específicas para mejorar tu eficiencia y precisión en la extracción de datos.
 
 ## Más Ejemplos y Videos
 

@@ -64,7 +64,7 @@ function extractCurrentLinks(content: string): string[] {
 	
 	while ((match = linkPattern.exec(content)) !== null) {
 		const [fullMatch, anchor, url] = match;
-		if (url.startsWith('/') || url.startsWith('./')) {
+		if (url && (url.startsWith('/') || url.startsWith('./'))) {
 			links.push(fullMatch);
 		}
 	}
@@ -77,7 +77,7 @@ function extractCurrentLinks(content: string): string[] {
  */
 function extractAnchorText(link: string): string {
 	const match = link.match(/\[([^\]]+)\]/);
-	return match ? match[1] : '';
+	return match?.[1] ?? '';
 }
 
 /**
@@ -144,8 +144,8 @@ function calculateRelevanceScore(content: string, currentPost: any, targetPost: 
 	// Title keyword overlap (20% weight)
 	const currentTitle = currentPost.data.title.toLowerCase();
 	const targetTitle = targetPost.data.title.toLowerCase();
-	const titleWords = new Set(currentTitle.split(/\s+/).filter(word => word.length > 3));
-	const targetWords = new Set(targetTitle.split(/\s+/).filter(word => word.length > 3));
+	const titleWords = new Set(currentTitle.split(/\s+/).filter((word: string) => word.length > 3));
+	const targetWords = new Set(targetTitle.split(/\s+/).filter((word: string) => word.length > 3));
 	const titleOverlap = intersection(titleWords, targetWords).size;
 	
 	if (titleWords.size > 0) {
@@ -271,7 +271,7 @@ function extractContext(text: string, position: number, radius: number): string 
  */
 function extractCategory(id: string): string | null {
 	const parts = id.split('/');
-	return parts.length > 1 ? parts[0] : null;
+	return parts.length > 1 ? parts[0] ?? null : null;
 }
 
 /**

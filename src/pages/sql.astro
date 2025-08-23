@@ -1,0 +1,253 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/Base.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import { siteConfig } from "@/site.config";
+import { collectionDateSort } from "@/utils/date";
+
+const title = "Guía Completa de SQL en Español";
+const description = "Aprende SQL desde cero con tutoriales prácticos en español. Bases de datos relacionales, consultas avanzadas, JOINs, subconsultas y mejores prácticas para desarrolladores.";
+
+// Get all SQL posts
+const allPosts = await getCollection("post");
+const sqlPosts = allPosts.filter(post => post.id.startsWith('sql/')).sort(collectionDateSort);
+
+const meta = {
+  title: `${title} • ${siteConfig.title}`,
+  description,
+  category: "sql",
+  tags: ["sql", "bases de datos", "tutorial", "programación"]
+};
+---
+
+<BaseLayout meta={meta}>
+  <div class="container mx-auto px-4">
+    
+    <!-- Hero Section -->
+    <header class="py-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-accent-base mb-6">
+        🗄️ Guía Completa de SQL
+      </h1>
+      <p class="text-xl text-light/80 max-w-3xl mx-auto leading-relaxed">
+        Aprende <strong>SQL desde cero</strong> con tutoriales prácticos en español. 
+        Desde conceptos básicos hasta consultas avanzadas, conviértete en un experto 
+        en bases de datos relacionales.
+      </p>
+    </header>
+
+    <!-- Learning Path -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-6 flex items-center gap-2">
+        🎯 Ruta de Aprendizaje Recomendada
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Fundamentos -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-3">
+            🏗️ Fundamentos
+          </h3>
+          <ul class="space-y-2 text-light/80">
+            <li>• Bases de datos relacionales</li>
+            <li>• Creación de bases y tablas</li>
+            <li>• Claves primarias y foráneas</li>
+            <li>• Insertar y gestionar datos</li>
+          </ul>
+        </div>
+
+        <!-- Consultas -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-3">
+            🔍 Consultas
+          </h3>
+          <ul class="space-y-2 text-light/80">
+            <li>• SELECT y filtros básicos</li>
+            <li>• ALIAS y DISTINCT</li>
+            <li>• Ordenación y paginación</li>
+            <li>• Actualizar y eliminar datos</li>
+          </ul>
+        </div>
+
+        <!-- Avanzado -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-3">
+            🚀 Nivel Avanzado
+          </h3>
+          <ul class="space-y-2 text-light/80">
+            <li>• JOINs y relaciones</li>
+            <li>• Subconsultas complejas</li>
+            <li>• Usuarios y permisos</li>
+            <li>• Optimización de consultas</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Reference -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-6">
+        ⚡ Referencia Rápida SQL
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">Consultas Básicas</h3>
+          <div class="bg-bgColor rounded-lg p-4 font-mono text-sm">
+            <div class="mb-2"><span class="text-accent-two">SELECT</span> * <span class="text-accent-two">FROM</span> tabla;</div>
+            <div class="mb-2"><span class="text-accent-two">SELECT</span> columna <span class="text-accent-two">FROM</span> tabla <span class="text-accent-two">WHERE</span> condicion;</div>
+            <div><span class="text-accent-two">INSERT INTO</span> tabla <span class="text-accent-two">VALUES</span> (valores);</div>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">JOINs Esenciales</h3>
+          <div class="bg-bgColor rounded-lg p-4 font-mono text-sm">
+            <div class="mb-2"><span class="text-accent-two">INNER JOIN</span> - Solo coincidencias</div>
+            <div class="mb-2"><span class="text-accent-two">LEFT JOIN</span> - Todos de la izquierda</div>
+            <div><span class="text-accent-two">RIGHT JOIN</span> - Todos de la derecha</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tutorials List -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-semibold text-accent-base">
+          📚 Todos los Tutoriales SQL
+        </h2>
+        <span class="bg-accent-base/10 text-accent-base px-3 py-1 rounded-full text-sm font-medium">
+          {sqlPosts.length} tutoriales
+        </span>
+      </div>
+
+      {sqlPosts.length === 0 ? (
+        <p class="text-light/60">Próximamente más tutoriales de SQL...</p>
+      ) : (
+        <div class="grid gap-6">
+          {sqlPosts.map((post) => (
+            <PostPreview post={post} withDesc={true} />
+          ))}
+        </div>
+      )}
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8">
+        ❓ Preguntas Frecuentes sobre SQL
+      </h2>
+      
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Qué es SQL y por qué es importante?</h3>
+          <p class="text-light/80">
+            SQL (Structured Query Language) es el lenguaje estándar para gestionar bases de datos relacionales. 
+            Es fundamental para cualquier desarrollador, ya que te permite crear, consultar, actualizar y administrar 
+            datos de manera eficiente. Prácticamente todas las aplicaciones modernas utilizan bases de datos.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Cuánto tiempo se tarda en aprender SQL?</h3>
+          <p class="text-light/80">
+            Los conceptos básicos de SQL se pueden aprender en 2-4 semanas con práctica constante. 
+            Para dominar consultas avanzadas, JOINs complejos y optimización, necesitarás 2-3 meses adicionales. 
+            La clave está en la práctica con bases de datos reales.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Qué base de datos usar para practicar?</h3>
+          <p class="text-light/80">
+            Recomiendo comenzar con <strong>MySQL</strong> o <strong>PostgreSQL</strong> para aprender. 
+            Son bases de datos gratuitas, ampliamente utilizadas en la industria y tienen excelente documentación. 
+            Los conceptos se aplican a otras bases como SQL Server, Oracle o SQLite.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Los tutoriales incluyen ejercicios prácticos?</h3>
+          <p class="text-light/80">
+            Sí, cada tutorial incluye ejemplos de código prácticos que puedes ejecutar inmediatamente. 
+            Aprenderás creando bases de datos reales, insertando datos y ejecutando consultas paso a paso. 
+            La teoría siempre va acompañada de práctica.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="text-center py-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-4">
+        🚀 ¿Listo para dominar SQL?
+      </h2>
+      <p class="text-lg text-light/80 mb-6 max-w-2xl mx-auto">
+        Comienza con nuestro tutorial de <strong>bases de datos relacionales</strong> 
+        y avanza paso a paso hasta convertirte en un experto en SQL.
+      </p>
+      <a 
+        href="/posts/sql/base-de-datos-relacional/" 
+        class="inline-flex items-center gap-2 bg-accent-base text-white px-6 py-3 rounded-lg font-medium hover:bg-accent-base/90 transition-colors"
+      >
+        📖 Empezar Tutorial
+      </a>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<!-- FAQ Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es SQL y por qué es importante?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SQL (Structured Query Language) es el lenguaje estándar para gestionar bases de datos relacionales. Es fundamental para cualquier desarrollador, ya que te permite crear, consultar, actualizar y administrar datos de manera eficiente."
+      }
+    },
+    {
+      "@type": "Question", 
+      "name": "¿Cuánto tiempo se tarda en aprender SQL?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Los conceptos básicos de SQL se pueden aprender en 2-4 semanas con práctica constante. Para dominar consultas avanzadas, JOINs complejos y optimización, necesitarás 2-3 meses adicionales."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué base de datos usar para practicar?", 
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Recomiendo comenzar con MySQL o PostgreSQL para aprender. Son bases de datos gratuitas, ampliamente utilizadas en la industria y tienen excelente documentación."
+      }
+    }
+  ]
+}, null, 0)} />
+
+<!-- Course Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Guía Completa de SQL en Español",
+  "description": "Aprende SQL desde cero con tutoriales prácticos en español. Bases de datos relacionales, consultas avanzadas, JOINs y subconsultas.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Cristotodev",
+    "url": "https://cristoto.dev"
+  },
+  "educationalLevel": "Beginner to Advanced",
+  "courseMode": "online",
+  "inLanguage": "es",
+  "teaches": [
+    "Bases de datos relacionales",
+    "Consultas SQL",
+    "JOINs y relaciones",
+    "Subconsultas",
+    "Optimización de bases de datos"
+  ]
+}, null, 0)} />

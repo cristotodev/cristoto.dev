@@ -144,7 +144,9 @@ function analyzeKeywordDensity(content: string, title: string, tags: string[]): 
 	
 	// Count keyword occurrences
 	potentialKeywords.forEach(keyword => {
-		const count = (content.match(new RegExp(`\\b${keyword}\\b`, 'gi')) || []).length;
+		// Escape special regex characters
+		const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		const count = (content.match(new RegExp(`\\b${escapedKeyword}\\b`, 'gi')) || []).length;
 		if (count > 0) {
 			keywordCounts.set(keyword, count);
 		}
@@ -275,7 +277,7 @@ function countSyllables(word: string): number {
 	let prevWasVowel = false;
 	
 	for (let i = 0; i < word.length; i++) {
-		const isVowel = vowels.includes(word[i]);
+		const isVowel = vowels.includes(word[i] ?? '');
 		if (isVowel && !prevWasVowel) {
 			count++;
 		}

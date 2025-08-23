@@ -1,0 +1,406 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/Base.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import { siteConfig } from "@/site.config";
+import { collectionDateSort } from "@/utils/date";
+
+const title = "DevOps Moderno con Podman y Traefik";
+const description = "Aprende DevOps moderno sin Docker: infraestructura rootless con Podman, proxy inteligente con Traefik, certificados SSL automáticos y despliegues seguros para desarrolladores modernos.";
+
+// Get all DevOps posts
+const allPosts = await getCollection("post");
+const devopsPosts = allPosts.filter(post => 
+  post.id.startsWith('devops/') || 
+  post.data.tags?.some(tag => ['podman', 'traefik', 'devops', 'contenedores', 'docker'].includes(tag.toLowerCase()))
+).sort(collectionDateSort);
+
+const meta = {
+  title: `${title} • ${siteConfig.title}`,
+  description,
+  category: "devops",
+  tags: ["devops", "podman", "traefik", "contenedores", "infraestructura", "rootless"]
+};
+---
+
+<BaseLayout meta={meta}>
+  <div class="container mx-auto px-4">
+    
+    <!-- Hero Section -->
+    <header class="py-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-accent-base mb-6">
+        🚀 DevOps Moderno con Podman y Traefik
+      </h1>
+      <p class="text-xl text-light/80 max-w-4xl mx-auto leading-relaxed">
+        Construye <strong>infraestructura moderna y segura</strong> sin dependencias de Docker. 
+        Aprende a implementar contenedores rootless con Podman, proxy inteligente con Traefik, 
+        y automatización de certificados SSL para aplicaciones de producción.
+      </p>
+      
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-4 py-2 rounded-full text-sm font-medium">
+          ✅ Sin privilegios root
+        </div>
+        <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium">
+          🔐 HTTPS automático
+        </div>
+        <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-4 py-2 rounded-full text-sm font-medium">
+          ⚡ Despliegues modernos
+        </div>
+      </div>
+    </header>
+
+    <!-- Why This Stack -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-6">
+        🤔 ¿Por qué Podman + Traefik en lugar de Docker?
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">🐋 Problemas con Docker Tradicional</h3>
+          <ul class="space-y-2 text-light/80">
+            <li class="flex items-start gap-2">
+              <span class="text-red-500 mt-1">❌</span>
+              <span>Requiere privilegios de root (riesgo de seguridad)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-500 mt-1">❌</span>
+              <span>Daemon central (punto único de fallo)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-500 mt-1">❌</span>
+              <span>Configuración compleja de proxy y SSL</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-500 mt-1">❌</span>
+              <span>Gestión manual de certificados</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">🚀 Ventajas del Stack Moderno</h3>
+          <ul class="space-y-2 text-light/80">
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">✅</span>
+              <span><strong>Podman rootless:</strong> Contenedores sin root</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">✅</span>
+              <span><strong>Sin daemon:</strong> Cada contenedor es independiente</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">✅</span>
+              <span><strong>Traefik automático:</strong> Descubrimiento dinámico</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-500 mt-1">✅</span>
+              <span><strong>SSL automático:</strong> Let's Encrypt integrado</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learning Path -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8 flex items-center gap-2">
+        🎯 Ruta de Aprendizaje DevOps Moderno
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Fundamentos -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🏗️ Fundamentos Podman
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Instalación y configuración rootless</li>
+            <li>• Comandos básicos vs Docker</li>
+            <li>• Podman Compose para servicios</li>
+            <li>• Gestión de imágenes y volúmenes</li>
+            <li>• Networking entre contenedores</li>
+          </ul>
+        </div>
+
+        <!-- Proxy Inteligente -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🔀 Proxy con Traefik
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Configuración inicial de Traefik</li>
+            <li>• Descubrimiento automático de servicios</li>
+            <li>• Routing dinámico por dominio</li>
+            <li>• Dashboard de monitorización</li>
+            <li>• Middleware para autenticación</li>
+          </ul>
+        </div>
+
+        <!-- Producción -->
+        <div class="bg-special-lighter border border-special-light rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-accent-base mb-4">
+            🛡️ Producción Segura
+          </h3>
+          <ul class="space-y-2 text-light/80 text-sm">
+            <li>• Certificados SSL automáticos</li>
+            <li>• Autenticación y autorización</li>
+            <li>• Monitorización y logging</li>
+            <li>• Backup y disaster recovery</li>
+            <li>• Escalado horizontal</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Commands Reference -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-6">
+        ⚡ Comandos Esenciales
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">Podman Básico</h3>
+          <div class="bg-bgColor rounded-lg p-4 font-mono text-sm">
+            <div class="mb-2 text-gray-400"># Ejecutar contenedor</div>
+            <div class="mb-3">podman run -d --name webapp nginx</div>
+            <div class="mb-2 text-gray-400"># Listar contenedores</div>
+            <div class="mb-3">podman ps -a</div>
+            <div class="mb-2 text-gray-400"># Ver logs</div>
+            <div>podman logs -f webapp</div>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-base">Podman Compose</h3>
+          <div class="bg-bgColor rounded-lg p-4 font-mono text-sm">
+            <div class="mb-2 text-gray-400"># Levantar servicios</div>
+            <div class="mb-3">podman-compose up -d</div>
+            <div class="mb-2 text-gray-400"># Ver estado</div>
+            <div class="mb-3">podman-compose ps</div>
+            <div class="mb-2 text-gray-400"># Parar servicios</div>
+            <div>podman-compose down</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Diagram -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-6">
+        🏛️ Arquitectura de la Infraestructura
+      </h2>
+      
+      <div class="bg-special-lighter border border-special-light rounded-lg p-8">
+        <div class="text-center mb-6">
+          <div class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-lg font-medium">
+            🌐 Internet / Usuarios
+          </div>
+        </div>
+        
+        <div class="text-center mb-6">
+          <div class="text-2xl mb-2">⬇️</div>
+          <div class="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-6 py-3 rounded-lg font-medium">
+            🔀 Traefik Proxy<br/>
+            <span class="text-sm opacity-80">(SSL + Routing + Auth)</span>
+          </div>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+          <div class="text-center">
+            <div class="text-2xl mb-2">⬇️</div>
+            <div class="bg-cyan-100 dark:bg-cyan-700 text-cyan-800 dark:text-cyan-50 px-4 py-3 rounded-lg border border-cyan-200 dark:border-cyan-600">
+              📱 App Web<br/>
+              <span class="text-sm opacity-80">React/Vue/etc</span>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl mb-2">⬇️</div>
+            <div class="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-4 py-3 rounded-lg">
+              🔧 API Backend<br/>
+              <span class="text-sm opacity-80">Node.js/Python/Go</span>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl mb-2">⬇️</div>
+            <div class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg">
+              🗄️ Base de Datos<br/>
+              <span class="text-sm opacity-80">PostgreSQL/MySQL</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center">
+          <div class="inline-block bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-lg text-sm">
+            🐧 Host Linux (sin privilegios root)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tutorials List -->
+    <section class="mb-12">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-semibold text-accent-base">
+          📚 Todos los Tutoriales DevOps
+        </h2>
+        <span class="bg-accent-base/10 text-accent-base px-3 py-1 rounded-full text-sm font-medium">
+          {devopsPosts.length} tutoriales
+        </span>
+      </div>
+
+      {devopsPosts.length === 0 ? (
+        <p class="text-light/60">Próximamente más tutoriales de DevOps...</p>
+      ) : (
+        <div class="grid gap-6">
+          {devopsPosts.map((post) => (
+            <PostPreview post={post} withDesc={true} />
+          ))}
+        </div>
+      )}
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="mb-12 bg-special-lighter border border-special-light rounded-lg p-8">
+      <h2 class="text-2xl font-semibold text-accent-base mb-8">
+        ❓ Preguntas Frecuentes sobre DevOps Moderno
+      </h2>
+      
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Por qué usar Podman en lugar de Docker?</h3>
+          <p class="text-light/80">
+            <strong>Podman es más seguro</strong> porque no requiere privilegios de root ni un daemon central. 
+            Cada contenedor funciona como un proceso normal del usuario, reduciendo vectores de ataque. 
+            Además, es compatible con Docker (mismo API) pero sin los riesgos de seguridad.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Traefik es difícil de configurar?</h3>
+          <p class="text-light/80">
+            Al contrario, <strong>Traefik simplifica la configuración</strong> comparado con Nginx o Apache. 
+            Detecta automáticamente tus servicios, genera certificados SSL, y maneja el routing dinámicamente. 
+            Una vez configurado, prácticamente se gestiona solo.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Necesito conocimientos avanzados de Linux?</h3>
+          <p class="text-light/80">
+            <strong>No</strong>. Mis tutoriales están diseñados para desarrolladores que quieren aprender DevOps paso a paso. 
+            Empezamos con lo básico y avanzamos gradualmente. Solo necesitas saber usar la terminal y conceptos básicos de contenedores.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Esta infraestructura sirve para producción?</h3>
+          <p class="text-light/80">
+            <strong>Absolutamente</strong>. Esta stack es usado por empresas en producción. Podman rootless + Traefik 
+            ofrece mejor seguridad que Docker tradicional, SSL automático, y escalabilidad horizontal. 
+            Es ideal para aplicaciones web modernas.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-accent-base">¿Qué ventajas tiene sobre Kubernetes?</h3>
+          <p class="text-light/80">
+            <strong>Simplicidad y menor overhead</strong>. Kubernetes es excelente para aplicaciones masivas, 
+            pero para proyectos pequeños/medianos es excesivo. Esta stack te da el 80% de beneficios con 20% de la complejidad.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="text-center py-12">
+      <h2 class="text-2xl font-semibold text-accent-base mb-4">
+        🚀 ¿Listo para modernizar tu infraestructura?
+      </h2>
+      <p class="text-lg text-light/80 mb-6 max-w-3xl mx-auto">
+        Empieza con nuestro tutorial de <strong>infraestructura moderna con Podman y Traefik</strong> 
+        y construye aplicaciones seguras, escalables y fáciles de mantener.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a 
+          href="/posts/devops/infraestructura-moderna-podman-traefik/" 
+          class="inline-flex items-center gap-2 bg-accent-base text-white px-6 py-3 rounded-lg font-medium hover:bg-accent-base/90 transition-colors"
+        >
+          📖 Empezar Tutorial
+        </a>
+        <a 
+          href="/services/" 
+          class="inline-flex items-center gap-2 border border-accent-base text-accent-base px-6 py-3 rounded-lg font-medium hover:bg-accent-base/10 transition-colors"
+        >
+          💼 Consultoría DevOps
+        </a>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<!-- FAQ Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Por qué usar Podman en lugar de Docker?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Podman es más seguro porque no requiere privilegios de root ni un daemon central. Cada contenedor funciona como un proceso normal del usuario, reduciendo vectores de ataque."
+      }
+    },
+    {
+      "@type": "Question", 
+      "name": "¿Traefik es difícil de configurar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Al contrario, Traefik simplifica la configuración comparado con Nginx o Apache. Detecta automáticamente servicios, genera certificados SSL, y maneja routing dinámicamente."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito conocimientos avanzados de Linux?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Los tutoriales están diseñados para desarrolladores que quieren aprender DevOps paso a paso, empezando con lo básico."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Esta infraestructura sirve para producción?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutamente. Esta stack es usado por empresas en producción. Podman rootless + Traefik ofrece mejor seguridad que Docker tradicional."
+      }
+    }
+  ]
+}, null, 0)} />
+
+<!-- Course Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "DevOps Moderno con Podman y Traefik",
+  "description": "Aprende DevOps moderno: infraestructura rootless con Podman, proxy inteligente con Traefik, certificados SSL automáticos y despliegues seguros.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Cristotodev",
+    "url": "https://cristoto.dev"
+  },
+  "educationalLevel": "Intermediate to Advanced",
+  "courseMode": "online",
+  "inLanguage": "es",
+  "teaches": [
+    "Podman rootless containers",
+    "Traefik proxy configuration", 
+    "SSL certificate automation",
+    "Modern deployment strategies",
+    "Container orchestration"
+  ]
+}, null, 0)} />
