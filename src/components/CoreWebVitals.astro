@@ -121,11 +121,26 @@
 				criticalCSS.media = 'all';
 			}
 			
-			// Lazy load non-critical CSS
+			// Safer CSS loading for mobile compatibility
 			const nonCriticalCSS = document.querySelectorAll('link[rel="stylesheet"]:not([data-critical])');
 			nonCriticalCSS.forEach(link => {
+				// Skip optimization for mobile to ensure CSS loads
+				const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+				if (isMobile) {
+					return; // Don't modify CSS loading on mobile
+				}
+				
+				// Desktop optimization with better fallback
 				link.media = 'print';
-				link.onload = function() { this.media = 'all'; };
+				link.addEventListener('load', function() { 
+					this.media = 'all'; 
+				});
+				// Fallback in case onload doesn't fire
+				setTimeout(() => {
+					if (link.media === 'print') {
+						link.media = 'all';
+					}
+				}, 1000);
 			});
 		};
 		
