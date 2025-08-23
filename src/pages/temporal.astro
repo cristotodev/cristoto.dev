@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getAllPosts } from "@/data/post";
 import BaseLayout from "@/layouts/Base.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import { siteConfig } from "@/site.config";
@@ -9,7 +9,7 @@ const title = "Workflows Distribuidos con Temporal";
 const description = "Domina Temporal para crear aplicaciones resilientes y escalables. Aprende orquestación de microservicios, workflows críticos, manejo de fallos y arquitecturas distribuidas robustas.";
 
 // Get all Temporal posts
-const allPosts = await getCollection("post");
+const allPosts = await getAllPosts();
 const temporalPosts = allPosts.filter(post => 
   post.id.startsWith('temporal/') || 
   post.data.tags?.some(tag => ['temporal', 'orquestación', 'microservicios', 'workflows'].includes(tag.toLowerCase()))

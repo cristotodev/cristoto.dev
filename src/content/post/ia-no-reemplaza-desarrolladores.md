@@ -1,12 +1,11 @@
 ---
 title: "¿La IA dejará sin trabajo a los desarrolladores? Desmintiendo el mito y adaptándose al futuro de la programación"
 description: "Analizamos si la IA reemplazará a los desarrolladores. Desmentimos el mito de la eliminación total y explicamos cómo la IA está transformando el rol del programador, enfatizando la adaptación y nuevas oportunidades."
-publishDate: "7 Jul 2025"
+publishDate: "21 Aug 2025"
 tags: ["IA", "futuro del trabajo", "desarrollo de software", "programación", "adaptación", "empleo tech", "inteligencia artificial"]
 coverImage:
   src: "https://res.cloudinary.com/cristotodev/image/upload/v1751381438/cristotodev/blog/ai-reemplaza-programadores_enx9rs.webp"
   alt: "IA y el Futuro del Desarrollo de Software"
-draft: true
 ---
 
 La pregunta resuena en conferencias, foros online y conversaciones de café en cualquier empresa tecnológica: **"¿La Inteligencia Artificial va a dejar sin trabajo a los desarrolladores?"** Es una preocupación legítima, alimentada por los avances asombrosos de herramientas como los copilotos de código (GitHub Copilot, Amazon CodeWhisperer) y los modelos de IA generativa que parecen capaces de escribir código por sí solos.

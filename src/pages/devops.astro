@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getAllPosts } from "@/data/post";
 import BaseLayout from "@/layouts/Base.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import { siteConfig } from "@/site.config";
@@ -9,7 +9,7 @@ const title = "DevOps Moderno con Podman y Traefik";
 const description = "Aprende DevOps moderno sin Docker: infraestructura rootless con Podman, proxy inteligente con Traefik, certificados SSL automáticos y despliegues seguros para desarrolladores modernos.";
 
 // Get all DevOps posts
-const allPosts = await getCollection("post");
+const allPosts = await getAllPosts();
 const devopsPosts = allPosts.filter(post => 
   post.id.startsWith('devops/') || 
   post.data.tags?.some(tag => ['podman', 'traefik', 'devops', 'contenedores', 'docker'].includes(tag.toLowerCase()))

@@ -1,5 +1,6 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry } from "astro:content";
+import { getAllPosts } from "@/data/post";
 import { analyzeInternalLinking } from "@/utils/smart-internal-linking";
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 const { currentPost, content, maxSuggestions = 5, showInProduction = false } = Astro.props;
 
 // Get all posts for analysis
-const allPosts = await getCollection("post");
+const allPosts = await getAllPosts();
 
 // Analyze internal linking opportunities
 const linkingAnalysis = analyzeInternalLinking(content, currentPost, allPosts, maxSuggestions);

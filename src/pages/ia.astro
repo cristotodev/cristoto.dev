@@ -1,15 +1,15 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "@/layouts/Base.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import { siteConfig } from "@/site.config";
 import { collectionDateSort } from "@/utils/date";
+import { getAllPosts } from "@/data/post";
 
 const title = "Inteligencia Artificial Aplicada para Desarrolladores";
 const description = "Aprende IA práctica: implementación de chatbots con Ollama, automatización con IA generativa, optimización para PYMEs y desarrollo de aplicaciones inteligentes con herramientas reales.";
 
-// Get all IA posts
-const allPosts = await getCollection("post");
+// Get all IA posts (filtering drafts properly)
+const allPosts = await getAllPosts();
 const iaPosts = allPosts.filter(post => 
   post.data.tags?.some(tag => ['ia', 'inteligencia artificial', 'chatgpt', 'ollama', 'ia generativa', 'automatización'].includes(tag.toLowerCase())) ||
   post.id.includes('ia') ||

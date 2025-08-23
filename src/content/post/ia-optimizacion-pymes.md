@@ -1,12 +1,11 @@
 ---
 title: "No es magia, es automatización: Cómo la IA puede optimizar los procesos de tu pequeña o mediana empresa"
 description: "Descubre cómo la Inteligencia Artificial no es solo para grandes corporaciones. Explora ejemplos prácticos y accesibles de cómo las PYMES pueden usar la IA para automatizar tareas, mejorar la eficiencia y liberar recursos."
-publishDate: "5 Jul 2025"
+publishDate: "16 Aug 2025"
 tags: ["IA para PYMES", "automatización de procesos", "eficiencia empresarial", "inteligencia artificial", "optimización de negocio", "transformación digital"]
 coverImage:
   src: "https://res.cloudinary.com/cristotodev/image/upload/v1751380893/cristotodev/blog/ai-pymes_szxp6j.webp"
   alt: "IA para la Optimización de PYMES"
-draft: true
 ---
 
 La Inteligencia Artificial (IA) a menudo suena a ciencia ficción o a soluciones exclusivas para gigantes tecnológicos. Es fácil pensar que tu **pequeña o mediana empresa (PYME)** no tiene el presupuesto ni los recursos para implementar algo tan "avanzado". Pero la realidad es muy diferente: la IA no es magia, es **automatización inteligente**, y está más accesible que nunca para transformar y optimizar las operaciones de cualquier negocio, sin importar su tamaño.

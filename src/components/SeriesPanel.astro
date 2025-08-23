@@ -1,11 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
 import { type CollectionEntry, getCollection } from "astro:content";
+import { getAllPosts } from "@/data/post";
 
 const { seriesId } = Astro.props;
 const currentPath = Astro.url.pathname;
 
-const posts = await getCollection("post");
+const posts = await getAllPosts();
 const series = await getCollection("series");
 
 // Находим серию по переданному `seriesId` указанному в посте

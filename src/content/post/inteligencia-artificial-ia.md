@@ -1,12 +1,11 @@
 ---
 title: "Inteligencia Artificial y Machine Learning: Entrenamiento y Gestión de Modelos de IA a Gran Escala"
 description: "Descubre los retos y soluciones para entrenar, desplegar y monitorear modelos de IA y Machine Learning a escala. Una guía sobre MLOps, gestión de datos e infraestructura para proyectos de IA de alto rendimiento."
-publishDate: "6 Jul 2025"
+publishDate: "19 Aug 2025"
 tags: ["IA", "Machine Learning", "MLOps", "modelos de IA", "escalabilidad", "datos", "infraestructura"]
 coverImage:
   src: "https://res.cloudinary.com/cristotodev/image/upload/v1751381205/cristotodev/blog/ai-machine-learning_hq2ttp.webp"
   alt: "Gestión de Modelos de IA a Gran Escala"
-draft: true
 ---
 
 Entrenar un modelo de Inteligencia Artificial en tu portátil es una cosa. Llevar ese modelo a producción, gestionarlo eficientemente y escalarlo para manejar millones de predicciones diarias con datos que cambian constantemente, eso es otro desafío completamente diferente. Aquí es donde la mayoría de los proyectos de IA encuentran su verdadero obstáculo.

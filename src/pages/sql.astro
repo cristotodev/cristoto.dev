@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getAllPosts } from "@/data/post";
 import BaseLayout from "@/layouts/Base.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import { siteConfig } from "@/site.config";
@@ -9,7 +9,7 @@ const title = "Guía Completa de SQL en Español";
 const description = "Aprende SQL desde cero con tutoriales prácticos en español. Bases de datos relacionales, consultas avanzadas, JOINs, subconsultas y mejores prácticas para desarrolladores.";
 
 // Get all SQL posts
-const allPosts = await getCollection("post");
+const allPosts = await getAllPosts();
 const sqlPosts = allPosts.filter(post => post.id.startsWith('sql/')).sort(collectionDateSort);
 
 const meta = {

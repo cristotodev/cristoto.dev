@@ -1,7 +1,6 @@
 ---
 import { type CollectionEntry } from "astro:content";
 import { detectSchema } from "@/utils/schema-detection";
-import FAQSchema from "./FAQSchema.astro";
 import HowToSchema from "./HowToSchema.astro";
 import CodeSchema from "./CodeSchema.astro";
 
@@ -31,7 +30,7 @@ const categoryLanguageMap: Record<string, string> = {
 	'angular': 'TypeScript'
 };
 
-const defaultLanguage = categoryLanguageMap[category.toLowerCase()] || 'JavaScript';
+const defaultLanguage = categoryLanguageMap[category?.toLowerCase() || ''] || 'JavaScript';
 ---
 
 {/* FAQ Schema disabled by user request */}
@@ -49,9 +48,9 @@ const defaultLanguage = categoryLanguageMap[category.toLowerCase()] || 'JavaScri
 	<CodeSchema 
 		title={`Código: ${title}`}
 		description={post.data.description || `Ejemplo de código para ${title}`}
-		programmingLanguage={detectedSchema.data.programmingLanguage || defaultLanguage}
-		codeSampleType={detectedSchema.data.codeBlocks > 3 ? "full-solution" : "code-snippet"}
-		runtimePlatform={detectedSchema.data.programmingLanguage === 'javascript' ? 'Node.js/Browser' : undefined}
+		programmingLanguage={detectedSchema.data?.programmingLanguage || defaultLanguage}
+		codeSampleType={detectedSchema.data?.codeBlocks > 3 ? "full-solution" : "code-snippet"}
+		{...(detectedSchema.data?.programmingLanguage === 'javascript' && { runtimePlatform: 'Node.js/Browser' })}
 		applicationCategory={category ? `${category} development` : 'software development'}
 	/>
 )}
