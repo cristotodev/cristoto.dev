@@ -362,4 +362,66 @@
 	article mark {
 		@apply bg-transparent;
 	}
+	
+	/* Mobile responsive tables - prevent horizontal page scroll */
+	.prose {
+		@apply overflow-x-hidden;
+	}
+	
+	.prose table {
+		@apply w-full;
+		max-width: 100%;
+		display: block;
+		overflow-x: auto;
+		scrollbar-width: thin;
+		white-space: nowrap;
+	}
+	
+	.prose table thead,
+	.prose table tbody {
+		display: block;
+	}
+	
+	.prose table thead tr,
+	.prose table tbody tr {
+		display: flex;
+		min-width: max-content;
+	}
+	
+	.prose table th,
+	.prose table td {
+		flex: 1 1 auto;
+		min-width: 100px;
+		padding: 0.5rem 0.75rem;
+		text-align: left;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	
+	/* Desktop table layout */
+	@media (min-width: 768px) {
+		.prose table {
+			display: table;
+			white-space: normal;
+		}
+		
+		.prose table thead,
+		.prose table tbody {
+			display: table-row-group;
+		}
+		
+		.prose table thead tr,
+		.prose table tbody tr {
+			display: table-row;
+		}
+		
+		.prose table th,
+		.prose table td {
+			display: table-cell;
+			white-space: normal;
+			min-width: auto;
+			flex: none;
+		}
+	}
 }
