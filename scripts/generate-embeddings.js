@@ -24,8 +24,12 @@ async function extractPostContent(filePath) {
 
 		const searchableText = `${frontmatter.title} ${frontmatter.description || ''} ${cleanContent}`;
 		
+		// Extract the relative path from src/content/post/ to match Astro's slug generation
+		const relativePath = path.relative(path.join(__dirname, '..', 'src', 'content', 'post'), filePath);
+		const slug = relativePath.replace(/\.(md|mdx)$/, '').replace(/\\/g, '/');
+
 		return {
-			slug: path.basename(filePath, path.extname(filePath)),
+			slug: slug,
 			title: frontmatter.title,
 			description: frontmatter.description || '',
 			content: searchableText,
