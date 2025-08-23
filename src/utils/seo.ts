@@ -3,10 +3,21 @@
  */
 
 /**
- * Optimize meta description for SEO
- * - Ensures optimal length (150-160 characters)
- * - Ends with proper punctuation
- * - Includes key terms if missing
+ * Optimizes meta descriptions for search engines by ensuring proper length, punctuation, and keyword inclusion.
+ * Automatically expands short descriptions and truncates long ones while preserving readability.
+ * 
+ * @param description - The original meta description text
+ * @param keywords - Optional array of keywords to include if missing
+ * @returns Optimized meta description between 120-160 characters with proper punctuation
+ * 
+ * @example
+ * ```typescript
+ * const optimized = optimizeMetaDescription(
+ *   'Learn React', 
+ *   ['react', 'tutorial']
+ * );
+ * // Returns: 'Learn React. Aprende sobre react y tutorial paso a paso.'
+ * ```
  */
 export function optimizeMetaDescription(description: string, keywords?: string[]): string {
 	let optimized = description.trim();
@@ -38,7 +49,19 @@ export function optimizeMetaDescription(description: string, keywords?: string[]
 }
 
 /**
- * Generate SEO-optimized title
+ * Creates SEO-optimized page titles with proper length limits and site branding.
+ * Adds category context and ensures titles don't exceed search engine display limits.
+ * 
+ * @param title - The base title text
+ * @param category - Optional category to add for context
+ * @param siteName - Site name for branding (defaults to 'Cristotodev')
+ * @returns Formatted title with category and site name, truncated if necessary
+ * 
+ * @example
+ * ```typescript
+ * const seoTitle = optimizeTitle('React Hooks Guide', 'javascript');
+ * // Returns: 'React Hooks Guide - Javascript • Cristotodev'
+ * ```
  */
 export function optimizeTitle(title: string, category?: string, siteName: string = 'Cristotodev'): string {
 	let optimized = title.trim();
@@ -60,7 +83,18 @@ export function optimizeTitle(title: string, category?: string, siteName: string
 }
 
 /**
- * Extract keywords from tags and title
+ * Extracts relevant keywords from title and tags for SEO optimization.
+ * Filters out short words from title and combines with tags to create keyword list.
+ * 
+ * @param title - Page title to extract keywords from
+ * @param tags - Array of content tags
+ * @returns Deduplicated array of keywords from title and tags
+ * 
+ * @example
+ * ```typescript
+ * const keywords = extractKeywords('Advanced React Patterns', ['react', 'patterns']);
+ * // Returns: ['react', 'patterns', 'advanced', 'patterns']
+ * ```
  */
 export function extractKeywords(title: string, tags: string[]): string[] {
 	const titleWords = title.toLowerCase()
@@ -72,7 +106,20 @@ export function extractKeywords(title: string, tags: string[]): string[] {
 }
 
 /**
- * Generate category-specific meta description
+ * Generates SEO-optimized meta descriptions for category pages based on predefined templates.
+ * Provides specific descriptions for known categories and generic template for others.
+ * 
+ * @param category - The category name to generate description for
+ * @returns SEO-optimized description text for the category
+ * 
+ * @example
+ * ```typescript
+ * const desc = generateCategoryDescription('sql');
+ * // Returns: 'Tutoriales completos de SQL para desarrolladores. Aprende bases de datos...'
+ * 
+ * const custom = generateCategoryDescription('golang');
+ * // Returns: 'Tutoriales y guías prácticas sobre golang. Aprende desarrollo...'
+ * ```
  */
 export function generateCategoryDescription(category: string): string {
 	const categoryDescriptions: Record<string, string> = {
@@ -89,7 +136,22 @@ export function generateCategoryDescription(category: string): string {
 }
 
 /**
- * Optimize H1 heading for SEO while keeping it natural
+ * Optimizes H1 headings for SEO by adding relevant category keywords while maintaining natural language.
+ * Only enhances titles that are short and missing obvious category-related terms.
+ * 
+ * @param title - The original title text
+ * @param category - Content category for keyword enhancement
+ * @param _tags - Content tags (currently unused, reserved for future enhancement)
+ * @returns Enhanced title with category keywords if appropriate, otherwise original title
+ * 
+ * @example
+ * ```typescript
+ * const h1 = optimizeH1('Guía básica', 'sql', ['database']);
+ * // Returns: 'Guía básica de SQL' (if title was short enough)
+ * 
+ * const h1Long = optimizeH1('Complete SQL Database Tutorial', 'sql');
+ * // Returns: 'Complete SQL Database Tutorial' (unchanged - already optimized)
+ * ```
  */
 export function optimizeH1(title: string, category?: string, _tags: string[] = []): string {
 	let optimized = title.trim();
@@ -127,7 +189,20 @@ export function optimizeH1(title: string, category?: string, _tags: string[] = [
 }
 
 /**
- * Generate SEO-friendly slug from title
+ * Converts title text into SEO-friendly URL slug by normalizing characters and formatting.
+ * Removes accents, special characters, and converts to lowercase kebab-case.
+ * 
+ * @param title - The title text to convert to slug
+ * @returns URL-safe slug in kebab-case format
+ * 
+ * @example
+ * ```typescript
+ * const slug = generateSlug('Guía de Programación en Python');
+ * // Returns: 'guia-de-programacion-en-python'
+ * 
+ * const slug2 = generateSlug('React Hooks: Advanced Patterns!');
+ * // Returns: 'react-hooks-advanced-patterns'
+ * ```
  */
 export function generateSlug(title: string): string {
 	return title
@@ -144,7 +219,23 @@ export function generateSlug(title: string): string {
 }
 
 /**
- * Create SEO-optimized URL structure
+ * Creates SEO-optimized URL structure for blog posts using existing slug or generating from title.
+ * Preserves category structure and chooses the most descriptive slug format.
+ * 
+ * @param post - Post object with id and data containing title and tags
+ * @param post.id - Post identifier with potential category path
+ * @param post.data.title - Post title for slug generation
+ * @param post.data.tags - Post tags array
+ * @returns SEO-friendly URL path with category and optimized slug
+ * 
+ * @example
+ * ```typescript
+ * const url = createSEOUrl({
+ *   id: 'sql/database-basics.md',
+ *   data: { title: 'Database Fundamentals', tags: ['sql'] }
+ * });
+ * // Returns: 'sql/database-basics' or 'sql/database-fundamentals'
+ * ```
  */
 export function createSEOUrl(post: {id: string, data: {title: string, tags: string[]}}): string {
 	const pathSegments = post.id.split('/');
@@ -163,7 +254,24 @@ export function createSEOUrl(post: {id: string, data: {title: string, tags: stri
 }
 
 /**
- * Generate canonical URL for posts
+ * Generates canonical URLs for blog posts to prevent duplicate content issues.
+ * Combines base URL with SEO-optimized post path and proper trailing slash.
+ * 
+ * @param baseUrl - The site's base URL (e.g., 'https://cristoto.dev')
+ * @param post - Post object with id and data for URL generation
+ * @param post.id - Post identifier
+ * @param post.data.title - Post title
+ * @param post.data.tags - Post tags
+ * @returns Complete canonical URL for the post
+ * 
+ * @example
+ * ```typescript
+ * const canonical = generateCanonicalUrl(
+ *   'https://cristoto.dev',
+ *   { id: 'sql/joins.md', data: { title: 'SQL Joins', tags: ['sql'] } }
+ * );
+ * // Returns: 'https://cristoto.dev/posts/sql/sql-joins/'
+ * ```
  */
 export function generateCanonicalUrl(baseUrl: string, post: {id: string, data: {title: string, tags: string[]}}): string {
 	const seoUrl = createSEOUrl(post);

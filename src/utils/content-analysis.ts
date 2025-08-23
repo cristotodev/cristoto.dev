@@ -41,7 +41,25 @@ export interface ContentQuality {
 }
 
 /**
- * Analyze content for SEO optimization
+ * Analyzes content for comprehensive SEO optimization including readability, keyword density, and structure.
+ * 
+ * @param content - The markdown/HTML content to analyze
+ * @param title - The page/post title for keyword extraction
+ * @param description - The meta description for analysis
+ * @param tags - Array of tags associated with the content
+ * @returns Complete analysis including word count, reading time, SEO suggestions, and quality metrics
+ * 
+ * @example
+ * ```typescript
+ * const analysis = analyzeContent(
+ *   '# My Post\n\nThis is great content...', 
+ *   'SEO Guide', 
+ *   'Learn SEO optimization', 
+ *   ['seo', 'guide']
+ * );
+ * console.log(analysis.wordCount); // 234
+ * console.log(analysis.seoSuggestions); // ['Add more H2 headings...']
+ * ```
  */
 export function analyzeContent(
 	content: string, 
@@ -102,7 +120,16 @@ export function analyzeContent(
 }
 
 /**
- * Clean text content from HTML/markdown
+ * Removes HTML tags, markdown formatting, and code blocks from content for text analysis.
+ * 
+ * @param content - Raw content with HTML/markdown formatting
+ * @returns Clean, lowercase text suitable for word counting and keyword analysis
+ * 
+ * @example
+ * ```typescript
+ * const clean = cleanTextContent('# Title\n\n**Bold** text `code`');
+ * // Returns: 'title bold text'
+ * ```
  */
 function cleanTextContent(content: string): string {
 	return content
@@ -125,7 +152,19 @@ function cleanTextContent(content: string): string {
 }
 
 /**
- * Analyze keyword density
+ * Analyzes keyword density in content and provides optimization recommendations.
+ * Extracts keywords from title, tags, and content to calculate density percentages.
+ * 
+ * @param content - Clean text content for analysis
+ * @param title - Page title to extract keywords from
+ * @param tags - Array of content tags
+ * @returns Array of keyword density objects with optimization status and suggestions
+ * 
+ * @example
+ * ```typescript
+ * const density = analyzeKeywordDensity('react tutorial guide', 'React Guide', ['react']);
+ * // Returns: [{ keyword: 'react', count: 2, density: 66.67, isOptimal: false, ... }]
+ * ```
  */
 function analyzeKeywordDensity(content: string, title: string, tags: string[]): KeywordDensity[] {
 	const words = content.split(/\s+/).filter(word => word.length > 2);
@@ -186,7 +225,18 @@ function analyzeKeywordDensity(content: string, title: string, tags: string[]): 
 }
 
 /**
- * Extract common phrases from content
+ * Extracts recurring phrases of specified word count from content for keyword analysis.
+ * Filters out short phrases and sorts by frequency to identify important phrases.
+ * 
+ * @param content - Text content to analyze
+ * @param wordCount - Number of words per phrase to extract
+ * @returns Array of phrases with their occurrence counts, sorted by frequency
+ * 
+ * @example
+ * ```typescript
+ * const phrases = extractPhrases('react tutorial react guide tutorial guide', 2);
+ * // Returns: [{ phrase: 'react tutorial', count: 1 }, { phrase: 'tutorial guide', count: 1 }]
+ * ```
  */
 function extractPhrases(content: string, wordCount: number): Array<{phrase: string, count: number}> {
 	const words = content.split(/\s+/);
@@ -206,7 +256,17 @@ function extractPhrases(content: string, wordCount: number): Array<{phrase: stri
 }
 
 /**
- * Analyze heading structure
+ * Analyzes the heading structure (H1, H2, H3) in markdown content for SEO optimization.
+ * Checks for proper hierarchy, missing headings, and structural issues.
+ * 
+ * @param content - Markdown content with heading tags
+ * @returns Analysis of heading counts, structure hierarchy, and identified issues
+ * 
+ * @example
+ * ```typescript
+ * const structure = analyzeHeadingStructure('# Main\n## Sub\n### Detail');
+ * // Returns: { h1Count: 1, h2Count: 1, h3Count: 1, structure: [...], issues: [] }
+ * ```
  */
 function analyzeHeadingStructure(content: string): HeadingAnalysis {
 	const h1Matches = content.match(/^#{1}\s+.+$/gm) || [];
@@ -249,7 +309,17 @@ function analyzeHeadingStructure(content: string): HeadingAnalysis {
 }
 
 /**
- * Calculate readability score (simplified Flesch-Kincaid)
+ * Calculates content readability using a simplified Flesch-Kincaid formula adapted for Spanish.
+ * Higher scores indicate easier reading, with 100 being most readable.
+ * 
+ * @param content - Clean text content to analyze
+ * @returns Readability score from 0 (very difficult) to 100 (very easy)
+ * 
+ * @example
+ * ```typescript
+ * const score = calculateReadabilityScore('Simple short sentences. Easy to read.');
+ * // Returns: ~75 (relatively easy to read)
+ * ```
  */
 function calculateReadabilityScore(content: string): number {
 	const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
@@ -268,7 +338,17 @@ function calculateReadabilityScore(content: string): number {
 }
 
 /**
- * Count syllables in a word (simplified for Spanish)
+ * Counts syllables in a Spanish word by counting vowel groups.
+ * Simplified algorithm that treats consecutive vowels as single syllables.
+ * 
+ * @param word - The word to count syllables for
+ * @returns Number of syllables (minimum 1)
+ * 
+ * @example
+ * ```typescript
+ * const syllables = countSyllables('hola'); // Returns: 2
+ * const syllables2 = countSyllables('programación'); // Returns: 5
+ * ```
  */
 function countSyllables(word: string): number {
 	word = word.toLowerCase();
@@ -288,7 +368,32 @@ function countSyllables(word: string): number {
 }
 
 /**
- * Evaluate overall content quality
+ * Evaluates overall content quality based on multiple SEO and readability factors.
+ * Combines length, keyword optimization, heading structure, readability, and media usage.
+ * 
+ * @param params - Object containing all analysis data
+ * @param params.wordCount - Total word count of the content
+ * @param params.keywordDensity - Array of keyword density analysis
+ * @param params.headingStructure - Heading structure analysis
+ * @param params.readabilityScore - Content readability score
+ * @param params.content - Original content for image analysis
+ * @param params.title - Content title
+ * @param params.description - Meta description
+ * @returns Quality score (0-100) with detailed factor breakdown and messages
+ * 
+ * @example
+ * ```typescript
+ * const quality = evaluateContentQuality({
+ *   wordCount: 800,
+ *   keywordDensity: [...],
+ *   headingStructure: {...},
+ *   readabilityScore: 65,
+ *   content: '...',
+ *   title: 'Guide',
+ *   description: 'Learn...'
+ * });
+ * console.log(quality.score); // 85
+ * ```
  */
 function evaluateContentQuality(params: {
 	wordCount: number;
@@ -371,7 +476,28 @@ function evaluateContentQuality(params: {
 }
 
 /**
- * Generate SEO suggestions and warnings
+ * Generates actionable SEO suggestions and critical warnings based on content analysis.
+ * Provides specific recommendations for improving search engine optimization.
+ * 
+ * @param params - Complete content analysis data
+ * @param params.wordCount - Total word count
+ * @param params.keywordDensity - Keyword analysis results
+ * @param params.headingStructure - Heading structure analysis
+ * @param params.readabilityScore - Content readability score
+ * @param params.contentQuality - Overall quality assessment
+ * @param params.title - Page title
+ * @param params.description - Meta description
+ * @param params.tags - Content tags
+ * @returns Object with actionable suggestions and critical warnings arrays
+ * 
+ * @example
+ * ```typescript
+ * const { suggestions, warnings } = generateSEOSuggestions({
+ *   wordCount: 250,
+ *   // ... other params
+ * });
+ * console.log(warnings); // ['📏 Content too short for SEO (minimum 300 words)']
+ * ```
  */
 function generateSEOSuggestions(params: {
 	wordCount: number;

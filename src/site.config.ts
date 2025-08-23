@@ -41,6 +41,10 @@ export const menuLinks: { path: string; title: string }[] = [
 		title: "Blog",
 	},
 	{
+		path: "/busqueda-semantica/",
+		title: "Búsqueda IA",
+	},
+	{
 		path: "/books/",
 		title: "Libros",
 	},

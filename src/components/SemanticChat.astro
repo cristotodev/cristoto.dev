@@ -1,0 +1,258 @@
+---
+// Componente de chat semántico
+---
+
+<div id="semantic-chat" class="w-full max-w-4xl mx-auto p-2 sm:p-4 lg:p-6">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden w-full">
+    <!-- Header -->
+    <div class="border-b border-gray-200 dark:border-gray-700 p-3 sm:p-4">
+      <h2 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
+        🔍 Búsqueda Semántica
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">
+        Pregunta en lenguaje natural y encuentra posts relacionados
+      </p>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="p-3 sm:p-4">
+      <div class="flex flex-col sm:flex-row gap-2">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Ej: ideas de SEO local..."
+          class="flex-1 px-3 sm:px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                 dark:bg-gray-700 dark:text-white text-sm sm:text-base
+                 min-w-0 w-full max-w-full"
+        />
+        <button
+          id="search-btn"
+          class="px-4 sm:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 
+                 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed
+                 text-sm sm:text-base whitespace-nowrap"
+        >
+          Buscar
+        </button>
+      </div>
+      
+      <!-- Loading indicator -->
+      <div id="loading" class="hidden mt-2 text-sm text-gray-500 dark:text-gray-400">
+        🤖 Analizando tu consulta...
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="search-results" class="hidden p-3 sm:p-4 border-t border-gray-200 dark:border-gray-700">
+      <h3 class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-4">
+        Resultados Relacionados
+      </h3>
+      <div id="results-container" class="overflow-x-hidden"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { pipeline } from '@xenova/transformers';
+  
+  interface PostEmbedding {
+    title: string;
+    description: string;
+    slug: string;
+    tags: string[];
+    embedding: number[];
+    similarity?: number;
+  }
+  
+  let embeddings: PostEmbedding[] = [];
+  let extractor: any = null;
+  
+  /**
+   * Calculates the cosine similarity between two embedding vectors.
+   * Used to measure semantic similarity between query and content embeddings.
+   * 
+   * @param {number[]} a - First embedding vector
+   * @param {number[]} b - Second embedding vector
+   * @returns {number} Cosine similarity score between 0 and 1 (1 = identical)
+   * 
+   * @example
+   * const similarity = cosineSimilarity([0.1, 0.2, 0.3], [0.2, 0.3, 0.4]);
+   * // Returns: ~0.99 (high similarity)
+   */
+  function cosineSimilarity(a: number[], b: number[]): number {
+    const dotProduct = a.reduce((sum, ai, i) => sum + ai * (b[i] || 0), 0);
+    const magnitudeA = Math.sqrt(a.reduce((sum, ai) => sum + ai * ai, 0));
+    const magnitudeB = Math.sqrt(b.reduce((sum, bi) => sum + bi * bi, 0));
+    return dotProduct / (magnitudeA * magnitudeB);
+  }
+  
+  /**
+   * Initializes the semantic search system by loading pre-generated embeddings and ML model.
+   * Fetches embeddings.json and loads the multilingual transformer model for query processing.
+   * 
+   * @returns {Promise<void>} Resolves when both embeddings and model are loaded
+   * 
+   * @example
+   * await initializeSearch();
+   * console.log('Search system ready');
+   */
+  async function initializeSearch() {
+    try {
+      // Cargar embeddings pre-generados
+      const response = await fetch('/embeddings.json');
+      embeddings = await response.json();
+      console.log(`📚 Cargados ${embeddings.length} posts con embeddings`);
+      
+      // Inicializar modelo para consultas en vivo
+      console.log('🤖 Cargando modelo de embeddings...');
+      extractor = await pipeline('feature-extraction', 'Xenova/multilingual-e5-small');
+      console.log('✅ Sistema de búsqueda semántica listo');
+      
+    } catch (error) {
+      console.error('Error inicializando búsqueda semántica:', error);
+    }
+  }
+  
+  /**
+   * Performs semantic search by generating query embedding and finding similar content.
+   * Compares query embedding against all post embeddings using cosine similarity.
+   * 
+   * @param {string} query - Natural language search query
+   * @returns {Promise<Array>} Array of posts with similarity scores, sorted by relevance
+   * 
+   * @example
+   * const results = await semanticSearch('React hooks tutorial');
+   * console.log(results[0].similarity); // 0.85
+   * console.log(results[0].title); // 'Advanced React Hooks Guide'
+   */
+  async function semanticSearch(query: string): Promise<PostEmbedding[]> {
+    if (!extractor || embeddings.length === 0) {
+      console.error('Sistema no inicializado');
+      return [];
+    }
+    
+    try {
+      // Generar embedding para la consulta
+      const queryOutput = await extractor(query, {
+        pooling: 'mean',
+        normalize: true,
+      });
+      const queryEmbedding = Array.from(queryOutput.data) as number[];
+      
+      // Calcular similitudes
+      const results = embeddings.map(post => ({
+        ...post,
+        similarity: cosineSimilarity(queryEmbedding, Array.isArray(post.embedding) ? post.embedding as number[] : [])
+      }))
+      .sort((a, b) => (b.similarity || 0) - (a.similarity || 0))
+      .slice(0, 5); // Top 5 resultados
+      
+      return results;
+      
+    } catch (error) {
+      console.error('Error en búsqueda semántica:', error);
+      return [];
+    }
+  }
+  
+  /**
+   * Renders search results in the UI with post information and similarity scores.
+   * Creates HTML for each result with title, description, tags, and similarity percentage.
+   * 
+   * @param {Array} results - Array of search results with post data and similarity scores
+   * 
+   * @example
+   * displayResults([
+   *   { title: 'React Guide', similarity: 0.85, slug: 'react-guide', tags: ['react'] }
+   * ]);
+   * // Renders result cards with 85% similarity badge
+   */
+  function displayResults(results: PostEmbedding[]): void {
+    const container = document.getElementById('results-container');
+    const resultsSection = document.getElementById('search-results');
+    
+    if (!container || !resultsSection) return;
+    
+    if (results.length === 0) {
+      container.innerHTML = '<p class="text-gray-500 dark:text-gray-400">No se encontraron resultados relacionados.</p>';
+      resultsSection.classList.remove('hidden');
+      return;
+    }
+    
+    const resultsHTML = results.map(result => `
+      <div class="mb-4 p-3 sm:p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
+          <h4 class="text-base sm:text-lg font-medium text-blue-600 dark:text-blue-400 break-words">
+            <a href="/posts/${result.slug}" class="hover:underline">
+              ${result.title}
+            </a>
+          </h4>
+          <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-600 px-2 py-1 rounded self-start whitespace-nowrap">
+            ${Math.round((result.similarity || 0) * 100)}% similitud
+          </span>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm mb-2 break-words">
+          ${result.description}
+        </p>
+        ${result.tags.length > 0 ? `
+          <div class="flex flex-wrap gap-1 overflow-x-hidden">
+            ${result.tags.map((tag: string) => `
+              <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded whitespace-nowrap">
+                ${tag}
+              </span>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `).join('');
+    
+    container.innerHTML = resultsHTML;
+    resultsSection.classList.remove('hidden');
+  }
+  
+  // Event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('chat-input') as HTMLInputElement | null;
+    const searchBtn = document.getElementById('search-btn') as HTMLButtonElement | null;
+    const loading = document.getElementById('loading') as HTMLElement | null;
+    
+    // Inicializar sistema
+    initializeSearch();
+    
+    /**
+     * Handles search execution with loading states and error handling.
+     * Manages UI state during search and displays results or errors appropriately.
+     * 
+     * @returns {Promise<void>} Resolves when search completes (success or error)
+     * 
+     * @example
+     * // Called when user clicks search or presses Enter
+     * await performSearch();
+     */
+    async function performSearch(): Promise<void> {
+      const query = input?.value?.trim();
+      if (!query || !input || !searchBtn || !loading) return;
+      
+      searchBtn.disabled = true;
+      loading.classList.remove('hidden');
+      
+      try {
+        const results = await semanticSearch(query);
+        displayResults(results);
+      } catch (error) {
+        console.error('Error en búsqueda:', error);
+      } finally {
+        if (searchBtn) searchBtn.disabled = false;
+        if (loading) loading.classList.add('hidden');
+      }
+    }
+    
+    // Event listeners
+    searchBtn?.addEventListener('click', performSearch);
+    input?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        performSearch();
+      }
+    });
+  });
+</script>

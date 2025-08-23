@@ -21,7 +21,26 @@ export interface LinkingAnalysis {
 }
 
 /**
- * Analyze content for internal linking opportunities
+ * Analyzes content for smart internal linking opportunities using relevance scoring.
+ * Finds related posts and suggests anchor text with context for optimal internal linking.
+ * 
+ * @param content - The markdown content to analyze for linking opportunities
+ * @param currentPost - The current post object being analyzed
+ * @param allPosts - Array of all available posts for linking
+ * @param maxSuggestions - Maximum number of link suggestions to return (default: 5)
+ * @returns Complete analysis with suggestions, current links, and optimization opportunities
+ * 
+ * @example
+ * ```typescript
+ * const analysis = analyzeInternalLinking(
+ *   'This React tutorial covers hooks...',
+ *   currentPost,
+ *   allPosts,
+ *   3
+ * );
+ * console.log(analysis.suggestions.length); // Up to 3 suggestions
+ * console.log(analysis.linkDensity); // 2.5 (percentage)
+ * ```
  */
 export function analyzeInternalLinking(
 	content: string,
@@ -55,7 +74,17 @@ export function analyzeInternalLinking(
 }
 
 /**
- * Extract current internal links from content
+ * Extracts existing internal links from markdown content using regex pattern matching.
+ * Only captures links that are internal (starting with / or ./) to avoid external links.
+ * 
+ * @param content - Markdown content to scan for links
+ * @returns Array of markdown link strings found in content
+ * 
+ * @example
+ * ```typescript
+ * const links = extractCurrentLinks('[Guide](/posts/guide/) and [Tutorial](./tutorial.md)');
+ * // Returns: ['[Guide](/posts/guide/)', '[Tutorial](./tutorial.md)']
+ * ```
  */
 function extractCurrentLinks(content: string): string[] {
 	const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
@@ -73,7 +102,17 @@ function extractCurrentLinks(content: string): string[] {
 }
 
 /**
- * Extract anchor text from markdown link
+ * Extracts the anchor text portion from a markdown link string.
+ * Parses the link format [anchor](url) to return just the anchor text.
+ * 
+ * @param link - Complete markdown link string
+ * @returns The anchor text or empty string if no match
+ * 
+ * @example
+ * ```typescript
+ * const anchor = extractAnchorText('[React Guide](/posts/react-guide/)');
+ * // Returns: 'React Guide'
+ * ```
  */
 function extractAnchorText(link: string): string {
 	const match = link.match(/\[([^\]]+)\]/);
@@ -81,7 +120,27 @@ function extractAnchorText(link: string): string {
 }
 
 /**
- * Find internal linking suggestions
+ * Finds relevant posts for internal linking based on content analysis and relevance scoring.
+ * Filters out current post and already linked posts, then generates suggestions for top matches.
+ * 
+ * @param content - Content to analyze for linking opportunities
+ * @param currentPost - Current post to exclude from suggestions
+ * @param allPosts - All available posts to consider for linking
+ * @param existingLinks - Array of existing link strings to avoid duplicates
+ * @param maxSuggestions - Maximum number of suggestions to return
+ * @returns Array of internal link suggestions sorted by relevance score
+ * 
+ * @example
+ * ```typescript
+ * const suggestions = findLinkingSuggestions(
+ *   'React hooks tutorial content...',
+ *   currentPost,
+ *   allPosts,
+ *   ['[existing](/link/)'],
+ *   5
+ * );
+ * // Returns top 5 most relevant internal link suggestions
+ * ```
  */
 function findLinkingSuggestions(
 	content: string,
@@ -118,7 +177,23 @@ function findLinkingSuggestions(
 }
 
 /**
- * Calculate relevance score between current content and target post
+ * Calculates relevance score between current content and a target post for internal linking.
+ * Uses weighted algorithm considering tag overlap, category match, title keywords, and content mentions.
+ * 
+ * @param content - Current post content to analyze
+ * @param currentPost - Current post object with metadata
+ * @param targetPost - Target post to calculate relevance against
+ * @returns Relevance score between 0 and 1, where 1 is most relevant
+ * 
+ * @example
+ * ```typescript
+ * const score = calculateRelevanceScore(
+ *   'React hooks are powerful...',
+ *   { data: { tags: ['react'], title: 'Hooks Guide' } },
+ *   { data: { tags: ['react', 'hooks'], title: 'Advanced React' } }
+ * );
+ * // Returns: ~0.85 (high relevance due to tag overlap)
+ * ```
  */
 function calculateRelevanceScore(content: string, currentPost: any, targetPost: any): number {
 	let score = 0;
@@ -166,7 +241,23 @@ function calculateRelevanceScore(content: string, currentPost: any, targetPost: 
 }
 
 /**
- * Generate specific link suggestions for a post
+ * Generates specific anchor text suggestions for linking to a target post.
+ * Creates both exact keyword matches and semantic phrase suggestions with context.
+ * 
+ * @param content - Content to find linking opportunities in
+ * @param targetPost - Post to generate link suggestions for
+ * @param relevanceScore - Calculated relevance score for the target post
+ * @returns Array of specific link suggestions with anchor text and context
+ * 
+ * @example
+ * ```typescript
+ * const suggestions = generateLinkSuggestionsForPost(
+ *   'Learn about React hooks in our guide...',
+ *   { slug: 'react-hooks', data: { title: 'React Hooks Guide', tags: ['react'] } },
+ *   0.8
+ * );
+ * // Returns suggestions for linking 'React hooks' to the target post
+ * ```
  */
 function generateLinkSuggestionsForPost(
 	content: string,
@@ -227,7 +318,18 @@ function generateLinkSuggestionsForPost(
 }
 
 /**
- * Extract keywords from title and tags
+ * Extracts meaningful keywords from title and tags for internal linking analysis.
+ * Filters out common Spanish stop words and short words that aren't useful for linking.
+ * 
+ * @param title - Post title to extract keywords from
+ * @param tags - Array of post tags
+ * @returns Array of cleaned keywords suitable for link anchor text
+ * 
+ * @example
+ * ```typescript
+ * const keywords = extractKeywords('Cómo usar React Hooks', ['react', 'tutorial']);
+ * // Returns: ['usar', 'React', 'Hooks', 'react', 'tutorial']
+ * ```
  */
 function extractKeywords(title: string, tags: string[]): string[] {
 	const titleWords = title.split(/\s+/)
@@ -238,7 +340,18 @@ function extractKeywords(title: string, tags: string[]): string[] {
 }
 
 /**
- * Generate semantic phrases for linking
+ * Generates semantic phrases for more natural internal linking opportunities.
+ * Creates variations like 'tutorial de X', 'guía de Y', etc. based on title and tags.
+ * 
+ * @param title - Post title to base phrases on
+ * @param tags - Post tags to create semantic variations
+ * @returns Array of natural language phrases suitable for link anchor text
+ * 
+ * @example
+ * ```typescript
+ * const phrases = generateSemanticPhrases('React Hooks Guide', ['react', 'hooks']);
+ * // Returns: ['React Hooks Guide', 'tutorial de react', 'guía de hooks', ...]
+ * ```
  */
 function generateSemanticPhrases(title: string, tags: string[]): string[] {
 	const phrases: string[] = [];
@@ -258,7 +371,19 @@ function generateSemanticPhrases(title: string, tags: string[]): string[] {
 }
 
 /**
- * Extract context around a position in text
+ * Extracts surrounding context from text around a specific position for link suggestions.
+ * Provides context to help understand where a link would be placed in the content.
+ * 
+ * @param text - The full text content
+ * @param position - Character position to center the context around
+ * @param radius - Number of characters to include before and after position
+ * @returns Trimmed context string around the specified position
+ * 
+ * @example
+ * ```typescript
+ * const context = extractContext('This is a long text with React hooks example', 25, 10);
+ * // Returns: 'xt with React hooks ex' (centered around position 25)
+ * ```
  */
 function extractContext(text: string, position: number, radius: number): string {
 	const start = Math.max(0, position - radius);
@@ -267,7 +392,20 @@ function extractContext(text: string, position: number, radius: number): string 
 }
 
 /**
- * Extract category from post ID
+ * Extracts category information from a post ID path structure.
+ * Assumes post IDs follow the pattern 'category/post-name' format.
+ * 
+ * @param id - Post ID string that may contain category information
+ * @returns Category name if found, null if post is not in a category
+ * 
+ * @example
+ * ```typescript
+ * const category = extractCategory('sql/advanced-queries.md');
+ * // Returns: 'sql'
+ * 
+ * const noCategory = extractCategory('standalone-post.md');
+ * // Returns: null
+ * ```
  */
 function extractCategory(id: string): string | null {
 	const parts = id.split('/');
@@ -275,28 +413,80 @@ function extractCategory(id: string): string | null {
 }
 
 /**
- * Escape regex special characters
+ * Escapes special regex characters in a string to make it safe for use in RegExp.
+ * Prevents regex injection and ensures literal string matching.
+ * 
+ * @param string - String that may contain regex special characters
+ * @returns String with regex special characters escaped
+ * 
+ * @example
+ * ```typescript
+ * const escaped = escapeRegex('React (hooks)');
+ * // Returns: 'React \\(hooks\\)'
+ * ```
  */
 function escapeRegex(string: string): string {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 /**
- * Set intersection helper
+ * Calculates the intersection of two sets (elements present in both sets).
+ * Helper function for tag overlap calculations in relevance scoring.
+ * 
+ * @param setA - First set
+ * @param setB - Second set
+ * @returns New set containing elements present in both input sets
+ * 
+ * @example
+ * ```typescript
+ * const set1 = new Set(['react', 'hooks']);
+ * const set2 = new Set(['react', 'javascript']);
+ * const common = intersection(set1, set2);
+ * // Returns: Set(['react'])
+ * ```
  */
 function intersection<T>(setA: Set<T>, setB: Set<T>): Set<T> {
 	return new Set([...setA].filter(x => setB.has(x)));
 }
 
 /**
- * Set union helper
+ * Calculates the union of two sets (all unique elements from both sets).
+ * Helper function for tag analysis calculations in relevance scoring.
+ * 
+ * @param setA - First set
+ * @param setB - Second set
+ * @returns New set containing all unique elements from both input sets
+ * 
+ * @example
+ * ```typescript
+ * const set1 = new Set(['react', 'hooks']);
+ * const set2 = new Set(['react', 'javascript']);
+ * const all = union(set1, set2);
+ * // Returns: Set(['react', 'hooks', 'javascript'])
+ * ```
  */
 function union<T>(setA: Set<T>, setB: Set<T>): Set<T> {
 	return new Set([...setA, ...setB]);
 }
 
 /**
- * Generate linking opportunities and recommendations
+ * Generates actionable recommendations for improving internal linking strategy.
+ * Analyzes current link density, anchor text variety, and available suggestions.
+ * 
+ * @param suggestions - Array of available internal link suggestions
+ * @param linkDensity - Current link density percentage in content
+ * @param anchorTextVariety - Percentage of unique anchor texts used
+ * @returns Array of actionable recommendations for link optimization
+ * 
+ * @example
+ * ```typescript
+ * const opportunities = generateLinkingOpportunities(
+ *   suggestions,
+ *   0.5,  // Low link density
+ *   60    // Moderate anchor variety
+ * );
+ * // Returns: ['🔗 Densidad de enlaces baja: considera añadir más enlaces internos']
+ * ```
  */
 function generateLinkingOpportunities(
 	suggestions: InternalLinkSuggestion[],

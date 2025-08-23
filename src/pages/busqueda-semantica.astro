@@ -1,0 +1,54 @@
+---
+import { siteConfig } from "../site.config";
+import Base from "../layouts/Base.astro";
+import SemanticChat from "../components/SemanticChat.astro";
+
+const meta = {
+	title: "Búsqueda Semántica",
+	description: "Encuentra posts relacionados usando búsqueda semántica con inteligencia artificial. Pregunta en lenguaje natural y descubre contenido relevante.",
+	canonicalURL: new URL("busqueda-semantica", Astro.site),
+};
+---
+
+<Base meta={meta}>
+	<div class="w-full overflow-x-hidden">
+		<h1 class="title mb-6 text-citrus-600 dark:text-citrus-400 font-bold text-2xl sm:text-3xl">
+			🔍 Búsqueda Semántica
+		</h1>
+		
+		<div class="prose prose-citrus dark:prose-invert max-w-none w-full overflow-x-hidden">
+			<p class="text-gray-700 dark:text-gray-300 text-lg mb-8">
+				Encuentra posts relacionados usando inteligencia artificial. Escribe tu consulta en lenguaje natural 
+				y el sistema encontrará contenido relevante aunque no contenga exactamente las mismas palabras.
+			</p>
+			
+			<div class="not-prose mb-12">
+				<SemanticChat />
+			</div>
+			
+			<h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Ejemplos de consultas</h2>
+			<ul class="space-y-2 text-gray-700 dark:text-gray-300">
+				<li><strong class="text-gray-900 dark:text-white">"ideas de SEO local para peluquerías"</strong> - Encuentra posts sobre SEO y marketing local</li>
+				<li><strong class="text-gray-900 dark:text-white">"cómo optimizar bases de datos"</strong> - Descubre contenido sobre SQL y rendimiento</li>
+				<li><strong class="text-gray-900 dark:text-white">"infraestructura en la nube"</strong> - Encuentra posts sobre DevOps y deployment</li>
+				<li><strong class="text-gray-900 dark:text-white">"inteligencia artificial para empresas"</strong> - Contenido sobre IA aplicada</li>
+			</ul>
+			
+			<h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4 mt-8">¿Cómo funciona?</h2>
+			<p class="text-gray-700 dark:text-gray-300">
+				Esta búsqueda utiliza <strong class="text-gray-900 dark:text-white">embeddings semánticos</strong> generados con inteligencia artificial. 
+				El sistema comprende el significado de tu consulta y encuentra contenido relacionado conceptualmente, 
+				no solo por palabras clave exactas.
+			</p>
+			
+			<p class="text-gray-700 dark:text-gray-300">
+				Todo el procesamiento se ejecuta en tu navegador usando 
+				<a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener" 
+				   class="text-blue-600 dark:text-blue-400 hover:underline">
+					@xenova/transformers
+				</a>, 
+				manteniendo tu privacidad al no enviar datos a servidores externos.
+			</p>
+		</div>
+	</div>
+</Base>
