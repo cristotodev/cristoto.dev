@@ -1,0 +1,167 @@
+{
+  "timestamp": "2025-08-23T09:33:03.182Z",
+  "url": "http://localhost:4321/posts/que-es-claude-code-productividad/",
+  "analysis": {
+    "wordCount": 1792,
+    "readingTime": 9,
+    "readabilityScore": 0,
+    "keywordDensity": [
+      {
+        "keyword": "claude",
+        "count": 38,
+        "density": 2.99,
+        "isOptimal": true,
+        "suggestion": ""
+      },
+      {
+        "keyword": "claude code",
+        "count": 30,
+        "density": 2.36,
+        "isOptimal": true,
+        "suggestion": ""
+      },
+      {
+        "keyword": "código",
+        "count": 18,
+        "density": 1.42,
+        "isOptimal": true,
+        "suggestion": ""
+      },
+      {
+        "keyword": "desarrollo",
+        "count": 12,
+        "density": 0.95,
+        "isOptimal": true,
+        "suggestion": ""
+      },
+      {
+        "keyword": "productividad",
+        "count": 8,
+        "density": 0.63,
+        "isOptimal": true,
+        "suggestion": ""
+      },
+      {
+        "keyword": "con claude",
+        "count": 7,
+        "density": 0.55,
+        "isOptimal": true,
+        "suggestion": ""
+      },
+      {
+        "keyword": "cómo",
+        "count": 6,
+        "density": 0.47,
+        "isOptimal": false,
+        "suggestion": "Considera usar más \"cómo\" (densidad actual: 0.47%)"
+      },
+      {
+        "keyword": "ia",
+        "count": 5,
+        "density": 0.39,
+        "isOptimal": false,
+        "suggestion": "Considera usar más \"ia\" (densidad actual: 0.39%)"
+      },
+      {
+        "keyword": "de desarrollo",
+        "count": 5,
+        "density": 0.39,
+        "isOptimal": false,
+        "suggestion": "Considera usar más \"de desarrollo\" (densidad actual: 0.39%)"
+      },
+      {
+        "keyword": "claude code:",
+        "count": 5,
+        "density": 0.39,
+        "isOptimal": false,
+        "suggestion": "Considera usar más \"claude code:\" (densidad actual: 0.39%)"
+      }
+    ],
+    "headingStructure": {
+      "h1Count": 0,
+      "h2Count": 10,
+      "h3Count": 25,
+      "structure": [
+        "H2: 🤖 ¿Qué es Claude Code y por qué es diferente?",
+        "H2: 📊 Mi Experiencia: 30 Días de Datos Reales",
+        "H2: 🚀 Casos de Uso que Transformaron mi Flujo de Trabajo",
+        "H2: 🔥 Funcionalidades que Marcan la Diferencia",
+        "H2: ⚡ Claude Code vs GitHub Copilot: Comparación Real",
+        "H2: 🎯 Impacto Real en Diferentes Tipos de Proyectos",
+        "H2: 💡 Tips para Maximizar tu Productividad con Claude Code",
+        "H2: 🔮 El Futuro del Desarrollo con IA",
+        "H2: 🎯 ¿Vale la Pena Claude Code?",
+        "H2: 🚀 Conclusión: Un Mes que Cambió Mi Carrera",
+        "H3: Características principales que lo distinguen:",
+        "H3: Métricas de Productividad",
+        "H3: Proyectos Completados",
+        "H3: 1. Desarrollo de APIs Ultrarrápido",
+        "H3: 2. Refactoring Inteligente y Seguro",
+        "H3: 3. TDD (Test-Driven Development) Acelerado",
+        "H3: 4. Debugging como un Detective Experto",
+        "H3: 1. Chat Contextual Inteligente",
+        "H3: 2. Generación de Código Contextualizada",
+        "H3: 3. Análisis de Seguridad Proactivo",
+        "H3: 4. Documentación Automática Inteligente",
+        "H3: Dónde Claude Code Gana:",
+        "H3: Dónde GitHub Copilot Compete:",
+        "H3: Desarrollo Frontend (React/Vue)",
+        "H3: Desarrollo Backend (Node.js/Python)",
+        "H3: DevOps y Automatización",
+        "H3: 1. Sé Específico en tus Consultas",
+        "H3: 2. Proporciona Contexto Completo",
+        "H3: 3. Utiliza la Función de Revisión de Código",
+        "H3: 4. Aprovecha las Explicaciones",
+        "H3: Lo que está cambiando:",
+        "H3: Lo que permanece igual:",
+        "H3: Para quién es ideal:",
+        "H3: Para quién podría no ser ideal:",
+        "H3: **¿Quieres Maximizar tu Productividad como Desarrollador?**"
+      ],
+      "issues": [
+        "Falta un título principal (H1) en el contenido"
+      ]
+    },
+    "contentQuality": {
+      "score": 72,
+      "factors": {
+        "length": {
+          "score": 100,
+          "message": "Longitud de contenido óptima"
+        },
+        "keywords": {
+          "score": 100,
+          "message": "Densidad de keywords óptima"
+        },
+        "headings": {
+          "score": 70,
+          "message": "1 problemas en estructura"
+        },
+        "readability": {
+          "score": 20,
+          "message": "Texto difícil de leer, simplifica"
+        },
+        "images": {
+          "score": 30,
+          "message": "Sin imágenes, añade contenido visual"
+        }
+      }
+    },
+    "seoSuggestions": [
+      "🔑 Considera usar más \"cómo\" (densidad actual: 0.47%)",
+      "🔑 Considera usar más \"ia\" (densidad actual: 0.39%)",
+      "🔑 Considera usar más \"de desarrollo\" (densidad actual: 0.39%)",
+      "📋 Falta un título principal (H1) en el contenido",
+      "📖 Simplifica el texto: usa frases más cortas y palabras comunes"
+    ],
+    "warnings": []
+  },
+  "summary": {
+    "score": 72,
+    "wordCount": 1792,
+    "readingTime": 9,
+    "keywordsCount": 10,
+    "warningsCount": 0,
+    "suggestionsCount": 5
+  }
+}
