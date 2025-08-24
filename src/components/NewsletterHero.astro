@@ -2,8 +2,8 @@
 import { Icon } from "astro-icon/components";
 ---
 
-<newsletter-hero class="bg-color-100 rounded-lg p-4 my-6">
-	<div class="max-w-md mx-auto text-center">
+<div class="block bg-color-100 rounded-lg p-4 my-6 overflow-hidden" id="newsletter-hero">
+	<div class="max-w-md mx-auto text-center px-2">
 		<div class="mb-4">
 			<h3 class="text-lg font-semibold text-textColor mb-2">
 				📧 ¡Únete a mi newsletter!
@@ -14,18 +14,18 @@ import { Icon } from "astro-icon/components";
 		</div>
 
 		<form id="newsletter-hero-form" class="space-y-3">
-			<div class="flex gap-2">
+			<div class="flex flex-col sm:flex-row gap-2">
 				<input
 					type="email"
 					id="hero-email"
 					name="email"
 					required
 					placeholder="tu.email@ejemplo.com"
-					class="flex-1 px-3 py-2 bg-bgColor border border-color-400 rounded-lg text-textColor placeholder-light focus:outline-none focus:ring-2 focus:ring-accent-two focus:border-transparent transition-colors text-sm"
+					class="flex-1 px-3 py-2 bg-bgColor border border-color-400 rounded-lg text-textColor placeholder-light focus:outline-none focus:ring-2 focus:ring-accent-two focus:border-transparent transition-colors text-sm min-w-0 w-full sm:w-auto"
 				/>
 				<button
 					type="submit"
-					class="bg-accent-base hover:bg-accent-two text-bgColor font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed text-sm whitespace-nowrap"
+					class="bg-accent-base hover:bg-accent-two text-bgColor font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed text-sm whitespace-nowrap flex-shrink-0 w-full sm:w-auto"
 				>
 					<span id="hero-submit-text">Suscribir</span>
 					<Icon 
@@ -43,7 +43,7 @@ import { Icon } from "astro-icon/components";
 					id="hero-terms"
 					name="terms"
 					required
-					class="mt-0.5 h-3 w-3 text-accent-two border-color-400 rounded focus:ring-accent-two focus:ring-1"
+					class="mt-0.5 h-3 w-3 appearance-none bg-bgColor border border-color-400 rounded cursor-pointer flex-shrink-0 checked:bg-accent-two checked:border-accent-two focus:outline focus:outline-1 focus:outline-accent-two focus:outline-offset-1 relative checked:after:content-[''] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:rotate-45 checked:after:w-1 checked:after:h-1.5 checked:after:border-solid checked:after:border-bgColor checked:after:border-r checked:after:border-b"
 				/>
 				<span class="text-light leading-4">
 					Acepto la 
@@ -64,10 +64,10 @@ import { Icon } from "astro-icon/components";
 			</div>
 		</div>
 	</div>
-</newsletter-hero>
+</div>
 
 <script>
-	class NewsletterHero extends HTMLElement {
+	class NewsletterHero {
 		private form: HTMLFormElement;
 		private emailInput: HTMLInputElement;
 		private termsInput: HTMLInputElement;
@@ -80,18 +80,18 @@ import { Icon } from "astro-icon/components";
 		private errorText: HTMLSpanElement;
 
 		constructor() {
-			super();
+			const container = document.getElementById('newsletter-hero')!;
 			
-			this.form = this.querySelector('#newsletter-hero-form')!;
-			this.emailInput = this.querySelector('#hero-email')!;
-			this.termsInput = this.querySelector('#hero-terms')!;
-			this.submitButton = this.querySelector('button[type="submit"]')!;
-			this.submitText = this.querySelector('#hero-submit-text')!;
-			this.submitIcon = this.querySelector('#hero-submit-icon')!;
-			this.formMessage = this.querySelector('#hero-form-message')!;
-			this.successMessage = this.querySelector('#hero-success-message')!;
-			this.errorMessage = this.querySelector('#hero-error-message')!;
-			this.errorText = this.querySelector('#hero-error-text')!;
+			this.form = container.querySelector('#newsletter-hero-form')!;
+			this.emailInput = container.querySelector('#hero-email')!;
+			this.termsInput = container.querySelector('#hero-terms')!;
+			this.submitButton = container.querySelector('button[type="submit"]')!;
+			this.submitText = container.querySelector('#hero-submit-text')!;
+			this.submitIcon = container.querySelector('#hero-submit-icon')!;
+			this.formMessage = container.querySelector('#hero-form-message')!;
+			this.successMessage = container.querySelector('#hero-success-message')!;
+			this.errorMessage = container.querySelector('#hero-error-message')!;
+			this.errorText = container.querySelector('#hero-error-text')!;
 
 			this.form.addEventListener('submit', this.handleSubmit.bind(this));
 		}
@@ -195,46 +195,7 @@ import { Icon } from "astro-icon/components";
 		}
 	}
 
-	customElements.define('newsletter-hero', NewsletterHero);
+	document.addEventListener('DOMContentLoaded', () => {
+		new NewsletterHero();
+	});
 </script>
-
-<style>
-	newsletter-hero {
-		display: block;
-	}
-
-	/* Custom checkbox styling to match the theme - smaller for hero */
-	input[type="checkbox"] {
-		appearance: none;
-		background-color: theme('colors.bgColor');
-		border: 1px solid theme('colors.color.400');
-		border-radius: 0.25rem;
-		width: 0.75rem;
-		height: 0.75rem;
-		position: relative;
-		cursor: pointer;
-		flex-shrink: 0;
-	}
-
-	input[type="checkbox"]:checked {
-		background-color: theme('colors.accent-two');
-		border-color: theme('colors.accent-two');
-	}
-
-	input[type="checkbox"]:checked::after {
-		content: '';
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%) rotate(45deg);
-		width: 0.25rem;
-		height: 0.375rem;
-		border: solid theme('colors.bgColor');
-		border-width: 0 1px 1px 0;
-	}
-
-	input[type="checkbox"]:focus {
-		outline: 1px solid theme('colors.accent-two');
-		outline-offset: 1px;
-	}
-</style>

@@ -43,11 +43,11 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 		</div>
 	</div>
 	<section
-		class="max-w-xl mx-auto relative flex items-center justify-center h-screen -mt-24"
+		class="max-w-xl mx-auto px-4 relative flex items-center justify-center"
 	>
-		<div class="w-full text-left">
+		<div class="w-full text-left overflow-hidden">
 			<h1
-				class="title text-center text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-accent-two/85 via-accent-one/85 to-accent-two/85 dark:from-accent-two dark:via-accent-one dark:to-accent-two bg-clip-text text-transparent leading-tight"
+				class="title text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-accent-two/85 via-accent-one/85 to-accent-two/85 dark:from-accent-two dark:via-accent-one dark:to-accent-two bg-clip-text text-transparent leading-tight px-2"
 			>
 				Impulsa tu Visión Digital y Carrera Tech
 			</h1>
@@ -61,33 +61,33 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 				> y a <strong>acelerar tu crecimiento profesional</strong> en el
 				mundo tech.
 			</p>
-			<div class="flex justify-center flex-col items-center mb-4">
+			<div class="flex justify-center flex-col items-center mb-4 px-4">
 				<a
 					href="/services"
-					class="inline-flex items-center justify-center h-12 px-6 md:px-8 rounded-lg shadow-xl hover:scale-105 hover:brightness-110 transition-all bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-600 dark:from-indigo-800 dark:via-indigo-600 dark:to-purple-700 border border-white/70 dark:border-none text-lg"
+					class="inline-flex items-center justify-center h-12 px-6 md:px-8 rounded-lg shadow-xl hover:scale-105 hover:brightness-110 transition-all bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-600 dark:from-indigo-800 dark:via-indigo-600 dark:to-purple-700 border border-white/70 dark:border-none text-base md:text-lg w-full max-w-sm"
 				>
-					<span
-						class="text-white font-bold whitespace-normal text-center"
-					>
+					<span class="text-white font-bold text-center">
 						🚀 Descubre mis Servicios
 					</span>
 				</a>
 				<p
-					class="mt-2 text-sm text-muted-foreground text-left max-w-xs"
+					class="mt-2 text-sm text-muted-foreground text-center max-w-xs px-2"
 				>
 					Formación, Desarrollo Web y Apps, Integración de IA.
 				</p>
 			</div>
-			<div class="flex justify-center gap-4 mt-4">
+			<div
+				class="flex flex-col sm:flex-row justify-center gap-3 mt-4 px-4"
+			>
 				<a
 					href="/posts/"
-					class="inline-flex items-center justify-center h-10 px-4 rounded-lg hover:brightness-110 transition-all border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200"
+					class="inline-flex items-center justify-center h-10 px-4 rounded-lg hover:brightness-110 transition-all border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 w-full sm:w-auto"
 				>
 					<span class="font-semibold text-sm"> Explora mi Blog </span>
 				</a>
 				<a
 					href="/busqueda-semantica/"
-					class="inline-flex items-center justify-center h-10 px-4 rounded-lg hover:brightness-110 transition-all border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200"
+					class="inline-flex items-center justify-center h-10 px-4 rounded-lg hover:brightness-110 transition-all border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 w-full sm:w-auto"
 				>
 					<span class="font-semibold text-sm"> Búsqueda IA </span>
 				</a>
@@ -95,9 +95,9 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 			<div class="flex justify-center mt-4">
 				<SocialList />
 			</div>
-			
+
 			<!-- Newsletter CTA in Hero Section -->
-			<div class="mt-8">
+			<div class="mt-8 mb-8">
 				<NewsletterHero />
 			</div>
 		</div>
