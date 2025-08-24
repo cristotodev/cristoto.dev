@@ -12,12 +12,10 @@ const hostName = new URL(DOMAIN).hostname;
 // Calls webmention.io api.
 async function fetchWebmentions(timeFrom: string | null, perPage = 1000) {
 	if (!DOMAIN) {
-		console.warn("No domain specified. Please set in astro.config.ts");
 		return null;
 	}
 
 	if (!WEBMENTION_API_KEY) {
-		console.warn("No webmention api token specified in .env");
 		return null;
 	}
 
@@ -71,8 +69,7 @@ function writeToCache(data: WebmentionsCache) {
 	// write data to cache json file
 	fs.writeFile(filePath, fileContent, (err) => {
 		if (err) throw err;
-		console.log(`Webmentions saved to ${filePath}`);
-	});
+		});
 }
 
 function getFromCache(): WebmentionsCache {

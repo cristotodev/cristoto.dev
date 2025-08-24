@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import { getAllPosts } from "@/data/post";
 import { suggestInternalLinks } from "@/utils/internal-linking";
 
@@ -118,16 +118,6 @@ const linkSuggestions = suggestInternalLinks(
 			});
 		});
 		
-		// Log internal linking stats for development
-		if (import.meta.env.DEV && internalLinks.length > 0) {
-			console.log(`🔗 Added ${internalLinks.length} internal links:`, 
-				Array.from(internalLinks).map(link => ({
-					text: link.textContent,
-					url: link.href,
-					confidence: link.getAttribute('data-confidence')
-				}))
-			);
-		}
 	});
 </script>
 

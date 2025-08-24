@@ -140,7 +140,6 @@ const { headings } = await render(series);
 
 	// Убедимся, что seriesPanel существует
 	if (!seriesPanel) {
-		console.error("Элемент series-panel не найден");
 		throw new Error("series-panel is required");
 	}
 
@@ -183,20 +182,14 @@ const { headings } = await render(series);
 	// Обработчики событий для обеих кнопок
 	if (togglePanelBtn) {
 		togglePanelBtn.addEventListener("click", togglePanel);
-	} else {
-		console.error("Элемент toggle-panel не найден");
 	}
 
 	if (togglePanelMobileBtn) {
 		togglePanelMobileBtn.addEventListener("click", togglePanel);
-	} else {
-		console.error("Элемент toggle-panel-mobile не найден");
 	}
 
 	if (closePanelBtn) {
 		closePanelBtn.addEventListener("click", hidePanel);
-	} else {
-		console.error("Элемент close-panel не найден");
 	}
 </script>
 
@@ -209,7 +202,6 @@ const { headings } = await render(series);
 
 	// Проверяем наличие панели (обязательно для работы)
 	if (!tocPanel) {
-		console.error('Элемент toc-panel не найден');
 		throw new Error('toc-panel is required');
 	}
 
@@ -246,22 +238,16 @@ const { headings } = await render(series);
 	// Добавляем обработчик для кнопки переключения
 	if (toggleTocBtn) {
 		toggleTocBtn.addEventListener("click", toggleToc);
-	} else {
-		console.error('Элемент toggle-toc не найден');
 	}
 
 	// Добавляем обработчик для кнопки переключения
 	if (toggleTocMobileBtn) {
 		toggleTocMobileBtn.addEventListener("click", toggleToc);
-	} else {
-		console.error('Элемент toggle-toc-mobile не найден');
 	}
 
 	// Добавляем обработчик для кнопки закрытия
 	if (closeTocBtn) {
 		closeTocBtn.addEventListener('click', hideToc);
-	} else {
-		console.error('Элемент close-toc не найден');
 	}
 </script>
 
@@ -272,9 +258,6 @@ const { headings } = await render(series);
     
     if (buttonsPanel) {
       buttonsPanel.classList.add("fixed");
-      console.log("Класс 'fixed' добавлен к элементу buttons-panel.");
-    } else {
-      console.error("Элемент с ID 'buttons-panel' не найден.");
     }
   });
 </script>

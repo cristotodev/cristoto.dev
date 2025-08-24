@@ -63,7 +63,7 @@ export function optimizeMetaDescription(description: string, keywords?: string[]
  * // Returns: 'React Hooks Guide - Javascript • Cristotodev'
  * ```
  */
-export function optimizeTitle(title: string, category?: string, siteName: string = 'Cristotodev'): string {
+export function optimizeTitle(title: string, category?: string, siteName = 'Cristotodev'): string {
 	let optimized = title.trim();
 	
 	// Add category context if provided and not already included

@@ -37,27 +37,21 @@ async function extractPostContent(filePath) {
 			publishDate: frontmatter.publishDate
 		};
 	} catch (error) {
-		console.error(`Error processing ${filePath}:`, error);
 		return null;
 	}
 }
 
 async function generateEmbeddings() {
-	console.log('🚀 Iniciando generación de embeddings...');
-	
 	// Inicializar el pipeline de embeddings
-	console.log('📥 Cargando modelo de embeddings...');
 	const extractor = await pipeline('feature-extraction', 'Xenova/multilingual-e5-small');
 	
 	// Obtener todos los posts
 	const postFiles = await glob('src/content/post/**/*.{md,mdx}', { cwd: path.join(__dirname, '..') });
-	console.log(`📚 Encontrados ${postFiles.length} posts`);
 	
 	const embeddings = [];
 	
 	for (const filePath of postFiles) {
 		const fullPath = path.join(__dirname, '..', filePath);
-		console.log(`🔄 Procesando: ${path.basename(filePath)}`);
 		
 		const postData = await extractPostContent(fullPath);
 		if (!postData) continue;
@@ -78,13 +72,11 @@ async function generateEmbeddings() {
 	const outputPath = path.join(__dirname, '..', 'public', 'embeddings.json');
 	await fs.writeFile(outputPath, JSON.stringify(embeddings, null, 2));
 	
-	console.log(`✅ Embeddings generados exitosamente: ${embeddings.length} posts`);
-	console.log(`📁 Guardados en: ${outputPath}`);
 }
 
 // Ejecutar si se llama directamente
 if (require.main === module) {
-	generateEmbeddings().catch(console.error);
+	generateEmbeddings().catch(() => {});
 }
 
 module.exports = { generateEmbeddings };

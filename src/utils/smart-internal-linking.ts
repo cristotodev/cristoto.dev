@@ -38,15 +38,15 @@ export interface LinkingAnalysis {
  *   allPosts,
  *   3
  * );
- * console.log(analysis.suggestions.length); // Up to 3 suggestions
- * console.log(analysis.linkDensity); // 2.5 (percentage)
+ * // analysis.suggestions.length - Up to 3 suggestions
+ * // analysis.linkDensity - 2.5 (percentage)
  * ```
  */
 export function analyzeInternalLinking(
 	content: string,
 	currentPost: any,
 	allPosts: any[],
-	maxSuggestions: number = 5
+	maxSuggestions = 5
 ): LinkingAnalysis {
 	const cleanContent = content.toLowerCase();
 	const currentLinks = extractCurrentLinks(content);

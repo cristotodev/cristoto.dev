@@ -1,0 +1,91 @@
+---
+import Layout from '@/layouts/Base.astro';
+import { Icon } from 'astro-icon/components';
+
+const meta = {
+	title: '¡Gracias por confirmar tu suscripción!',
+	description: 'Has confirmado exitosamente tu suscripción a mi newsletter.',
+};
+---
+
+<Layout {meta}>
+	<main class="max-w-4xl mx-auto px-4 py-8">
+		<article class="prose prose-lg mx-auto text-center">
+			<div class="mb-8">
+				<Icon 
+					class="h-16 w-16 text-green-500 mx-auto mb-4" 
+					name="hugeicons:checkmark-circle-02" 
+					aria-hidden="true"
+				/>
+				<h1 class="text-3xl font-bold text-textColor mb-4">
+					¡Gracias por confirmar tu suscripción!
+				</h1>
+			</div>
+
+			<div class="bg-color-100 rounded-lg p-6 mb-8">
+				<h2 class="text-xl font-semibold text-textColor mb-3">
+					📧 ¡Ya formas parte de mi newsletter!
+				</h2>
+				<p class="text-light mb-4">
+					Has confirmado exitosamente tu suscripción. A partir de ahora recibirás contenido técnico exclusivo directamente en tu bandeja de entrada.
+				</p>
+				<div class="text-sm text-light space-y-2">
+					<p>✅ Suscripción confirmada</p>
+					<p>✅ Email verificado</p>
+					<p>✅ Listo para recibir contenido exclusivo</p>
+				</div>
+			</div>
+
+			<div class="space-y-4 text-left max-w-2xl mx-auto">
+				<h3 class="text-lg font-semibold text-textColor">¿Qué puedes esperar?</h3>
+				<ul class="space-y-2 text-light">
+					<li class="flex items-start gap-2">
+						<Icon class="h-5 w-5 text-accent-two mt-0.5" name="hugeicons:arrow-right-02" />
+						<span>Artículos técnicos sobre desarrollo web y tecnología</span>
+					</li>
+					<li class="flex items-start gap-2">
+						<Icon class="h-5 w-5 text-accent-two mt-0.5" name="hugeicons:arrow-right-02" />
+						<span>Tips y trucos de programación</span>
+					</li>
+					<li class="flex items-start gap-2">
+						<Icon class="h-5 w-5 text-accent-two mt-0.5" name="hugeicons:arrow-right-02" />
+						<span>Recursos y herramientas útiles</span>
+					</li>
+					<li class="flex items-start gap-2">
+						<Icon class="h-5 w-5 text-accent-two mt-0.5" name="hugeicons:arrow-right-02" />
+						<span>Contenido exclusivo que no encontrarás en el blog</span>
+					</li>
+				</ul>
+			</div>
+
+			<div class="mt-8 space-y-4">
+				<p class="text-light">
+					Mientras tanto, puedes explorar mis últimos artículos:
+				</p>
+				<div class="flex gap-4 justify-center flex-wrap">
+					<a 
+						href="/posts/" 
+						class="bg-accent-base hover:bg-accent-two text-bgColor font-medium py-2 px-4 rounded-lg transition-colors duration-200 inline-flex items-center gap-1"
+					>
+						<Icon class="h-4 w-4" name="hugeicons:book-02" />
+						Ver artículos
+					</a>
+					<a 
+						href="/" 
+						class="border border-color-400 hover:bg-color-100 text-textColor font-medium py-2 px-4 rounded-lg transition-colors duration-200 inline-flex items-center gap-1"
+					>
+						<Icon class="h-4 w-4" name="hugeicons:home-01" />
+						Ir al inicio
+					</a>
+				</div>
+			</div>
+
+			<div class="mt-8 text-xs text-light">
+				<p>
+					¿Problemas con tu suscripción? 
+					<a href="/contact/" class="text-accent-two hover:underline">Contáctame aquí</a>
+				</p>
+			</div>
+		</article>
+	</main>
+</Layout>

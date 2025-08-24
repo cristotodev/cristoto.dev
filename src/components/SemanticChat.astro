@@ -94,22 +94,19 @@
    * 
    * @example
    * await initializeSearch();
-   * console.log('Search system ready');
+   * // Search system ready
    */
   async function initializeSearch() {
     try {
       // Cargar embeddings pre-generados
       const response = await fetch('/embeddings.json');
       embeddings = await response.json();
-      console.log(`📚 Cargados ${embeddings.length} posts con embeddings`);
       
       // Inicializar modelo para consultas en vivo
-      console.log('🤖 Cargando modelo de embeddings...');
       extractor = await pipeline('feature-extraction', 'Xenova/multilingual-e5-small');
-      console.log('✅ Sistema de búsqueda semántica listo');
       
     } catch (error) {
-      console.error('Error inicializando búsqueda semántica:', error);
+      // Error inicializando búsqueda semántica
     }
   }
   
@@ -122,12 +119,11 @@
    * 
    * @example
    * const results = await semanticSearch('React hooks tutorial');
-   * console.log(results[0].similarity); // 0.85
-   * console.log(results[0].title); // 'Advanced React Hooks Guide'
+   * // results[0].similarity - 0.85
+   * // results[0].title - 'Advanced React Hooks Guide'
    */
   async function semanticSearch(query: string): Promise<PostEmbedding[]> {
     if (!extractor || embeddings.length === 0) {
-      console.error('Sistema no inicializado');
       return [];
     }
     
@@ -150,7 +146,6 @@
       return results;
       
     } catch (error) {
-      console.error('Error en búsqueda semántica:', error);
       return [];
     }
   }
@@ -240,7 +235,7 @@
         const results = await semanticSearch(query);
         displayResults(results);
       } catch (error) {
-        console.error('Error en búsqueda:', error);
+        // Error en búsqueda
       } finally {
         if (searchBtn) searchBtn.disabled = false;
         if (loading) loading.classList.add('hidden');

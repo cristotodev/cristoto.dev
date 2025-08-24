@@ -58,7 +58,7 @@ export function calculateRelevance(
 	const currentMatch = currentPost.title.match(/parte?\s*(\d+)/i);
 	const otherMatch = otherPost.title.match(/parte?\s*(\d+)/i);
 	if (currentMatch?.[1] && otherMatch?.[1]) {
-		const diff = Math.abs(parseInt(currentMatch[1]) - parseInt(otherMatch[1]));
+		const diff = Math.abs(Number.parseInt(currentMatch[1]) - Number.parseInt(otherMatch[1]));
 		if (diff === 1) score += 0.5; // Adjacent parts
 		if (diff <= 3) score += 0.2;  // Nearby parts
 	}
@@ -72,7 +72,7 @@ export function calculateRelevance(
 export function findRelatedPosts(
 	currentPost: { tags: string[]; title: string; id: string; description?: string },
 	allPosts: Array<{ tags: string[]; title: string; id: string; data: any }>,
-	maxResults: number = 5
+	maxResults = 5
 ): RelatedPost[] {
 	return allPosts
 		.map(post => ({
@@ -99,7 +99,7 @@ export function suggestInternalLinks(
 	content: string,
 	currentPost: { tags: string[]; title: string; id: string },
 	allPosts: Array<{ tags: string[]; title: string; id: string; data: any }>,
-	maxSuggestions: number = 3
+	maxSuggestions = 3
 ): LinkSuggestion[] {
 	const suggestions: LinkSuggestion[] = [];
 	const relatedPosts = findRelatedPosts(currentPost, allPosts, 10);

@@ -223,15 +223,11 @@ import { Icon } from "astro-icon/components";
 			!closeMenuIcon ||
 			!drawer
 		) {
-			console.error(
-				"One or more required elements are missing in the DOM.",
-			);
 			return;
 		}
 
 		const drawerBody = document.getElementById("drawer-body");
 		if (!drawerBody) {
-			console.error("Drawer body element is missing in the DOM.");
 			return;
 		}
 

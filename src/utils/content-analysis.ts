@@ -57,8 +57,8 @@ export interface ContentQuality {
  *   'Learn SEO optimization', 
  *   ['seo', 'guide']
  * );
- * console.log(analysis.wordCount); // 234
- * console.log(analysis.seoSuggestions); // ['Add more H2 headings...']
+ * // analysis.wordCount - 234
+ * // analysis.seoSuggestions - ['Add more H2 headings...']
  * ```
  */
 export function analyzeContent(
@@ -392,7 +392,7 @@ function countSyllables(word: string): number {
  *   title: 'Guide',
  *   description: 'Learn...'
  * });
- * console.log(quality.score); // 85
+ * // quality.score - 85
  * ```
  */
 function evaluateContentQuality(params: {
@@ -496,7 +496,7 @@ function evaluateContentQuality(params: {
  *   wordCount: 250,
  *   // ... other params
  * });
- * console.log(warnings); // ['📏 Content too short for SEO (minimum 300 words)']
+ * // warnings - ['📏 Content too short for SEO (minimum 300 words)']
  * ```
  */
 function generateSEOSuggestions(params: {

@@ -42,7 +42,6 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE_NAME)
       .then((cache) => {
-        console.log('Precaching static resources');
         return cache.addAll(PRECACHE_URLS);
       })
       .then(() => {
@@ -63,7 +62,6 @@ self.addEventListener('activate', (event) => {
               return cacheName !== CACHE_NAME && cacheName !== STATIC_CACHE_NAME;
             })
             .map((cacheName) => {
-              console.log('Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             })
         );
@@ -138,7 +136,6 @@ async function cacheFirst(request) {
     
     return networkResponse;
   } catch (error) {
-    console.error('Cache first strategy failed:', error);
     return new Response('Network error', { status: 408 });
   }
 }
@@ -155,7 +152,6 @@ async function networkFirst(request) {
     
     return networkResponse;
   } catch (error) {
-    console.log('Network failed, trying cache:', request.url);
     const cachedResponse = await caches.match(request);
     
     if (cachedResponse) {
@@ -205,7 +201,6 @@ if ('sync' in self.registration) {
 
 async function doBackgroundSync() {
   // Handle offline actions when back online
-  console.log('Background sync triggered');
 }
 
 // Push notifications (if needed in the future)

@@ -204,7 +204,6 @@ const imageSchema = generateImageSchema(src, optimizedAlt, {
 			};
 			
 			const handleError = () => {
-				console.warn('Smart image failed to load:', img.src);
 				
 				// Try fallback formats
 				const picture = img.closest('picture');

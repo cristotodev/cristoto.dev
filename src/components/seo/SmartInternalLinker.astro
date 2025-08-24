@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import { getAllPosts } from "@/data/post";
 import { analyzeInternalLinking } from "@/utils/smart-internal-linking";
 
@@ -304,7 +304,6 @@ const getQualityColor = (score: number) => {
 
 				return true;
 			} catch (error) {
-				console.warn('Failed to apply link suggestion:', error);
 				return false;
 			}
 		}
