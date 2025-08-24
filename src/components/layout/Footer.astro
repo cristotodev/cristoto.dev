@@ -1,8 +1,14 @@
 ---
 import { menuLinks, siteConfig } from "@/site.config";
+import NewsletterHero from "@/components/NewsletterHero.astro";
 
 const year = new Date().getFullYear();
 ---
+
+<!-- Newsletter Section in Footer -->
+<div class="mt-8 mb-8 px-4 md:px-8">
+	<NewsletterHero />
+</div>
 
 <footer
 	class="semibold mt-auto flex w-full flex-col items-center justify-center gap-y-2 pb-4 pt-8 text-center align-top text-accent sm:flex-row sm:justify-between sm:text-sm px-4 md:px-8"

@@ -6,6 +6,7 @@ import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
 import type { GetStaticPaths, Page } from "astro";
 import { Icon } from "astro-icon/components";
+import NewsletterHero from "@/components/NewsletterHero.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const MAX_NOTES_PER_PAGE = 5;
@@ -58,6 +59,11 @@ const paginationProps = {
 					</div>
 				))
 			}
+		</div>
+
+		<!-- Newsletter Section -->
+		<div class="my-8">
+			<NewsletterHero />
 		</div>
 
 		<Pagination {...paginationProps} />
